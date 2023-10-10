@@ -1,7 +1,7 @@
 import wollok.game.*
 import escenario.*
 import background.*
-
+import objetosMoviles.*
 
 program juego {
 	game.title("Juego Base")
@@ -9,6 +9,14 @@ program juego {
 	game.height(84)
 	game.width(80)
 	background.crearFondo()
-	
+	const tortuga = new Tortuga(positionInicial = game.at(0,50))
+	const tortuga2 = new Tortuga(positionInicial = game.at(8,50))
+	const tortuga3 = new Tortuga(positionInicial = game.at(16,50))
+	game.addVisual(tortuga)
+	game.addVisual(tortuga2)
+	game.addVisual(tortuga3)
+	tortuga.iniciar()
+	tortuga2.iniciar()
+	tortuga3.iniciar()
 	game.start()
 }
