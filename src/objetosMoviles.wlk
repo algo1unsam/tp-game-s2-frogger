@@ -30,11 +30,10 @@ class ObjetoMovil {
 
 class Tortuga inherits ObjetoMovil{
 	
-	var property abajoAgua = false
 	var etapa = 0
 	var property tope = false
 	
-	override method velocidad() = 50
+	override method velocidad() = 500
 	
 	override method esMortal() = false
 	
@@ -64,17 +63,12 @@ class Tortuga inherits ObjetoMovil{
 	
 	method image(){
 		if (self.abajoAgua()){
-			return "Escenario/Agua.png"
+			return "tortuga/Vacio.png"
 		}
 		else {return "tortuga/Tortuga"+etapa.toString()+".png"}
 	}
 	
-	method abajoDelAgua(){
-		if (etapa > 9 and etapa < 15){
-		abajoAgua = true
-	}
-		else {abajoAgua = false}
-	}
+	method abajoAgua() = etapa > 9 and etapa < 15
 	
 	override method Contacto(){}
 	
