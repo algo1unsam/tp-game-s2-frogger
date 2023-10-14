@@ -16,21 +16,5 @@ object background {
 	const property eje_x = new Range(start = 0, end = limite_x, step = 8)
 	const property eje_y = new Range(start = 0, end = (limite_y - 1), step = 8)
 	
-	method borrarEscenario() {
-		
-		eje_y.forEach({y =>
-			eje_x.forEach({x =>
-				new Position(x = x, y = y).allElements().forEach({element => game.removeVisual(element)})
-			})
-		})
-	}
-	
-	method crearBarraDeEstado(){
-		eje_x.forEach({x =>
-			const posicion = new Position(x = x, y = limite_y)
-			game.addVisualIn(new BarraSuperior(), posicion)
-		})
-	}
-	
 	
 }

@@ -26,10 +26,14 @@ class Nivel {
 		self.insertarTortugas()
 	}
 	
+	method reiniciarEscenario(){
+		self.borrarEscenario()
+		self.crearBarraDeEstado()
+	}
+	
 	method insertarFondo(){
 		
-		background.borrarEscenario()
-		background.crearBarraDeEstado()
+		self.reiniciarEscenario()
 		
 		background.eje_x().forEach({x =>
 			
@@ -102,6 +106,22 @@ class Nivel {
 				game.addVisualIn(new Meta(), posicion)
 			else
 				game.addVisualIn(new Arbusto(), posicion)
+		})
+	}
+	
+	method borrarEscenario() {
+		
+		background.eje_y().forEach({y =>
+			background.eje_x().forEach({x =>
+				new Position(x = x, y = y).allElements().forEach({element => game.removeVisual(element)})
+			})
+		})
+	}
+	
+	method crearBarraDeEstado(){
+		background.eje_x().forEach({x =>
+			const posicion = new Position(x = x, y = background.limite_y())
+			game.addVisualIn(new BarraSuperior(), posicion)
 		})
 	}
 }
