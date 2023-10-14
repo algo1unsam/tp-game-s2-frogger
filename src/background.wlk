@@ -3,202 +3,122 @@ import escenario.*
 
 object background {
 	
-	//La grilla es de 10 celdas x 10 celdas y cada celda mide 8x8
-	//A esto hay que refactorizarlo y hacerlo con un Range(0,80), por ahora lo dejo así para que nos sea más fácil orientarnos
-	const eje_x = new Range(start = 0, end = 72, step = 8)
-	const eje_y = new Range(start = 0, end = 80, step = 8)
-	const posiciones = [
-		
-		//Primera columna
-		new Position(x = 0, y = 0),
-		new Position(x = 0, y = 8),
-		new Position(x = 0, y = 16),
-		new Position(x = 0, y = 24),
-		new Position(x = 0, y = 32),
-		new Position(x = 0, y = 40),
-		new Position(x = 0, y = 48),
-		new Position(x = 0, y = 56),
-		new Position(x = 0, y = 64),
-		new Position(x = 0, y = 72),
-		new Position(x = 0, y = 80),
-		
-		//Segunda columna
-		new Position(x = 8, y = 0),
-		new Position(x = 8, y = 8),
-		new Position(x = 8, y = 16),
-		new Position(x = 8, y = 24),
-		new Position(x = 8, y = 32),
-		new Position(x = 8, y = 40),
-		new Position(x = 8, y = 48),
-		new Position(x = 8, y = 56),
-		new Position(x = 8, y = 64),
-		new Position(x = 8, y = 72),
-		new Position(x = 8, y = 80),
-		
-		//Tercera columna
-		new Position(x = 16, y = 0),
-		new Position(x = 16, y = 8),
-		new Position(x = 16, y = 16),
-		new Position(x = 16, y = 24),
-		new Position(x = 16, y = 32),
-		new Position(x = 16, y = 40),
-		new Position(x = 16, y = 48),
-		new Position(x = 16, y = 56),
-		new Position(x = 16, y = 64),
-		new Position(x = 16, y = 72),
-		new Position(x = 16, y = 80),
-		
-		//Cuarta columna
-		new Position(x = 24, y = 0),
-		new Position(x = 24, y = 8),
-		new Position(x = 24, y = 16),
-		new Position(x = 24, y = 24),
-		new Position(x = 24, y = 32),
-		new Position(x = 24, y = 40),
-		new Position(x = 24, y = 48),
-		new Position(x = 24, y = 56),
-		new Position(x = 24, y = 64),
-		new Position(x = 24, y = 72),
-		new Position(x = 24, y = 80),
-		
-		//Quinta columna
-		new Position(x = 32, y = 0),
-		new Position(x = 32, y = 8),
-		new Position(x = 32, y = 16),
-		new Position(x = 32, y = 24),
-		new Position(x = 32, y = 32),
-		new Position(x = 32, y = 40),
-		new Position(x = 32, y = 48),
-		new Position(x = 32, y = 56),
-		new Position(x = 32, y = 64),
-		new Position(x = 32, y = 72),
-		new Position(x = 32, y = 80),
-		
-		//Sexta columna
-		new Position(x = 40, y = 0),
-		new Position(x = 40, y = 8),
-		new Position(x = 40, y = 16),
-		new Position(x = 40, y = 24),
-		new Position(x = 40, y = 32),
-		new Position(x = 40, y = 40),
-		new Position(x = 40, y = 48),
-		new Position(x = 40, y = 56),
-		new Position(x = 40, y = 64),
-		new Position(x = 40, y = 72),
-		new Position(x = 40, y = 80),
-		
-		//Septima columna
-		new Position(x = 48, y = 0),
-		new Position(x = 48, y = 8),
-		new Position(x = 48, y = 16),
-		new Position(x = 48, y = 24),
-		new Position(x = 48, y = 32),
-		new Position(x = 48, y = 40),
-		new Position(x = 48, y = 48),
-		new Position(x = 48, y = 56),
-		new Position(x = 48, y = 64),
-		new Position(x = 48, y = 72),
-		new Position(x = 48, y = 80),
+	//****************
+	//DATOS DE GRILLA
+	//****************
+	//Eje x = 15 columnas usables
+	//Eje y = 9 filas usables. Una décima fila se usa para barra de estado (tiempo, vidas...)
 	
-		//Octava columna
-		new Position(x = 56, y = 0),
-		new Position(x = 56, y = 8),
-		new Position(x = 56, y = 16),
-		new Position(x = 56, y = 24),
-		new Position(x = 56, y = 32),
-		new Position(x = 56, y = 40),
-		new Position(x = 56, y = 48),
-		new Position(x = 56, y = 56),
-		new Position(x = 56, y = 64),
-		new Position(x = 56, y = 72),
-		new Position(x = 56, y = 80),
+	const property limite_y = 72
+	const property limite_x = 120
+	const property tamanio_celda = 8
+	
+	const property eje_x = new Range(start = 0, end = limite_x, step = 8)
+	const property eje_y = new Range(start = 0, end = (limite_y - 1), step = 8)
+	
+	method borrarEscenario() {
 		
-		//Novena columna
-		new Position(x = 64, y = 0),
-		new Position(x = 64, y = 8),
-		new Position(x = 64, y = 16),
-		new Position(x = 64, y = 24),
-		new Position(x = 64, y = 32),
-		new Position(x = 64, y = 40),
-		new Position(x = 64, y = 48),
-		new Position(x = 64, y = 56),
-		new Position(x = 64, y = 64),
-		new Position(x = 64, y = 72),
-		new Position(x = 64, y = 80),
-		
-		//Decima columna
-		new Position(x = 72, y = 0),
-		new Position(x = 72, y = 8),
-		new Position(x = 72, y = 16),
-		new Position(x = 72, y = 24),
-		new Position(x = 72, y = 32),
-		new Position(x = 72, y = 40),
-		new Position(x = 72, y = 48),
-		new Position(x = 72, y = 56),
-		new Position(x = 72, y = 64),
-		new Position(x = 72, y = 72),
-		new Position(x = 72, y = 80)
-		
-	]
+		eje_y.forEach({y =>
+			eje_x.forEach({x =>
+				new Position(x = x, y = y).allElements().forEach({element => game.removeVisual(element)})
+			})
+		})
+	}
+	
+	method crearBarraDeEstado(){
+		eje_x.forEach({x =>
+			const posicion = new Position(x = x, y = limite_y)
+			game.addVisualIn(new BarraSuperior(), posicion)
+		})
+	}
+	
+	
+}
 
+class Background1 {
+	
 	const posicionesDeHojasEnAgua = [
 		
 		//Ponemos 4 hojas en la fila del medio del agua
-		new Position(x = 8, y = 56),
-		new Position(x = 32, y = 56),
-		new Position(x = 40, y = 56),
-		new Position(x = 64, y = 56)
+		//new Position(x = 8, y = 56),
+		//new Position(x = 32, y = 56),
+		//new Position(x = 40, y = 56),
+		//new Position(x = 64, y = 56)
 	]
 	
 	const posicionesDeCalaveras = [
 		
-		new Position(x = 8, y = 0),
-		new Position(x = 40, y = 8),
-		new Position(x = 16, y = 40)
+		//new Position(x = 8, y = 0),
+		//new Position(x = 40, y = 8),
+		//new Position(x = 16, y = 40)
 	]
+	
+	method crearAgua(x){
+
+		background.eje_y().forEach({ y =>
+			const posicion = new Position(x = x, y = y)
+			game.addVisualIn(new Agua(), posicion)
+		})
+	}
+	
+	method crearPista(x){
+		
+		background.eje_y().forEach({ y =>
+			const posicion = new Position(x = x, y = y)
+			game.addVisualIn(new Pista(), posicion)
+		})
+	}
+	
+	method crearPasto(x){
+		
+		background.eje_y().forEach({ y =>
+			const posicion = new Position(x = x, y = y)
+			game.addVisualIn(new Pasto(), posicion)
+		})
+	}
+	
+	method crearMeta(x){
+		
+		const lugaresDeLLegada = [0,4,5,8]
+		
+		background.eje_y().forEach({ y =>
+			const posicion = new Position(x = x, y = y)
+			const esLugarDeLLegada = lugaresDeLLegada.any({ lugar => lugar == (y/background.tamanio_celda())})
+			
+			if(esLugarDeLLegada)
+				game.addVisualIn(new Meta(), posicion)
+			else
+				game.addVisualIn(new Arbusto(), posicion)
+		})
+	}
 	
 	method crearFondo(){
 		
+		background.borrarEscenario()
+		background.crearBarraDeEstado()
 		
-		//*******************************************
-		//ESCENARIO
-		//*******************************************
-		
-		posiciones.forEach({posicion =>
-//			
-//			eje_y.forEach({_y => 
-//				
-//				
-//			})
+		background.eje_x().forEach({x =>
 			
-			const esTitulo = posicion.y() == 80
+			const esColumnaDeMeta = x == background.limite_x() - (background.tamanio_celda())
 			
-			//Es agua si está entre la séptima y novena fila
-			const esAgua = posicion.y() >= 48 and posicion.y() <= 64 
+			const columnasDeAgua = [10,11,12,13]
+			const columnasDePista = [7,8,9]
+			const columnasDePasto = [0,1,2,3,4,5,6]
 			
-			//Es pista si está entre la tercera y quinta fila
-			const esPista = posicion.y() >= 16 and posicion.y() <= 32
+			const esAgua = columnasDeAgua.any({columna => (columna * background.tamanio_celda()) == x})
 			
-			const esFilaDeMeta = posicion.y() == 72
+			const esPista = columnasDePista.any({columna => (columna * background.tamanio_celda()) == x})
 			
-			if(esTitulo)
-				game.addVisualIn(new BarraSuperior(), posicion)
-			else if(esAgua)
-				game.addVisualIn(new Agua(), posicion)
+			const esPasto = columnasDePasto.any({columna => (columna * background.tamanio_celda()) == x})
+			
+			if(esAgua)
+				self.crearAgua(x)
 			else if(esPista)
-				game.addVisualIn(new Pista(), posicion)
-			
-			else if(esFilaDeMeta){
-				if(posicion.x() == 24 or posicion.x() == 48){
-					game.addVisualIn(new Meta(), posicion)
-					game.addVisualIn(new Mosca(), posicion)					
-				}
-				else{
-					game.addVisualIn(new Arbusto(), posicion)					
-				}
-			}
-			else
-				game.addVisualIn(new Pasto(), posicion)
+				self.crearPista(x)
+			else if(esColumnaDeMeta)
+				self.crearMeta(x)
+			else if(esPasto)
+				self.crearPasto(x)
 		})
 		
 		//*******************************************
@@ -213,5 +133,6 @@ object background {
 			game.addVisualIn(new Calavera(), posicion)
 		})
 	}
+	
 	
 }

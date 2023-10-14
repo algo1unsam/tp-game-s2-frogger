@@ -7,12 +7,14 @@ import tortuga.*
 program juego {
 	game.title("Juego Base")
 	game.cellSize(10)
-	game.height(84)
-	game.width(80)
-	background.crearFondo()
-	const tortuga = new Tortuga(x = 0, y = 50)
-	const tortuga2 = new Tortuga(x = 8, y = 50)
-	const tortuga3 = new Tortuga(x = 16, y = 50)
+	game.height(background.limite_y() + (background.tamanio_celda() / 2))
+	game.width(background.limite_x())
+	
+	new Background1().crearFondo()
+	
+	const tortuga = new Tortuga(x = 10, y = 8)
+	const tortuga2 = new Tortuga(x = 10, y = 7)
+	const tortuga3 = new Tortuga(x = 10, y = 6)
 	game.addVisual(tortuga)
 	game.addVisual(tortuga2)
 	game.addVisual(tortuga3)

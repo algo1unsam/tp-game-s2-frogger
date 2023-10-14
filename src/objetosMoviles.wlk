@@ -1,14 +1,17 @@
 import wollok.game.*
+import background.*
 
 class ObjetoMovil {
-	//Todos deben tener position porque se tienen que ir desplazando
-	//(si se excede del límite de pantalla deben aparecer por el otro lado o hay que implementar alguna lógica
-	//para evitar crear infinitos objetos, se podría destruir con "removeVisual" cuando se excede de los límites de pantalla)
-	//Habría que averiguarlo
+	//La grilla es de 9 (alto) por 15 (ancho: 0 - 14)
+	//Los valores de X e Y corresponden al valor en "neto" en la grilla
+	//O sea, su posición sin importar el tamaño de la celda. El cálculo se hace automático.
 	const property x
 	const property y
 	
-	var property position = new Position(x = x, y = y)
+	const property x_real = x * background.tamanio_celda()
+	const property y_real = y * background.tamanio_celda()
+	
+	var property position = new Position(x = x_real, y = y_real)
 	
 	//En milisegundos, ver qué velocidad le conviene a cada obj
 	method velocidad() = 1000

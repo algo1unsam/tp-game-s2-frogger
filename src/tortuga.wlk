@@ -1,5 +1,6 @@
-import objetosMoviles.*
 import wollok.game.*
+import objetosMoviles.*
+import background.*
 
 class Tortuga inherits ObjetoMovil{
 	
@@ -11,7 +12,7 @@ class Tortuga inherits ObjetoMovil{
 	override method esMortal() = self.abajoAgua()
 	
 	override method mover(){
-		position = position.right(1)
+		position = self.position().down(1)
 		self.etapas()
 		self.limiteEtapas()
 		self.valPosicion()
@@ -19,8 +20,8 @@ class Tortuga inherits ObjetoMovil{
 	
 
 	method valPosicion(){
-		if (self.position().x()>80){
-			position = new Position(x = 0, y = y)
+		if (self.position().y() < 0){
+			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
 		}
 	}
 	
