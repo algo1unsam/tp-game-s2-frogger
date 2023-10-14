@@ -22,6 +22,7 @@ class ObjetoMovil {
 	//Se puede sobrescribir para que el obj vaya a la izquierda, deberían invertir las imágenes
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
 	method iniciar(){
+		game.addVisual(self)
 		game.onTick(self.velocidad(), "movimiento", {self.mover()})
 	}
 	

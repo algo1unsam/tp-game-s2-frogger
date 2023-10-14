@@ -2,7 +2,7 @@ import wollok.game.*
 import escenario.*
 import background.*
 import objetosMoviles.*
-import tortuga.*
+import niveles.*
 
 program juego {
 	game.title("Juego Base")
@@ -10,16 +10,7 @@ program juego {
 	game.height(background.limite_y() + (background.tamanio_celda() / 2))
 	game.width(background.limite_x())
 	
-	new Background1().crearFondo()
+	new Nivel1().iniciar()
 	
-	const tortuga = new Tortuga(x = 10, y = 8)
-	const tortuga2 = new Tortuga(x = 10, y = 7)
-	const tortuga3 = new Tortuga(x = 10, y = 6)
-	game.addVisual(tortuga)
-	game.addVisual(tortuga2)
-	game.addVisual(tortuga3)
-	tortuga.iniciar()
-	tortuga2.iniciar()
-	tortuga3.iniciar()
 	game.start()
 }
