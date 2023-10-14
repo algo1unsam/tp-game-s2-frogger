@@ -5,8 +5,10 @@ class ObjetoMovil {
 	//(si se excede del límite de pantalla deben aparecer por el otro lado o hay que implementar alguna lógica
 	//para evitar crear infinitos objetos, se podría destruir con "removeVisual" cuando se excede de los límites de pantalla)
 	//Habría que averiguarlo
-	var property positionInicial
-	var property position = self.positionInicial()
+	const property x
+	const property y
+	
+	var property position = new Position(x = x, y = y)
 	
 	//En milisegundos, ver qué velocidad le conviene a cada obj
 	method velocidad() = 1000
@@ -18,7 +20,7 @@ class ObjetoMovil {
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
 	method iniciar(){
 		game.onTick(self.velocidad(), "movimiento", {self.mover()})
-		}
+	}
 	
 	method mover()
 	

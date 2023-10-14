@@ -1,4 +1,5 @@
 import objetosMoviles.*
+import wollok.game.*
 
 class Tortuga inherits ObjetoMovil{
 	
@@ -16,11 +17,11 @@ class Tortuga inherits ObjetoMovil{
 		self.valPosicion()
 	}
 	
+
 	method valPosicion(){
 		if (self.position().x()>80){
-			position = self.positionInicial()
-			
-			}
+			position = new Position(x = 0, y = y)
+		}
 	}
 	
 	method limiteEtapas(){

@@ -5,6 +5,8 @@ object background {
 	
 	//La grilla es de 10 celdas x 10 celdas y cada celda mide 8x8
 	//A esto hay que refactorizarlo y hacerlo con un Range(0,80), por ahora lo dejo así para que nos sea más fácil orientarnos
+	const eje_x = new Range(start = 0, end = 72, step = 8)
+	const eje_y = new Range(start = 0, end = 80, step = 8)
 	const posiciones = [
 		
 		//Primera columna
@@ -138,7 +140,7 @@ object background {
 		new Position(x = 72, y = 80)
 		
 	]
-	
+
 	const posicionesDeHojasEnAgua = [
 		
 		//Ponemos 4 hojas en la fila del medio del agua
@@ -163,6 +165,11 @@ object background {
 		//*******************************************
 		
 		posiciones.forEach({posicion =>
+//			
+//			eje_y.forEach({_y => 
+//				
+//				
+//			})
 			
 			const esTitulo = posicion.y() == 80
 			
