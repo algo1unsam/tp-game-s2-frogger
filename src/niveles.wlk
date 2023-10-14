@@ -20,6 +20,8 @@ class Nivel {
 	method columnasDePasto() //[2,4,6]
 	
 	method iniciar(){
+		
+		self.reiniciarEscenario()
 		self.insertarFondo()
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
@@ -32,8 +34,6 @@ class Nivel {
 	}
 	
 	method insertarFondo(){
-		
-		self.reiniciarEscenario()
 		
 		background.eje_x().forEach({x =>
 			
