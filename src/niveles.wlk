@@ -2,6 +2,7 @@ import wollok.game.*
 import background.*
 import escenario.*
 import tortuga.*
+import auto.*
 
 class Nivel {
 	
@@ -13,6 +14,7 @@ class Nivel {
 	method posicionesDeHojasEnAgua() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	method posicionesDeCalaveras() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	method tortugas() //[new Tortuga(0,1), new Tortuga(2, 8)] 
+	method autosPrimerCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
 	
 	//Sobrescribir con valores en neto de X
 	method columnasDeAgua() //[2,4,6]
@@ -26,6 +28,7 @@ class Nivel {
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
 		self.insertarTortugas()
+		self.autosPrimerCarril()
 	}
 	
 	method reiniciarEscenario(){
@@ -70,6 +73,10 @@ class Nivel {
 	
 	method insertarTortugas(){
 		self.tortugas().forEach({tortuga=> tortuga.iniciar()})
+	}
+	
+	method insertarAutosPrimerCarril(){
+		self.autosPrimerCarril().forEach({auto=> auto.iniciar()})
 	}
 	
 	method crearAgua(x){
@@ -138,5 +145,12 @@ class Nivel1 inherits Nivel{
 	override method tortugas() = 
 	[new Tortuga(x = 11, y = 8),
 	 new Tortuga(x = 11, y = 7)
+	]
+	
+	override method autosPrimerCarril() = 
+	[
+		new Vehiculo(x = 7, y = 5, velocidad = 300, cantidad = 0),
+		new Vehiculo(x = 8, y = 4, velocidad = 300, cantidad = 0),
+		new Vehiculo(x = 9, y = 3, velocidad = 300, cantidad = 0)
 	]
 }

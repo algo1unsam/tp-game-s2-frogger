@@ -16,17 +16,13 @@ class Vehiculo inherits ObjetoMovil {
 	method image() = "Autos/Auto"+ numero + "Edited.png"
 	
 	method iniciar(){
-			game.addVisual(self)
-			game.onTick(self.velocidad(),"moverAuto",{self.mover()})
+		game.addVisual(self)
+		game.onTick(self.velocidad(),"moverAuto",{self.mover()})
 	}
 	
 	
 	method mover(){
-    	position = position.right(1)
-    	if(self.position().x() > 72){
-			position = self.posicionInicial()
-
-    	}
+    	position = position.down(1)
 	}
 		override method Contacto() = null
 	
