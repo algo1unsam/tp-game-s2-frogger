@@ -1,11 +1,17 @@
 import wollok.game.*
+import background.*
 
 class ObjetoMovil {
-	//Todos deben tener position porque se tienen que ir desplazando
-	//(si se excede del límite de pantalla deben aparecer por el otro lado o hay que implementar alguna lógica
-	//para evitar crear infinitos objetos, se podría destruir con "removeVisual" cuando se excede de los límites de pantalla)
-	//Habría que averiguarlo
-	var property position
+	//La grilla es de 9 (alto) por 15 (ancho: 0 - 14)
+	//Los valores de X e Y corresponden al valor en "neto" en la grilla
+	//O sea, su posición sin importar el tamaño de la celda. El cálculo se hace automático.
+	const property x
+	const property y
+	
+	const property x_real = x * background.tamanio_celda()
+	const property y_real = y * background.tamanio_celda()
+	
+	var property position = new Position(x = x_real, y = y_real)
 	
 	//En milisegundos, ver qué velocidad le conviene a cada obj
 	method velocidad() = 1000
@@ -15,7 +21,12 @@ class ObjetoMovil {
 	
 	//Se puede sobrescribir para que el obj vaya a la izquierda, deberían invertir las imágenes
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
-	method moverse() = game.onTick(self.velocidad(), "movimiento", {self.position().right(1)})
+	method iniciar(){
+		game.addVisual(self)
+		game.onTick(self.velocidad(), "movimiento", {self.mover()})
+	}
+	
+	method mover()
 	
 	//Este método se va a llamar cuando la rana toque al objeto
 	method Contacto()

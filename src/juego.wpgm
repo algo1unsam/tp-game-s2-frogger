@@ -1,16 +1,16 @@
 import wollok.game.*
 import escenario.*
 import background.*
-import auto.*
-
+import objetosMoviles.*
+import niveles.*
 
 program juego {
-
 	game.title("Juego Base")
 	game.cellSize(10)
-	game.height(84)
-	game.width(80)
-	background.crearFondo()
+	game.height(background.limite_y() + (background.tamanio_celda() / 2))
+	game.width(background.limite_x())
+	
+	new Nivel1().iniciar()
 	
 	game.start()
 }
