@@ -15,6 +15,8 @@ class Nivel {
 	method posicionesDeCalaveras() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	method tortugas() //[new Tortuga(0,1), new Tortuga(2, 8)] 
 	method autosPrimerCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
+	method autosSegundoCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
+	method autosTercerCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
 	
 	//Sobrescribir con valores en neto de X
 	method columnasDeAgua() //[2,4,6]
@@ -28,7 +30,9 @@ class Nivel {
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
 		self.insertarTortugas()
-		self.autosPrimerCarril()
+		self.insertarAutosPrimerCarril()
+		self.insertarAutosSegundoCarril()
+		self.insertarAutosTercerCarril()
 	}
 	
 	method reiniciarEscenario(){
@@ -77,6 +81,14 @@ class Nivel {
 	
 	method insertarAutosPrimerCarril(){
 		self.autosPrimerCarril().forEach({auto=> auto.iniciar()})
+	}
+	
+	method insertarAutosSegundoCarril(){
+		self.autosSegundoCarril().forEach({auto=> auto.iniciar()})
+	}
+	
+	method insertarAutosTercerCarril(){
+		self.autosTercerCarril().forEach({auto=> auto.iniciar()})
 	}
 	
 	method crearAgua(x){
@@ -149,8 +161,23 @@ class Nivel1 inherits Nivel{
 	
 	override method autosPrimerCarril() = 
 	[
-		new Vehiculo(x = 7, y = 5, velocidad = 300, cantidad = 0),
-		new Vehiculo(x = 8, y = 4, velocidad = 300, cantidad = 0),
-		new Vehiculo(x = 9, y = 3, velocidad = 300, cantidad = 0)
+		new Vehiculo(x = 7, y = 0, velocidad = 300),
+		new Vehiculo(x = 7, y = 2, velocidad = 300),
+		new Vehiculo(x = 7, y = 4, velocidad = 300),
+		new Vehiculo(x = 7, y = 6, velocidad = 300)
+	]
+	override method autosSegundoCarril() = 
+	[
+		new Vehiculo(x = 8, y = 2, velocidad = 300),
+		new Vehiculo(x = 8, y = 4, velocidad = 300),
+		new Vehiculo(x = 8, y = 5, velocidad = 300),
+		new Vehiculo(x = 8, y = 7, velocidad = 300)
+	]
+	override method autosTercerCarril() = 
+	[
+		new Vehiculo(x = 9, y = 0, velocidad = 175),
+		new Vehiculo(x = 9, y = 2, velocidad = 175),
+		new Vehiculo(x = 9, y = 4, velocidad = 175),
+		new Vehiculo(x = 9, y = 6, velocidad = 175)
 	]
 }

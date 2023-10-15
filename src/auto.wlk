@@ -1,87 +1,43 @@
 import objetosMoviles.*
 import wollok.game.*
+import background.*
 
 
 class Vehiculo inherits ObjetoMovil {
 	var property velocidad
 	
-	var property cantidad
-	
 	var property numero = self.obtenerNumeroImagen()
 	
-	method posicionInicial() = game.at(1,18)
+	override method velocidad() = velocidad
 	
-	method obtenerNumeroImagen() = new Range(start = 1, end = 2).anyOne()
+	method posicionInicial() {
+		position=  new Position(x= x_real, y= (background.limite_y() - background.tamanio_celda()))
+	} 
 	
-	method image() = "Autos/Auto"+ numero + "Edited.png"
+	method obtenerNumeroImagen() = new Range(start = 1, end = 4).anyOne()
+	
+	method image() = "Autos/Auto" + numero + ".png"
 	
 	method iniciar(){
 		game.addVisual(self)
 		game.onTick(self.velocidad(),"moverAuto",{self.mover()})
 	}
 	
-	
 	method mover(){
     	position = position.down(1)
+		self.valPosicion()
 	}
-		override method Contacto() = null
+	
+	method valPosicion(){
+		if (self.position().y() < 0){
+			self.posicionInicial()
+		}
+	}
+		
+	override method Contacto() = null 
+		//le sacaria una vida a la rana
 	
 	 
 	
 }
 
-/*
-
-object vehiculoCarrilUno inherits Vehiculo(position = game.at(1,18)  ) {
-	
-	method posicionInicial() = game.at(-1,18)
-	
-	override method velocidad() = 100
-	
-	override method Contacto() = null
-	
-	method mover(){
-    	position = position.right(1)
-    	if(self.position().x() > 72){
-			position = self.posicionInicial()
-
-    	}
-	}
-	
-}
-
-object vehiculoCarrilDos inherits Vehiculo(position = game.at(1,26)  ) {
-
-	method posicionInicial() = game.at(-1,26)
-	
-	override method velocidad() = 20
-	
-	override method Contacto() = null
-	
-	method mover(){
-    	position = position.right(1)
-    	if(self.position().x() > 72){
-			position = self.posicionInicial()
-
-    	}
-	}
-	
-}
-
-object vehiculoCarrilTres inherits Vehiculo(position = game.at(1,34)  ) {
-	method posicionInicial() = game.at(-1,34)
-	
-	override method velocidad() = 10
-	
-	override method Contacto() = null
-	
-	method mover(){
-    	position = position.right(1)
-    	if(self.position().x() > 72){
-			position = self.posicionInicial()
-
-    	}
-	}
-	
-}
-  */
