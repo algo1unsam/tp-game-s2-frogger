@@ -1,9 +1,11 @@
 import wollok.game.*
 import escenario.*
 import background.*
+import auto.*
 
 
 program juego {
+
 	game.title("Juego Base")
 	game.cellSize(10)
 	game.height(84)

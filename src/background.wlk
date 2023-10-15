@@ -1,5 +1,6 @@
 import wollok.game.*
 import escenario.*
+import auto.*
 
 object background {
 	
@@ -155,6 +156,7 @@ object background {
 		new Position(x = 16, y = 40)
 	]
 	
+	
 	method crearFondo(){
 		
 		
@@ -178,8 +180,9 @@ object background {
 				game.addVisualIn(new BarraSuperior(), posicion)
 			else if(esAgua)
 				game.addVisualIn(new Agua(), posicion)
-			else if(esPista)
+			else if(esPista){
 				game.addVisualIn(new Pista(), posicion)
+				}
 			
 			else if(esFilaDeMeta){
 				if(posicion.x() == 24 or posicion.x() == 48){
@@ -205,6 +208,7 @@ object background {
 		posicionesDeCalaveras.forEach({posicion =>
 			game.addVisualIn(new Calavera(), posicion)
 		})
+		
 	}
 	
 }
