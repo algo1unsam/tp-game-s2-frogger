@@ -3,6 +3,8 @@ import escenario.*
 import background.*
 import objetosMoviles.*
 import niveles.*
+import rana.*
+
 
 program juego {
 	game.title("Juego Base")
@@ -12,5 +14,8 @@ program juego {
 	
 	new Nivel1().iniciar()
 	
+	juegoInicia.iniciar()
+	rana.movimiento()
 	game.start()
+	
 }
