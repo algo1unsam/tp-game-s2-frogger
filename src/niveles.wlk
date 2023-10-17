@@ -31,9 +31,9 @@ class Nivel {
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
 		self.insertarTortugas()
-		rana.iniciar()
 		self.insertarAutos()
 		self.insertarTroncos()
+		rana.iniciar()
 	}
 	
 	method reiniciarEscenario(){
@@ -45,7 +45,7 @@ class Nivel {
 		
 		background.eje_x().forEach({x =>
 			
-			const esColumnaDeMeta = x == background.limite_x() - (background.tamanio_celda())
+			const esColumnaDeMeta = x == background.limite_x() - background.tamanio_celda()
 			
 			const esAgua = self.columnasDeAgua().any({columna => (columna * background.tamanio_celda()) == x})
 			
@@ -135,8 +135,10 @@ class Nivel {
 	}
 	
 	method crearBarraDeEstado(){
-		background.eje_x().forEach({x =>
-			const posicion = new Position(x = x, y = background.limite_y())
+		background.eje_y().forEach({y =>
+			var posicion = new Position(x = background.limite_x(), y = y)
+			game.addVisualIn(new BarraSuperior(), posicion)
+			posicion = new Position(x = background.limite_x(), y = (y + background.tamanio_celda() / 2))
 			game.addVisualIn(new BarraSuperior(), posicion)
 		})
 	}

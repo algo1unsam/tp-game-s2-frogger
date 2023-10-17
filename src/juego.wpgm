@@ -8,8 +8,8 @@ import rana.*
 program juego {
 	game.title("Juego Base")
 	game.cellSize(10)
-	game.height(background.limite_y() + (background.tamanio_celda() / 2))
-	game.width(background.limite_x())
+	game.height(background.limite_y())
+	game.width(background.limite_x() + (background.tamanio_celda() / 2))
 	
 	new Nivel1().iniciar()
 	
