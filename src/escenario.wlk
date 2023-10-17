@@ -3,6 +3,7 @@ class Escenario {
 	method image()
 	method esMortal() = false
 	method esPosicionable() = true
+	method Contacto(){}
 		
 }
 

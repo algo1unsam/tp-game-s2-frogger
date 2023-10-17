@@ -4,6 +4,7 @@ import background.*
 import objetosMoviles.*
 import niveles.*
 import rana.*
+import config.*
 
 program juego {
 	game.title("Juego Base")
@@ -12,6 +13,7 @@ program juego {
 	game.width(background.limite_x() + (background.tamanio_celda() / 2))
 	
 	new Nivel1().iniciar()
+	config.iniciar()
 	
 	game.start()
 	

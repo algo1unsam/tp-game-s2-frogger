@@ -12,7 +12,6 @@ object rana{
 	
 	method iniciar(){
 		game.addVisualCharacter(self)
-		self.movimiento()
 	}
 
 
@@ -54,14 +53,6 @@ object rana{
 		//keyboard.left().onPressDo({animacion.apply(self.image(),"assets/Rana/Izquierda/Rana-Izquierda1.png")})
 	
 		//keyboard.right().onPressDo({animacion.apply(self.image(),"assets/Rana/Derecha/Rana-Derecha1.png")})
-		
-		keyboard.up().onPressDo({self.moverArriba()})
-		
-		keyboard.down().onPressDo({self.moverAbajo()})
-	
-		keyboard.left().onPressDo({self.moverIzquierda()})
-	
-		keyboard.right().onPressDo({self.moverDerecha()})
 	}
 	
 	
