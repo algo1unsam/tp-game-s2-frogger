@@ -4,6 +4,7 @@ import escenario.*
 import tortuga.*
 import rana.*
 import auto.*
+import tronco.*
 
 class Nivel {
 	
@@ -18,6 +19,7 @@ class Nivel {
 	method autosPrimerCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
 	method autosSegundoCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
 	method autosTercerCarril() //[new Vehiculo(0,1), new Vehiculo(2, 8)] 
+	method troncos() // new tronco() , new Tronco ()
 	
 	//Sobrescribir con valores en neto de X
 	method columnasDeAgua() //[2,4,6]
@@ -35,6 +37,7 @@ class Nivel {
 		self.insertarAutosPrimerCarril()
 		self.insertarAutosSegundoCarril()
 		self.insertarAutosTercerCarril()
+		self.insertarTroncos()
 	}
 	
 	method reiniciarEscenario(){
@@ -91,6 +94,10 @@ class Nivel {
 	
 	method insertarAutosTercerCarril(){
 		self.autosTercerCarril().forEach({auto=> auto.iniciar()})
+	}
+	
+	method insertarTroncos(){
+		self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
 	method crearAgua(x){
@@ -182,4 +189,12 @@ class Nivel1 inherits Nivel{
 		new Vehiculo(x = 9, y = 4, velocidad = 175),
 		new Vehiculo(x = 9, y = 6, velocidad = 175)
 	]
+	
+	override method troncos() = 
+	[new Tronco1(x = 12, y = 2),
+	 new Tronco2(x = 10, y = 5),
+	 new Tronco0(x = 13, y = 1),
+	 new Tronco0(x = 13, y = 5)
+	]
+	
 }
