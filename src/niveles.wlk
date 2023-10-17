@@ -2,6 +2,7 @@ import wollok.game.*
 import background.*
 import escenario.*
 import tortuga.*
+import rana.*
 
 class Nivel {
 	
@@ -26,6 +27,7 @@ class Nivel {
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
 		self.insertarTortugas()
+		rana.iniciar()
 	}
 	
 	method reiniciarEscenario(){
@@ -129,8 +131,8 @@ class Nivel {
 class Nivel1 inherits Nivel{
 	
 	override method columnasDeAgua() = [10,11,12,13]
-	override method columnasDePista() = [7,8,9]
-	override method columnasDePasto() = [0,1,2,3,4,5,6]
+	override method columnasDePista() = [2,3,7,8,9]
+	override method columnasDePasto() = [0,1,4,5,6]
 	override method lugaresDeLLegada() = [0,4,5,8]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
