@@ -2,6 +2,7 @@ import wollok.game.*
 import background.*
 import escenario.*
 import tortuga.*
+import tronco.*
 
 class Nivel {
 	
@@ -13,6 +14,7 @@ class Nivel {
 	method posicionesDeHojasEnAgua() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	method posicionesDeCalaveras() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	method tortugas() //[new Tortuga(0,1), new Tortuga(2, 8)] 
+	method troncos() // new tronco() , new Tronco ()
 	
 	//Sobrescribir con valores en neto de X
 	method columnasDeAgua() //[2,4,6]
@@ -26,6 +28,7 @@ class Nivel {
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
 		self.insertarTortugas()
+		self.insertarTroncos()
 	}
 	
 	method reiniciarEscenario(){
@@ -70,6 +73,10 @@ class Nivel {
 	
 	method insertarTortugas(){
 		self.tortugas().forEach({tortuga=> tortuga.iniciar()})
+	}
+	
+		method insertarTroncos(){
+		self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
 	method crearAgua(x){
@@ -139,4 +146,12 @@ class Nivel1 inherits Nivel{
 	[new Tortuga(x = 11, y = 8),
 	 new Tortuga(x = 11, y = 7)
 	]
+	
+		override method troncos() = 
+	[new Tronco1(x = 12, y = 2),
+	 new Tronco2(x = 10, y = 5),
+	 new Tronco0(x = 13, y = 1),
+	 new Tronco0(x = 13, y = 5)
+	]
+	
 }
