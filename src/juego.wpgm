@@ -1,6 +1,7 @@
 import wollok.game.*
 import escenario.*
 import background.*
+import rana.*
 
 
 program juego {
@@ -10,5 +11,8 @@ program juego {
 	game.width(80)
 	background.crearFondo()
 	
+	juegoInicia.iniciar()
+	rana.movimiento()
 	game.start()
+	
 }
