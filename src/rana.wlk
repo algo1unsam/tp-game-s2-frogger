@@ -1,7 +1,7 @@
 import wollok.game.*
 
 object rana{
-	var property position = game.at(9,1)
+	var property position = game.at(8,1)
 	var puntos = 0
 	var vidas = 5
 	method aumentar (valor){
