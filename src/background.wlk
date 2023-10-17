@@ -9,7 +9,7 @@ object background {
 	//Eje x = 15 columnas usables
 	//Eje y = 9 filas usables. Una décima fila se usa para barra de estado (tiempo, vidas...)
 	
-	const property limite_y = 72
+	const property limite_y = 64
 	const property limite_x = 120
 	const property tamanio_celda = 8
 	
