@@ -44,6 +44,6 @@ class Tortuga inherits ObjetoMovil{
 	
 	method abajoAgua() = etapa > 9 and etapa < 15
 	
-	override method Contacto(){}
+	override method Contacto(posicion){}
 	
 }

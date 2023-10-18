@@ -8,21 +8,22 @@ import tronco.*
 
 class Nivel {
 	
+	//Sobrescribir con valores en neto de X
+	const property columnasDeAgua = [] //[2,4,6]
+	const property columnasDePista = [] //[2,4,6]
+	const property columnasDePasto  = []//[2,4,6]
+	
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
 	//Cuando hablo de "neto" me refiero a posición en grilla / tamaño de celda
-	method lugaresDeLLegada() //[2,4,6]
+	const property lugaresDeLLegada  = []//[2,4,6]
 	
 	//Sobrescribir con listas de Position
-	method posicionesDeHojasEnAgua() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
-	method posicionesDeCalaveras() //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
-	method tortugas() //[new Tortuga(0,1), new Tortuga(2, 8)] 
-	method autos() //[new Vehiculo(0,1), new Vehiculo(2, 8)]
-	method troncos() // new tronco() , new Tronco ()
+	const property posicionesDeHojasEnAgua  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
+	const property posicionesDeCalaveras  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
+	const property tortugas  = [] //[new Tortuga(0,1), new Tortuga(2, 8)] 
+	const property autos  = [] //[new Vehiculo(0,1), new Vehiculo(2, 8)]
+	const property troncos  = [] // new tronco() , new Tronco ()
 	
-	//Sobrescribir con valores en neto de X
-	method columnasDeAgua() //[2,4,6]
-	method columnasDePista() //[2,4,6]
-	method columnasDePasto() //[2,4,6]
 	
 	method iniciar(){
 		

@@ -29,6 +29,6 @@ class ObjetoMovil {
 	method mover()
 	
 	//Este método se va a llamar cuando la rana toque al objeto
-	method Contacto()
+	method Contacto(posicion)
 	
 }

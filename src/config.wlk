@@ -4,15 +4,15 @@ import escenario.*
 
 object config {
 	
+	var property nivelActual
+	
 	method iniciar(){
 		self.movimiento()
 		self.colisiones()
 	}
 	
 	method colisiones(){
-		game.onCollideDo(rana, {obj =>
-			obj.Contacto()
-		})
+
 	}
 	
 	

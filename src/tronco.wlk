@@ -3,15 +3,17 @@ import objetosMoviles.*
 import background.*
 import rana.*
 
-class Tronco0 inherits ObjetoMovil{
-	
-	var property tope = false
-	
+class Tronco inherits ObjetoMovil{
+
 	const property tamanio = 20
-	
-	override method velocidad() = 40
-	
+	const property image = ""
+	var property tope = false
 	override method esMortal() = false
+	
+	method valPosicion(){
+		if ((self.position().y() + self.tamanio()) < 0)
+			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
+	}
 	
 	
 	override method mover(){
@@ -19,37 +21,34 @@ class Tronco0 inherits ObjetoMovil{
 		self.valPosicion()
 	}
 	
-
-	method valPosicion(){
-		if ((self.position().y() + self.tamanio()) < 0){
-			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
-		}
-	}
-
-	method image(){return "troncos/tronco0.png"} 
 	
-	override method Contacto(){
+	override method Contacto(posicion){
 		game.say(rana,"Me sente en el tronco")
 	}
 	
+	
 }
 
-class Tronco1 inherits Tronco0{
+class Tronco0 inherits Tronco{
+	
+	override method tamanio() = 20
+	override method image() = "troncos/tronco0.png"
+	override method velocidad() = 40
+
+}
+
+class Tronco1 inherits Tronco{
 	
 	override method tamanio() = 28
-	
 	override method velocidad() = 60
-	
-	override method image(){return "troncos/tronco1.png"} 
+	override method image() = "troncos/tronco1.png"
 	
 }
 
-class Tronco2 inherits Tronco0{
+class Tronco2 inherits Tronco{
 	
 	override method tamanio() = 36
-	
 	override method velocidad() = 100
-	
-	override method image(){return "troncos/tronco2.png"} 
+	override method image() = "troncos/tronco2.png"
 	
 }
