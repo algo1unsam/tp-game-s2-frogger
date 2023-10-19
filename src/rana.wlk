@@ -56,6 +56,8 @@ object rana{
 		self.position(self.positionInicial())
 	}
 	
+	method Contacto(posicion){}
+	
 }
 	
 

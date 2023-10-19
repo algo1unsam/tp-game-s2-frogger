@@ -31,12 +31,12 @@ class Vehiculo inherits ObjetoMovil {
 	}
 	
 	override method Contacto(posicion) {
-		const topeInferior = self.position().y() - 8
-		const topeSuperior = self.position().y() + 8
-		const estaEnRango = posicion.y() >= topeInferior and posicion.y() <= topeSuperior
+		//const topeInferior = self.position().y() - 8
+		//const topeSuperior = self.position().y() + 8
+		//const estaEnRango = posicion.y() >= topeInferior and posicion.y() <= topeSuperior
 		
-		if(estaEnRango)
-			rana.perderVida()
+		//if(estaEnRango)
+		game.say(rana,"Toco")
 	}
 	
 	 
