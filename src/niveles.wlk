@@ -5,7 +5,7 @@ import tortuga.*
 import rana.*
 import auto.*
 import tronco.*
-
+import tiempo.*
 class Nivel {
 	
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
@@ -139,8 +139,10 @@ class Nivel {
 			var posicion = new Position(x = background.limite_x(), y = y)
 			game.addVisualIn(new BarraSuperior(), posicion)
 			posicion = new Position(x = background.limite_x(), y = (y + background.tamanio_celda() / 2))
-			game.addVisualIn(new BarraSuperior(), posicion)
+			game.addVisualIn(new BarraSuperior(), posicion)		
 		})
+			game.addVisual(tiempores)
+		tiempores.iniciar()
 	}
 }
 

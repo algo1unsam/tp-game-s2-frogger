@@ -4,6 +4,7 @@ import background.*
 import objetosMoviles.*
 import niveles.*
 import rana.*
+import tiempo.*
 import config.*
 
 program juego {
