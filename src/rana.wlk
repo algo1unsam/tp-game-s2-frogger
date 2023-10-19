@@ -4,10 +4,15 @@ import background.*
 
 object rana{
 	const property positionInicial = game.at(0,16)
+	const property nombreAssets = "Rana"
+	var property estadoParaImg = 1
 	var property position = self.positionInicial()
 	var property puntaje = 0
 	var property vidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
+	var estaEnAgua = false
+	var estaEnPista = false
+	
 	
 	method aumentar(valor){
 		puntaje += valor
@@ -18,8 +23,17 @@ object rana{
 	}
 
 	method validarTerreno(){
-		if(config.nivelActual().columnasDePista().contains(self.position().x() / 8))
-			self.buscarAutos(self.position().x() / 8)
+		
+		const pistasEnTerreno = config.nivelActual().columnasDePista()
+		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
+		const posX = self.position().x()
+		
+		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 7)})
+		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 7)})
+		
+		if(estaEnPista)
+			self.buscarAutos(posX)
+		//Aplicar la misma logica para el agua
 	}
 	
 	method buscarAutos(x){
@@ -31,29 +45,7 @@ object rana{
 	}
 	
 	
-	method moverIzquierda(){
-		self.image("assets/Rana/Izquierda/Rana-Izquierda1.png")
-		self.position(self.position().left(7))
-		self.validarTerreno()
-	}
-	
-	method moverDerecha(){
-		self.image("assets/Rana/Derecha/Rana-Derecha1.png")
-		self.position(self.position().right(7))
-		self.validarTerreno()
-	}
-	
-	method moverArriba(){
-		self.image("assets/Rana/Arriba/Rana-Arriba1.png")
-		self.position(self.position().up(7))
-		self.validarTerreno()
-	}
-	
-	method moverAbajo(){
-		self.image("assets/Rana/Abajo/Rana-Abajo1.png")
-		self.position(self.position().down(7))
-		self.validarTerreno()
-	}
+
 	
 	
 	method perderVida(){
