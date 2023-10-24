@@ -27,9 +27,7 @@ object config {
 		
 	}
 	
-	method moverObjPrincipal(strDireccion, nuevaPosicion){
-		
-		self.verificarPosicion(nuevaPosicion)
+	method moverObjPrincipal(strDireccion){
 		
 		var rutaImagen
 		
@@ -38,25 +36,16 @@ object config {
 		rutaImagen += objPrincipal.estadoParaImg().toString() + ".png"
 		
 		objPrincipal.image(rutaImagen)
-		objPrincipal.position(nuevaPosicion)
-		objPrincipal.validarTerreno()
+		objPrincipal.mover(strDireccion)
 	}
 	
-	method moverIzquierda() {
-		self.moverObjPrincipal("Izquierda", objPrincipal.position().left(7))
-	}
+	method moverIzquierda() {self.moverObjPrincipal("Izquierda")}
 	
-	method moverDerecha() {
-		self.moverObjPrincipal("Derecha", objPrincipal.position().right(7))
-	}
+	method moverDerecha() {self.moverObjPrincipal("Derecha")}
 	
-	method moverArriba() {
-		self.moverObjPrincipal("Arriba", objPrincipal.position().up(7))
-	}
+	method moverArriba() {self.moverObjPrincipal("Arriba")}
 	
-	method moverAbajo() {
-		self.moverObjPrincipal("Abajo", objPrincipal.position().down(7))
-	}
+	method moverAbajo() {self.moverObjPrincipal("Abajo")}
 	
 	
 	method movimiento(){

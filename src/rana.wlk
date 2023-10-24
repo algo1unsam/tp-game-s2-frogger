@@ -44,7 +44,21 @@ object rana{
 		})
 	}
 	
-	
+	method mover(direccion){
+		
+		if(direccion == "Arriba")
+			self.mover_arriba()
+		else if(direccion == "Abajo")
+			self.mover_abajo()
+		else if(direccion == "Izquierda")
+			self.mover_izquierda()
+		else if(direccion == "Derecha")
+			self.mover_derecha()
+	}
+	method mover_arriba(){self.position().up(1)}
+	method mover_abajo(){self.position().down(1)}
+	method mover_izquierda(){self.position().left(1)}
+	method mover_derecha(){self.position().right(1)}
 
 	
 	
