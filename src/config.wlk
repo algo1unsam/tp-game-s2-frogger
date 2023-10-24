@@ -12,6 +12,19 @@ object posYRana{
 	method text() = "Y: " + rana.position().y().toString()
 }
 
+object terrenoRana{
+	method position() = game.at(0,16)
+	method terreno() = if(rana.estaEnAgua()) "Agua" else if(rana.estaEnPista()) "Pista" else "Tierra"
+	method text() = "Terreno: " + self.terreno()
+}
+
+object contactosRana{
+	method position() = game.at(0,24)
+	method contacto() = rana.contactos()
+	method text() = "Contacto: " + self.contacto()
+}
+
+
 object config {
 	const property objPrincipal = rana
 	var property nivelActual
@@ -21,6 +34,8 @@ object config {
 		self.colisiones()
 		game.addVisual(posXRana)
 		game.addVisual(posYRana)
+		game.addVisual(terrenoRana)
+		game.addVisual(contactosRana)
 		game.onTick(100,"Validar",{objPrincipal.validarTerreno()})
 	}
 	

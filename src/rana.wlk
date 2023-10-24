@@ -10,9 +10,11 @@ object rana{
 	var property puntaje = 0
 	var property vidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
-	var estaEnAgua = false
-	var estaEnPista = false
+	var property estaEnAgua = false
+	var property estaEnPista = false
 	var property velocidad = 1
+	var property columnaNeta = 0
+	var property contactos = ""
 	
 	
 	method aumentar(valor){
@@ -27,25 +29,42 @@ object rana{
 		
 		const pistasEnTerreno = config.nivelActual().columnasDePista()
 		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
-		const posX = self.position().x().div(8)
+		const posX = self.position().x()
+		columnaNeta = (posX + 4).div(8)
 		
-		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
-		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
+		estaEnPista = pistasEnTerreno.any({x =>
+			const limiteInferior = (x * 8) - 4
+			const limiteSuperior = (x * 8) + 4
+			posX >= limiteInferior and posX <= limiteSuperior
+		})
+		estaEnAgua = aguasEnTerreno.any({x => 
+			const limiteInferior = (x * 8) - 4
+			const limiteSuperior = (x * 8) + 4
+			posX >= limiteInferior and posX <= limiteSuperior
+		})
 		
 		if(estaEnPista)
-			game.say(self,"pista")
+			self.buscarAutos(columnaNeta)
 		//Aplicar la misma logica para el agua
 	}
 	
-	method buscarAutos(x){
-		new Range(start = 0, end = background.limite_y()).forEach({ y =>
-			game.getObjectsIn(new Position(x = x, y = y)).forEach({obj =>
-				obj.Contacto(self.position())
-			})
-		})
+	method buscarAutos(xEnNeto){
+		const xEnBruto = xEnNeto * 8
+		const estaTocandoUnAuto = self.haceContacto(xEnBruto)
+		if(estaTocandoUnAuto)
+			self.contactos("Auto")
+		else
+			self.contactos("")
 	}
 	
-	method mover(direccion){
+	method haceContacto(xEnBruto) =
+		new Range(start = 0, end = background.limite_y()).any({ y =>
+					(game.getObjectsIn(new Position(x = xEnBruto, y = y)).any({obj =>
+						obj.Contacto(self.position())
+					}))
+				})
+	
+	method mover(direccion){  //objetpoos
 		
 		if(direccion == "Arriba")
 			self.mover_arriba()
