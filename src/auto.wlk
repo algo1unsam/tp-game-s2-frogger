@@ -1,7 +1,7 @@
 import objetosMoviles.*
 import wollok.game.*
 import background.*
-
+import rana.*
 
 class Vehiculo inherits ObjetoMovil {
 	var property velocidad
@@ -11,19 +11,15 @@ class Vehiculo inherits ObjetoMovil {
 	override method velocidad() = velocidad
 	
 	method posicionInicial() {
-		position=  new Position(x= x_real, y= (background.limite_y() - background.tamanio_celda()))
+		position =  new Position(x= x_real, y= background.limite_y())
 	} 
 	
 	method obtenerNumeroImagen() = new Range(start = 1, end = 4).anyOne()
 	
 	method image() = "Autos/Auto" + numero + ".png"
 	
-	method iniciar(){
-		game.addVisual(self)
-		game.onTick(self.velocidad(),"moverAuto",{self.mover()})
-	}
 	
-	method mover(){
+	override method mover(){
     	position = position.down(1)
 		self.valPosicion()
 	}
@@ -33,9 +29,15 @@ class Vehiculo inherits ObjetoMovil {
 			self.posicionInicial()
 		}
 	}
+	
+	override method Contacto(posicion) {
+		//const topeInferior = self.position().y() - 8
+		//const topeSuperior = self.position().y() + 8
+		//const estaEnRango = posicion.y() >= topeInferior and posicion.y() <= topeSuperior
 		
-	override method Contacto() = null 
-		//le sacaria una vida a la rana
+		//if(estaEnRango)
+		game.say(rana,"Toco")
+	}
 	
 	 
 	

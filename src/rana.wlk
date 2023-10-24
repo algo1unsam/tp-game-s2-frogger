@@ -1,53 +1,72 @@
 import wollok.game.*
-
-object juegoInicia{
-	method iniciar(){
-		game.addVisualCharacter(rana)
-		
-		
-	}
-}
+import config.*
+import background.*
 
 object rana{
-	var property position = game.at(37,1)
-	var puntos = 0
-	var vidas = 5
-	var property image = "assets/Escenario/Ranaarr.png"
+	const property positionInicial = game.at(0,16)
+	const property nombreAssets = "Rana"
+	var property estadoParaImg = 1
+	var property position = self.positionInicial()
+	var property puntaje = 0
+	var property vidas = 5
+	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
+	var estaEnAgua = false
+	var estaEnPista = false
+	
+	
 	method aumentar(valor){
-		puntos += valor
+		puntaje += valor
+	}
+	
+	method iniciar(){
+		game.addVisualCharacter(self)
 	}
 
-
-	method puntaje() = puntos
-//	method image() = "assets/Escenario/Ranaarr.png"
-	
-	
-	
-	
-
-	method movimiento() {
-		const animacion = {
-			imagen1, imagen2 =>
-			self.image(imagen1)
-			game.schedule(300, {self.image(imagen2)})
-		}
-		keyboard.up().onPressDo({animacion.apply("assets/Escenario/Ranasarr.png","assets/Escenario/Ranaarr.png")})
+	method validarTerreno(){
 		
-		keyboard.down().onPressDo({animacion.apply("assets/Escenario/Ranasabj.png","assets/Escenario/Ranaabj.png")})
-	
-		keyboard.left().onPressDo({animacion.apply("assets/Escenario/Ranasizq.png","assets/Escenario/Ranaizq.png")})
-	
-		keyboard.right().onPressDo({animacion.apply("assets/Escenario/Ranasder.png","assets/Escenario/Ranader.png")})
+		const pistasEnTerreno = config.nivelActual().columnasDePista()
+		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
+		const posX = self.position().x()
+		
+		estaEnPista = pistasEnTerreno.any({x =>
+			const limiteInferior = x * 8
+			const limiteSuperior = limiteInferior + 7
+			(posX >= limiteInferior) and (posX <= limiteSuperior)
+		})
+		estaEnAgua = aguasEnTerreno.any({x =>
+			const limiteInferior = x * 8
+			const limiteSuperior = limiteInferior + 7
+			(posX >= limiteInferior) and (posX <= limiteSuperior)
+		})
+		if(estaEnPista)
+			game.say(self,"Estoy en pista")
+		else if(estaEnAgua)
+			game.say(self,"Estoy en agua")
+		//Aplicar la misma logica para el agua
 	}
+	
+	method buscarAutos(x){
+		new Range(start = 0, end = background.limite_y()).forEach({ y =>
+			game.getObjectsIn(new Position(x = x, y = y)).forEach({obj =>
+				obj.Contacto(self.position())
+			})
+		})
+	}
+	
+	
+
 	
 	
 	method perderVida(){
-		vidas -=1
-		if (vidas == 0){
-			juego.terminar()
-		}
+		
+		vidas -=1	
+		if (vidas == 0)
+			game.stop()
+		self.position(self.positionInicial())
 	}
-	method vida()=vidas
+	
+	method Contacto(posicion){}
+	
 }
 	
 

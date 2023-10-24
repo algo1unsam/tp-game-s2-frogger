@@ -4,18 +4,18 @@ import background.*
 import objetosMoviles.*
 import niveles.*
 import rana.*
-
+import config.*
 
 program juego {
 	game.title("Juego Base")
 	game.cellSize(10)
-	game.height(background.limite_y() + (background.tamanio_celda() / 2))
-	game.width(background.limite_x())
+	game.height(background.limite_y())
+	game.width(background.limite_x() + (background.tamanio_celda() / 2))
 	
-	new Nivel1().iniciar()
-	
-	juegoInicia.iniciar()
-	rana.movimiento()
+	config.nivelActual(new Nivel1())
+	config.nivelActual().iniciar()
+	config.iniciar()
+		
 	game.start()
 	
 }
