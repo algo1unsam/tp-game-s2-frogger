@@ -26,13 +26,13 @@ object rana{
 		
 		const pistasEnTerreno = config.nivelActual().columnasDePista()
 		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
-		const posX = self.position().x()
+		const posX = self.position().x().div(8)
 		
-		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 7)})
-		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 7)})
+		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
+		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
 		
 		if(estaEnPista)
-			self.buscarAutos(posX)
+			game.say(self,"pista")
 		//Aplicar la misma logica para el agua
 	}
 	
