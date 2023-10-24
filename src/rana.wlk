@@ -12,6 +12,7 @@ object rana{
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	var estaEnAgua = false
 	var estaEnPista = false
+	var property velocidad = 1
 	
 	
 	method aumentar(valor){
@@ -26,22 +27,13 @@ object rana{
 		
 		const pistasEnTerreno = config.nivelActual().columnasDePista()
 		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
-		const posX = self.position().x()
+		const posX = self.position().x().div(8)
 		
-		estaEnPista = pistasEnTerreno.any({x =>
-			const limiteInferior = x * 8
-			const limiteSuperior = limiteInferior + 7
-			(posX >= limiteInferior) and (posX <= limiteSuperior)
-		})
-		estaEnAgua = aguasEnTerreno.any({x =>
-			const limiteInferior = x * 8
-			const limiteSuperior = limiteInferior + 7
-			(posX >= limiteInferior) and (posX <= limiteSuperior)
-		})
+		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
+		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
+		
 		if(estaEnPista)
-			game.say(self,"Estoy en pista")
-		else if(estaEnAgua)
-			game.say(self,"Estoy en agua")
+			game.say(self,"pista")
 		//Aplicar la misma logica para el agua
 	}
 	
@@ -64,12 +56,11 @@ object rana{
 		else if(direccion == "Derecha")
 			self.mover_derecha()
 	}
-	method mover_arriba(){self.position().up(1)}
-	method mover_abajo(){self.position().down(1)}
-	method mover_izquierda(){self.position().left(1)}
-	method mover_derecha(){self.position().right(1)}
-
-	
+	method mover_arriba(){self.position().up(velocidad)}
+	method mover_abajo(){self.position().down(velocidad)}
+	method mover_izquierda(){self.position().left(velocidad)}
+	method mover_derecha(){self.position().right(velocidad)}
+		
 	
 	method perderVida(){
 		

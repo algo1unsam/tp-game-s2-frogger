@@ -2,13 +2,26 @@ import wollok.game.*
 import rana.*
 import escenario.*
 
+object posXRana{
+	method position() = game.at(0,0)
+	method text() = "X: " + rana.position().x().toString()
+}
+
+object posYRana{
+	method position() = game.at(0,8)
+	method text() = "Y: " + rana.position().y().toString()
+}
+
 object config {
-	const objPrincipal = rana
+	const property objPrincipal = rana
 	var property nivelActual
 	
 	method iniciar(){
 		self.movimiento()
 		self.colisiones()
+		game.addVisual(posXRana)
+		game.addVisual(posYRana)
+		game.onTick(100,"Validar",{objPrincipal.validarTerreno()})
 	}
 	
 	method colisiones(){
