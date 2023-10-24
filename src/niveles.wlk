@@ -145,6 +145,10 @@ class Nivel {
 		tiempores.iniciar()
 	}
 }
+// Aca toque yo
+
+
+//nacho lo hizo 
 
 class Nivel1 inherits Nivel{
 	
