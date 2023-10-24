@@ -10,7 +10,7 @@ object tiempores {
  
 	method text() = "tiempo restate " + tiempo.toString()
 
-	method position() = game.at(0,17)
+	method position() = game.at(0,background.limite_y() - 8)
 
 	method pasarTiempo() {
 		tiempo = tiempo - 1

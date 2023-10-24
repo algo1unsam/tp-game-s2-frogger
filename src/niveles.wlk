@@ -33,6 +33,7 @@ class Nivel {
 		self.insertarTortugas()
 		self.insertarAutos()
 		self.insertarTroncos()
+		self.insertarElementosDeBarraSup()
 		rana.iniciar()
 	}
 	
@@ -141,7 +142,11 @@ class Nivel {
 			posicion = new Position(x = background.limite_x(), y = (y + background.tamanio_celda() / 2))
 			game.addVisualIn(new BarraSuperior(), posicion)		
 		})
-			game.addVisual(tiempores)
+
+	}
+	
+	method insertarElementosDeBarraSup(){
+		game.addVisual(tiempores)
 		tiempores.iniciar()
 	}
 }
