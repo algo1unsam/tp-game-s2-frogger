@@ -46,6 +46,7 @@ object rana{
 		if(estaEnPista)
 			self.buscarAutos(columnaNeta)
 		//Aplicar la misma logica para el agua
+		//
 	}
 	
 	method buscarAutos(xEnNeto){

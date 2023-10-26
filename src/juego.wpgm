@@ -15,7 +15,7 @@ program juego {
 	config.nivelActual(new Nivel1())
 	config.nivelActual().iniciar()
 	config.iniciar()
-		
+	
 	game.start()
 	
 }
