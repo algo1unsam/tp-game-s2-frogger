@@ -3,28 +3,28 @@ import rana.*
 import escenario.*
 
 object posXRana{
-	method position() = game.at(0,0)
+	method position() = game.at(4,0)
 	method text() = "X: " + rana.position().x().toString()
 }
 
 object posYRana{
-	method position() = game.at(0,8)
+	method position() = game.at(4,8)
 	method text() = "Y: " + rana.position().y().toString()
 }
 
 object terrenoRana{
-	method position() = game.at(0,16)
+	method position() = game.at(4,16)
 	method terreno() = if(rana.estaEnAgua()) "Agua" else if(rana.estaEnPista()) "Pista" else "Tierra"
 	method text() = "Terreno: " + self.terreno()
 }
 
 object contactosRana{
-	method position() = game.at(0,24)
+	method position() = game.at(4,24)
 	method text() = "Contacto: " + rana.contactos()
 }
 
 object colNetaRana{
-	method position() = game.at(0,32)
+	method position() = game.at(4,32)
 	method text() = "Columna neta: " + rana.columnaNeta()
 }
 

@@ -33,8 +33,12 @@ object rana{
 		columnaNeta = (posX + 4).div(8)
 		
 		estaEnPista = pistasEnTerreno.any({x =>
+			
 			const limiteInferior = (x * 8) - 4
-			const limiteSuperior = (x * 8) + 4
+			
+			//Los autos están una unidad a la izquierda del centro de la pista, por eso es +3 y no +4
+			const limiteSuperior = (x * 8) + 3
+			
 			posX > limiteInferior and posX < limiteSuperior
 		})
 		estaEnAgua = aguasEnTerreno.any({x => 
@@ -58,9 +62,7 @@ object rana{
 		
 		const hizoContacto = self.contactaObjeto(_xEnBruto)
 		
-		if(hizoContacto)
-			self.contactos(tipoObjeto)
-		else
+		if(not hizoContacto)
 			self.contactos("")
 	}
 	

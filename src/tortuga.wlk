@@ -8,7 +8,7 @@ class Tortuga inherits ObjetoMovil{
 	var etapa = 0
 	var property tope = false
 	
-	override method altura() = 10
+	override method altura() = 2
 	
 	override method velocidad() = 200
 	
@@ -49,7 +49,7 @@ class Tortuga inherits ObjetoMovil{
 	
 	
 	override method ejecutarContacto(){
-
+		rana.contactos("Tortuga")
 	}
 	
 }

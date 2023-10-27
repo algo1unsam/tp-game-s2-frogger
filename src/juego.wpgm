@@ -11,8 +11,9 @@ program juego {
 	game.cellSize(10)
 	game.height(background.limite_y())
 	game.width(background.limite_x() + (background.tamanio_celda() / 2))
+	game.boardGround("Escenario/Fondo_pasto.png")
 	
-	config.nivelActual(new Nivel1())
+	config.nivelActual(new NivelTest())
 	config.nivelActual().iniciar()
 	config.iniciar()
 	

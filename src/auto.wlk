@@ -12,7 +12,24 @@ class Vehiculo inherits ObjetoMovil {
 	
 	method posicionInicial() {
 		position =  new Position(x= x_real, y= background.limite_y())
-	} 
+	}
+	
+	method verificarContacto(posicion) {
+		
+		//Los autos que no sean camión tienen una unidad menor de altura
+		var factor_de_altura
+		if(self.numero() == 4)
+			factor_de_altura = 0
+		else
+			factor_de_altura = 1
+			
+		const mitad_de_altura = self.altura().div(2) + 1
+		const topeInferior = self.position().y() - mitad_de_altura
+		const topeSuperior = self.position().y() + (mitad_de_altura - factor_de_altura)
+		
+		return ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
+		
+	}
 	
 	method obtenerNumeroImagen() = new Range(start = 1, end = 4).anyOne()
 	
@@ -31,7 +48,7 @@ class Vehiculo inherits ObjetoMovil {
 	}
 	
 	override method ejecutarContacto(){
-
+		rana.contactos("Auto")
 	}
 	
 }
