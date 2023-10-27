@@ -35,35 +35,60 @@ object rana{
 		estaEnPista = pistasEnTerreno.any({x =>
 			const limiteInferior = (x * 8) - 4
 			const limiteSuperior = (x * 8) + 4
-			posX >= limiteInferior and posX <= limiteSuperior
+			posX > limiteInferior and posX < limiteSuperior
 		})
 		estaEnAgua = aguasEnTerreno.any({x => 
 			const limiteInferior = (x * 8) - 4
 			const limiteSuperior = (x * 8) + 4
-			posX >= limiteInferior and posX <= limiteSuperior
+			posX > limiteInferior and posX < limiteSuperior
 		})
 		
 		if(estaEnPista)
 			self.buscarAutos(columnaNeta)
-		//Aplicar la misma logica para el agua
-		//
+		else if(estaEnAgua)
+			self.buscarEnAgua(columnaNeta)
 	}
 	
-	method buscarAutos(xEnNeto){
-		const xEnBruto = xEnNeto * 8
-		const estaTocandoUnAuto = self.haceContacto(xEnBruto)
-		if(estaTocandoUnAuto)
-			self.contactos("Auto")
+	method buscarAutos(columna){self.buscarObjetos(columna, "Auto")}
+	
+	method buscarEnAgua(columna){self.buscarObjetos(columna, "Obj Marino")}
+	
+	method buscarObjetos(xEnNeto, tipoObjeto){
+		const _xEnBruto = xEnNeto * 8
+		
+		const hizoContacto = self.contactaObjeto(_xEnBruto)
+		
+		if(hizoContacto)
+			self.contactos(tipoObjeto)
 		else
 			self.contactos("")
 	}
 	
-	method haceContacto(xEnBruto) =
-		new Range(start = 0, end = background.limite_y()).any({ y =>
-					(game.getObjectsIn(new Position(x = xEnBruto, y = y)).any({obj =>
-						obj.Contacto(self.position())
-					}))
+	method contactaObjeto(xEnBruto) {
+		
+		var hizoContacto = false
+		const yEnColumnaActual = new Range(start = 0, end = background.limite_y())
+		
+		yEnColumnaActual.forEach({ y =>
+			
+			const pos = new Position(x = xEnBruto, y = y)
+			const _contactos = game.getObjectsIn(pos)
+			if(_contactos.size() > 0){
+				_contactos.forEach({obj =>
+					//Tiene que verificarse si el resultado de "verificarContacto" es true
+					//antes de la función "ejecutarContacto" porque todos los escenarios
+					//Devuelven false en verificarContacto porque no tienen un método llamado
+					//"ejecutarContacto"
+					if(obj.verificarContacto(self.position())){
+						obj.ejecutarContacto()	
+						hizoContacto = true				
+					}
 				})
+			}
+		})
+		
+		return hizoContacto
+	}
 	
 	method mover(direccion){  //objetpoos
 		
@@ -90,7 +115,7 @@ object rana{
 		self.position(self.positionInicial())
 	}
 	
-	method Contacto(posicion){}
+	method verificarContacto(posicion) = false
 	
 }
 	

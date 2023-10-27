@@ -20,8 +20,12 @@ object terrenoRana{
 
 object contactosRana{
 	method position() = game.at(0,24)
-	method contacto() = rana.contactos()
-	method text() = "Contacto: " + self.contacto()
+	method text() = "Contacto: " + rana.contactos()
+}
+
+object colNetaRana{
+	method position() = game.at(0,32)
+	method text() = "Columna neta: " + rana.columnaNeta()
 }
 
 
@@ -36,6 +40,7 @@ object config {
 		game.addVisual(posYRana)
 		game.addVisual(terrenoRana)
 		game.addVisual(contactosRana)
+		game.addVisual(colNetaRana)
 		game.onTick(100,"Validar",{objPrincipal.validarTerreno()})
 	}
 	

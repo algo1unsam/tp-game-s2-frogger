@@ -3,8 +3,8 @@ class Escenario {
 	method image()
 	method esMortal() = false
 	method esPosicionable() = true
-	method Contacto(posicion){}
-		
+	method verificarContacto(posicion) = false
+	
 }
 
 class BarraSuperior inherits Escenario{
