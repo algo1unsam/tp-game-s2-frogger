@@ -13,6 +13,9 @@ class ObjetoMovil {
 	
 	var property position = new Position(x = x_real, y = y_real)
 	
+	//Con esto podemos evaluar si se está o no haciendo contacto
+	const property altura = 6
+	
 	//En milisegundos, ver qué velocidad le conviene a cada obj
 	method velocidad() = 1000
 	
@@ -29,6 +32,17 @@ class ObjetoMovil {
 	method mover()
 	
 	//Este método se va a llamar cuando la rana toque al objeto
-	method Contacto(posicion)
+	method verificarContacto(posicion) {
+		
+		const mitad_de_altura = self.altura().div(2) + 1
+		const topeInferior = self.position().y() - mitad_de_altura
+		const topeSuperior = self.position().y() + mitad_de_altura
+		
+		return ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
+		
+	}
+	
+	//Método al que se llama si hace contacto
+	method ejecutarContacto()
 	
 }

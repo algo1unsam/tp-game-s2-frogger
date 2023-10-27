@@ -10,8 +10,11 @@ object rana{
 	var property puntaje = 0
 	var property vidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
-	var estaEnAgua = false
-	var estaEnPista = false
+	var property estaEnAgua = false
+	var property estaEnPista = false
+	var property velocidad = 1
+	var property columnaNeta = 0
+	var property contactos = ""
 	
 	
 	method aumentar(valor){
@@ -27,35 +30,84 @@ object rana{
 		const pistasEnTerreno = config.nivelActual().columnasDePista()
 		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
 		const posX = self.position().x()
+		columnaNeta = (posX + 4).div(8)
 		
 		estaEnPista = pistasEnTerreno.any({x =>
-			const limiteInferior = x * 8
-			const limiteSuperior = limiteInferior + 7
-			(posX >= limiteInferior) and (posX <= limiteSuperior)
+			
+			const limiteInferior = (x * 8) - 4
+			
+			//Los autos están una unidad a la izquierda del centro de la pista, por eso es +3 y no +4
+			const limiteSuperior = (x * 8) + 3
+			
+			posX > limiteInferior and posX < limiteSuperior
 		})
-		estaEnAgua = aguasEnTerreno.any({x =>
-			const limiteInferior = x * 8
-			const limiteSuperior = limiteInferior + 7
-			(posX >= limiteInferior) and (posX <= limiteSuperior)
+		estaEnAgua = aguasEnTerreno.any({x => 
+			const limiteInferior = (x * 8) - 4
+			const limiteSuperior = (x * 8) + 4
+			posX > limiteInferior and posX < limiteSuperior
 		})
+		
 		if(estaEnPista)
-			game.say(self,"Estoy en pista")
+			self.buscarAutos(columnaNeta)
 		else if(estaEnAgua)
-			game.say(self,"Estoy en agua")
-		//Aplicar la misma logica para el agua
+			self.buscarEnAgua(columnaNeta)
 	}
 	
-	method buscarAutos(x){
-		new Range(start = 0, end = background.limite_y()).forEach({ y =>
-			game.getObjectsIn(new Position(x = x, y = y)).forEach({obj =>
-				obj.Contacto(self.position())
-			})
+	method buscarAutos(columna){self.buscarObjetos(columna, "Auto")}
+	
+	method buscarEnAgua(columna){self.buscarObjetos(columna, "Obj Marino")}
+	
+	method buscarObjetos(xEnNeto, tipoObjeto){
+		const _xEnBruto = xEnNeto * 8
+		
+		const hizoContacto = self.contactaObjeto(_xEnBruto)
+		
+		if(not hizoContacto)
+			self.contactos("")
+	}
+	
+	method contactaObjeto(xEnBruto) {
+		
+		var hizoContacto = false
+		const yEnColumnaActual = new Range(start = 0, end = background.limite_y())
+		
+		yEnColumnaActual.forEach({ y =>
+			
+			const pos = new Position(x = xEnBruto, y = y)
+			const _contactos = game.getObjectsIn(pos)
+			if(_contactos.size() > 0){
+				_contactos.forEach({obj =>
+					//Tiene que verificarse si el resultado de "verificarContacto" es true
+					//antes de la función "ejecutarContacto" porque todos los escenarios
+					//Devuelven false en verificarContacto porque no tienen un método llamado
+					//"ejecutarContacto"
+					if(obj.verificarContacto(self.position())){
+						obj.ejecutarContacto()	
+						hizoContacto = true				
+					}
+				})
+			}
 		})
+		
+		return hizoContacto
 	}
 	
-	
-
-	
+	method mover(direccion){  //objetpoos
+		
+		if(direccion == "Arriba")
+			self.mover_arriba()
+		else if(direccion == "Abajo")
+			self.mover_abajo()
+		else if(direccion == "Izquierda")
+			self.mover_izquierda()
+		else if(direccion == "Derecha")
+			self.mover_derecha()
+	}
+	method mover_arriba(){self.position().up(velocidad)}
+	method mover_abajo(){self.position().down(velocidad)}
+	method mover_izquierda(){self.position().left(velocidad)}
+	method mover_derecha(){self.position().right(velocidad)}
+		
 	
 	method perderVida(){
 		
@@ -65,7 +117,7 @@ object rana{
 		self.position(self.positionInicial())
 	}
 	
-	method Contacto(posicion){}
+	method verificarContacto(posicion) = false
 	
 }
 	
