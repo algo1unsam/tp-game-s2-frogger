@@ -40,36 +40,29 @@ object config {
 		
 	}
 	
-	method moverObjPrincipal(strDireccion){
+	method moverObjPrincipal(direccion){
 		
 		var rutaImagen
 		
 		rutaImagen  = "assets/" + objPrincipal.nombreAssets() + "/"
-		rutaImagen += strDireccion + "/" + objPrincipal.nombreAssets() + "-" + strDireccion
+		rutaImagen += direccion.nombre() + "/" + objPrincipal.nombreAssets() + "-" + direccion.nombre()
 		rutaImagen += objPrincipal.estadoParaImg().toString() + ".png"
 		
 		objPrincipal.image(rutaImagen)
-		objPrincipal.mover(strDireccion)
+		objPrincipal.mover(direccion)
 	}
-	
-	method moverIzquierda() {self.moverObjPrincipal("Izquierda")}
-	
-	method moverDerecha() {self.moverObjPrincipal("Derecha")}
-	
-	method moverArriba() {self.moverObjPrincipal("Arriba")}
-	
-	method moverAbajo() {self.moverObjPrincipal("Abajo")}
 	
 	
 	method movimiento(){
 		
-		keyboard.up().onPressDo({self.moverArriba()})
+
+		keyboard.up().onPressDo({self.moverObjPrincipal(arriba)})
 		
-		keyboard.down().onPressDo({self.moverAbajo()})
+		keyboard.down().onPressDo({self.moverObjPrincipal(abajo)})
 	
-		keyboard.left().onPressDo({self.moverIzquierda()})
+		keyboard.left().onPressDo({self.moverObjPrincipal(izquierda)})
 	
-		keyboard.right().onPressDo({self.moverDerecha()})
+		keyboard.right().onPressDo({self.moverObjPrincipal(derecha)})
 		
 	}
 }

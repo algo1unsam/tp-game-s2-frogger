@@ -12,9 +12,18 @@ object rana{
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	var estaEnAgua = false
 	var estaEnPista = false
-	var property velocidad = 1
+	var property velocidad = 4
 	
-	
+	method arriba() {
+		if(self.position().y() >= (game.height() - 8))
+			return false
+			
+		const X = self.position().x()
+		const nuevaY = self.position().y() + self.velocidad()
+		const nuevaPos = new Position(x = X, y = nuevaY)
+		position = nuevaPos
+		return true
+	}
 	method aumentar(valor){
 		puntaje += valor
 	}
@@ -45,22 +54,21 @@ object rana{
 		})
 	}
 	
+	method sumarEtapas() {
+		self.validarEtapa()
+		estadoParaImg++
+	}
+	
+	method validarEtapa() {
+		if(self.estadoParaImg() == 7) {
+			estadoParaImg = 0
+		}
+	}
 	method mover(direccion){
 		
-		if(direccion == "Arriba")
-			self.mover_arriba()
-		else if(direccion == "Abajo")
-			self.mover_abajo()
-		else if(direccion == "Izquierda")
-			self.mover_izquierda()
-		else if(direccion == "Derecha")
-			self.mover_derecha()
+		self.sumarEtapas()
+		direccion.mover(self)
 	}
-	method mover_arriba(){self.position().up(velocidad)}
-	method mover_abajo(){self.position().down(velocidad)}
-	method mover_izquierda(){self.position().left(velocidad)}
-	method mover_derecha(){self.position().right(velocidad)}
-		
 	
 	method perderVida(){
 		
@@ -72,6 +80,52 @@ object rana{
 	
 	method Contacto(posicion){}
 	
+}
+
+object arriba{
+	
+	const property nombre = "Arriba"
+	
+	method mover(obj){
+		if(obj.position().y() < (game.height() - 8)){
+			//if(objetoPrincipal.position().y() > 50)
+			//objetoPrincipal.position().up(20)
+			obj.arriba()
+			return true
+		}
+		return false
+	}
+}
+
+object abajo{
+	const property nombre = "Abajo"
+	
+	method mover(objetoPrincipal){
+		if(objetoPrincipal.position().y() > 0){
+			objetoPrincipal.position(objetoPrincipal.position().down(objetoPrincipal.velocidad()))
+		}
+		return true
+	}
+}
+object izquierda{
+	const property nombre = "Izquierda"
+	
+	method mover(objetoPrincipal){
+		if(objetoPrincipal.position().x() > 0){
+			objetoPrincipal.position(objetoPrincipal.position().left(objetoPrincipal.velocidad()))
+		}
+		return true
+	}
+}
+object derecha{
+	const property nombre = "Derecha"
+	
+	method mover(objetoPrincipal){
+		if(objetoPrincipal.position().x() < background.limite_x() - 8){
+			objetoPrincipal.position(objetoPrincipal.position().right(objetoPrincipal.velocidad()))
+		}
+		return true
+	}
 }
 	
 
