@@ -11,7 +11,6 @@ class Nivel {
 	//Sobrescribir con valores en neto de X
 	const property columnasDeAgua = [] //[2,4,6]
 	const property columnasDePista = [] //[2,4,6]
-	const property columnasDePasto  = []//[2,4,6]
 	
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
 	//Cuando hablo de "neto" me refiero a posición en grilla / tamaño de celda
@@ -52,16 +51,12 @@ class Nivel {
 			
 			const esPista = self.columnasDePista().any({columna => (columna * background.tamanio_celda()) == x})
 			
-			const esPasto = self.columnasDePasto().any({columna => (columna * background.tamanio_celda()) == x})
-			
 			if(esAgua)
 				self.crearAgua(x)
 			else if(esPista)
 				self.crearPista(x)
 			else if(esColumnaDeMeta)
 				self.crearMeta(x)
-			else if(esPasto)
-				self.crearPasto(x)
 		})
 	}
 	
@@ -104,14 +99,7 @@ class Nivel {
 			game.addVisualIn(new Pista(), posicion)
 		})
 	}
-	
-	method crearPasto(x){
-		
-		background.eje_y().forEach({ y =>
-			const posicion = new Position(x = x, y = y)
-			game.addVisualIn(new Pasto(), posicion)
-		})
-	}
+
 	
 	method crearMeta(x){
 		
@@ -145,11 +133,36 @@ class Nivel {
 	}
 }
 
+class NivelTest inherits Nivel{
+	override method columnasDeAgua() = [10,11,12,13]
+	override method columnasDePista() = [2,3,4,5]
+	override method lugaresDeLLegada() = [0,4,5,8]
+	override method posicionesDeCalaveras() = []
+	override method posicionesDeHojasEnAgua() = []
+	
+	override method tortugas() = 
+	[new Tortuga(x = 13, y = 6)
+	]
+	
+	override method autos() = 
+	[
+		new Vehiculo(x = 2, y = 2, velocidad = 300),
+		new Vehiculo(x = 3, y = 5, velocidad = 300),
+		new Vehiculo(x = 4, y = 7, velocidad = 300),
+		new Vehiculo(x = 5, y = 3, velocidad = 300)
+	]
+	
+	override method troncos() = 
+	[new Tronco1(x = 11, y = 4),
+	 new Tronco2(x = 12, y = 3),
+	 new Tronco0(x = 10, y = 3)
+	]
+}
+
 class Nivel1 inherits Nivel{
 	
 	override method columnasDeAgua() = [10,11,12,13]
 	override method columnasDePista() = [2,3,7,8,9]
-	override method columnasDePasto() = [0,1,4,5,6]
 	override method lugaresDeLLegada() = [0,4,5,8]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []

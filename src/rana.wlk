@@ -10,9 +10,12 @@ object rana{
 	var property puntaje = 0
 	var property vidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
-	var estaEnAgua = false
-	var estaEnPista = false
+	var property estaEnAgua = false
+	var property estaEnPista = false
 	var property velocidad = 4
+	var property columnaNeta = 0
+	var property contactos = ""
+	
 	
 	method arriba() {
 		if(self.position().y() >= (game.height() - 8))
@@ -29,29 +32,7 @@ object rana{
 	}
 	
 	method iniciar(){
-		game.addVisualCharacter(self)
-	}
-
-	method validarTerreno(){
-		
-		const pistasEnTerreno = config.nivelActual().columnasDePista()
-		const aguasEnTerreno = config.nivelActual().columnasDeAgua()
-		const posX = self.position().x().div(8)
-		
-		estaEnPista = pistasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
-		estaEnAgua = aguasEnTerreno.any({x => posX >= x and posX <= (x + 1)})
-		
-		if(estaEnPista)
-			game.say(self,"pista")
-		//Aplicar la misma logica para el agua
-	}
-	
-	method buscarAutos(x){
-		new Range(start = 0, end = background.limite_y()).forEach({ y =>
-			game.getObjectsIn(new Position(x = x, y = y)).forEach({obj =>
-				obj.Contacto(self.position())
-			})
-		})
+		game.addVisual(self)
 	}
 	
 	method sumarEtapas() {
@@ -64,12 +45,13 @@ object rana{
 			estadoParaImg = 0
 		}
 	}
+	
 	method mover(direccion){
 		
 		self.sumarEtapas()
 		direccion.mover(self)
 	}
-	
+
 	method perderVida(){
 		
 		vidas -=1	
@@ -78,7 +60,7 @@ object rana{
 		self.position(self.positionInicial())
 	}
 	
-	method Contacto(posicion){}
+	method verificarContacto(posicion) = false
 	
 }
 
