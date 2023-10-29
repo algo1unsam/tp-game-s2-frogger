@@ -5,7 +5,7 @@ import background.*
 object rana{
 	const property positionInicial = game.at(0,16)
 	const property nombreAssets = "Rana"
-	var property estadoParaImg = 1
+	var property estadoParaImg = 2
 	var property position = self.positionInicial()
 	var property puntaje = 0
 	var property vidas = 5
@@ -42,14 +42,13 @@ object rana{
 	
 	method validarEtapa() {
 		if(self.estadoParaImg() == 7) {
-			estadoParaImg = 0
+			estadoParaImg = 2
 		}
 	}
 	
-	method mover(direccion){
-		
+	method mover(nuevaPosicion){
 		self.sumarEtapas()
-		direccion.mover(self)
+		self.position(nuevaPosicion)
 	}
 
 	method perderVida(){
@@ -64,50 +63,5 @@ object rana{
 	
 }
 
-object arriba{
-	
-	const property nombre = "Arriba"
-	
-	method mover(obj){
-		if(obj.position().y() < (game.height() - 8)){
-			//if(objetoPrincipal.position().y() > 50)
-			//objetoPrincipal.position().up(20)
-			obj.arriba()
-			return true
-		}
-		return false
-	}
-}
-
-object abajo{
-	const property nombre = "Abajo"
-	
-	method mover(objetoPrincipal){
-		if(objetoPrincipal.position().y() > 0){
-			objetoPrincipal.position(objetoPrincipal.position().down(objetoPrincipal.velocidad()))
-		}
-		return true
-	}
-}
-object izquierda{
-	const property nombre = "Izquierda"
-	
-	method mover(objetoPrincipal){
-		if(objetoPrincipal.position().x() > 0){
-			objetoPrincipal.position(objetoPrincipal.position().left(objetoPrincipal.velocidad()))
-		}
-		return true
-	}
-}
-object derecha{
-	const property nombre = "Derecha"
-	
-	method mover(objetoPrincipal){
-		if(objetoPrincipal.position().x() < background.limite_x() - 8){
-			objetoPrincipal.position(objetoPrincipal.position().right(objetoPrincipal.velocidad()))
-		}
-		return true
-	}
-}
 	
 

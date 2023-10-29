@@ -48,13 +48,13 @@ object config {
 	
 	method configTeclas(){
 		
-		keyboard.up().onPressDo({movimiento.moverArriba()})
+		keyboard.up().onPressDo({movimiento.mover(arriba)})
 		
-		keyboard.down().onPressDo({movimiento.moverAbajo()})
+		keyboard.down().onPressDo({movimiento.mover(abajo)})
 	
-		keyboard.left().onPressDo({movimiento.moverIzquierda()})
+		keyboard.left().onPressDo({movimiento.mover(izquierda)})
 	
-		keyboard.right().onPressDo({movimiento.moverDerecha()})
+		keyboard.right().onPressDo({movimiento.mover(derecha)})
 		
 	}
 	
