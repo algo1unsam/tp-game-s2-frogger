@@ -11,7 +11,7 @@ object movimiento {
 		const objeto = config.objPrincipal()
 		
 		rutaImagen  = "assets/" + objeto.nombreAssets() + "/"
-		rutaImagen += direccion + "/" + objeto.nombreAssets() + "-" + direccion
+		rutaImagen += direccion.nombre() + "/" + objeto.nombreAssets() + "-" + direccion.nombre()
 		rutaImagen += objeto.estadoParaImg().toString() + ".png"
 		
 		objeto.image(rutaImagen)
@@ -29,26 +29,6 @@ object movimiento {
 		return false
 	}
 	
-	method moverArriba(){
-		self.direccion("Arriba")
-		return self.validarMovimiento()
-	}
-	
-	method moverAbajo(){
-		self.direccion("Abajo")
-		return self.validarMovimiento()
-	}
-	
-	method moverIzquierda(){
-		self.direccion("Izquierda")
-		return self.validarMovimiento()
-	}
-	
-	method moverDerecha(){
-		self.direccion("Derecha")
-		return self.validarMovimiento()
-	}
-	
 	method validarMovimiento(){
 		
 		if(self.proxDireccionEsAgua())
@@ -60,11 +40,14 @@ object movimiento {
 		if(self.proxDireccionFueraDeRango())
 			return false
 		
-		self.mover()
 		return true
 	}
 	
-	method mover(){
+	method mover(direccionDestino){
+		
+		self.validarMovimiento()
+		self.direccion(direccionDestino)
+		
 		const obj = config.objPrincipal()
 		const velocidad = obj.velocidad()
 		const posActual = obj.position()
@@ -72,20 +55,60 @@ object movimiento {
 		
 		self.modificarImg()
 		
-		if(direccion == "Arriba")
-			posNueva = new Position(x = posActual.x(), y = (posActual.y() + velocidad))
-		if(direccion == "Abajo")
-			posNueva = new Position(x = posActual.x(), y = (posActual.y() - velocidad))
-		if(direccion == "Izquierda")
-			posNueva = new Position(x = posActual.x() - velocidad, y = posActual.y())
-		if(direccion == "Derecha")
-			posNueva = new Position(x = posActual.x() + velocidad, y = posActual.y())
-			
-		obj.position(posNueva)
+		posNueva = direccionDestino.mover(obj,velocidad, posActual)
+		if(posNueva != false)
+			obj.mover(posNueva)
 		
 	}
 	
 	method moverDesdeOHaciaAgua(){
 		
 	}
+}
+
+
+object arriba{
+	
+	
+	const property nombre = "Arriba"
+	
+	method mover(obj,velocidad,posActual){
+		if(posActual.y() < (game.height() - 8)){
+			return new Position(x = posActual.x(), y = (posActual.y() + velocidad))
+		}
+		return false
+	}
+}
+
+object abajo{
+	const property nombre = "Abajo"
+	
+	method mover(obj,velocidad,posActual){
+		if(posActual.y() > 0){
+			return new Position(x = posActual.x(), y = (posActual.y() - velocidad))
+		}
+		return false
+	}
+}
+object izquierda{
+	const property nombre = "Izquierda"
+	
+	method mover(obj,velocidad,posActual){
+		if(posActual.x() > 0){
+			return new Position(x = posActual.x() - velocidad, y = posActual.y())
+		}
+		return false
+	}
+	
+}
+object derecha{
+	const property nombre = "Derecha"
+	
+	method mover(obj,velocidad,posActual){
+		if(posActual.x() < (game.width() - 8)){
+			return new Position(x = posActual.x() + velocidad, y = posActual.y())
+		}
+		return false
+	}
+	
 }

@@ -5,7 +5,7 @@ import background.*
 object rana{
 	const property positionInicial = game.at(0,16)
 	const property nombreAssets = "Rana"
-	var property estadoParaImg = 1
+	var property estadoParaImg = 2
 	var property position = self.positionInicial()
 	var property puntaje = 0
 	var property vidas = 5
@@ -16,17 +16,30 @@ object rana{
 	var property columnaNeta = 0
 	var property contactos = ""
 	
-	
-	method aumentar(valor){
-		puntaje += valor
-	}
-	
 	method iniciar(){
 		game.addVisual(self)
 	}
 	
+	method aumentar(valor){
+		puntaje += valor
+	}
+
+	method sumarEtapas() {
+		self.validarEtapa()
+		estadoParaImg++
+	}
+	
+	method validarEtapa() {
+		if(self.estadoParaImg() == 7)
+			estadoParaImg = 2
+	}
+	
+	method mover(nuevaPosicion){
+		self.sumarEtapas()
+		self.position(nuevaPosicion)
+	}
+
 	method perderVida(){
-		
 		vidas -=1	
 		if (vidas == 0)
 			game.stop()
@@ -36,5 +49,6 @@ object rana{
 	method verificarContacto(posicion) = false
 	
 }
+
 	
 
