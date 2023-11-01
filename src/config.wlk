@@ -30,6 +30,11 @@ object colNetaRana{
 	method text() = "Columna neta: " + rana.columnaNeta()
 }
 
+object filaNetaRana{
+	method position() = game.at(4,40)
+	method text() = "Fila neta: " + rana.filaNeta()
+}
+
 
 object config {
 	const property objPrincipal = rana
@@ -42,7 +47,16 @@ object config {
 		game.addVisual(terrenoRana)
 		game.addVisual(contactosRana)
 		game.addVisual(colNetaRana)
+		game.addVisual(filaNetaRana)
 		game.onTick(100,"Validar",{colisiones.verificarContactos()})
+	}
+	
+	method finalizar(){
+		game.say(objPrincipal,"Finalicé")
+	}
+	
+	method ganar(){
+		game.say(objPrincipal,"Gané")
 	}
 
 	

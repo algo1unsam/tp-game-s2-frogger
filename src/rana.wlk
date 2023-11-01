@@ -12,9 +12,10 @@ object rana{
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	var property estaEnAgua = false
 	var property estaEnPista = false
-	const property velocidadOriginal = 4
+	const property velocidadOriginal = 3
 	var property velocidad = velocidadOriginal
 	var property columnaNeta = 0
+	var property filaNeta = (self.positionInicial().y() + 4).div(8)
 	var property contactos = ""
 	
 	method iniciar(){
@@ -42,8 +43,10 @@ object rana{
 
 	method perderVida(){
 		vidas -=1	
-		if (vidas == 0)
+		if (vidas == 0){
+			config.finalizar()			
 			game.stop()
+		}
 		self.position(self.positionInicial())
 	}
 	

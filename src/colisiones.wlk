@@ -8,10 +8,14 @@ object colisiones {
 		
 		const obj = config.objPrincipal()
 		const posX = obj.position().x()
+		const posY = obj.position().y()
 		const columnaNeta = (posX + 4).div(8)
+		const filaNeta = (posY + 4).div(8)
 		
 		//Variable de debug:
 		obj.columnaNeta(columnaNeta)
+		//Variable de debug:
+		obj.filaNeta(filaNeta)
 		//Variable de debug
 		obj.estaEnPista(self.estaEnPista(posX))
 		//Variable de debug
@@ -49,6 +53,29 @@ object colisiones {
 			
 			posX > limiteInferior and posX < limiteSuperior
 		})
+	}
+	
+	//Antes de usarse debe validarse con self.esColumnaDeMeta(posicion.x())
+	method esArbusto(posY) = not self.esMeta(posY)
+	
+	//Antes de usarse debe validarse con self.esColumnaDeMeta(posicion.x())
+	method esMeta(posY){
+		
+		return config.nivelActual().lugaresDeMetas().any({y =>
+			const limSuperior = (y * 8) + 4
+			const limInferior = (y * 8) - 2
+			
+			posY < limSuperior and posY > limInferior
+		})
+	}
+	
+	method esColumnaDeMeta(posicionX){
+		
+		const colMetaLimInferior = background.columna_de_meta() - 4
+		const colMetaLimSuperior = background.columna_de_meta() + 4
+		
+		return
+		(posicionX >= colMetaLimInferior) and (posicionX <= colMetaLimSuperior)
 	}
 	
 	method buscarObjetosEnColumna(xEnNeto){

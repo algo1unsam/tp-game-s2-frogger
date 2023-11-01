@@ -1,6 +1,7 @@
 import wollok.game.*
 import config.*
 import background.*
+import colisiones.*
 
 object movimiento {
 	
@@ -19,49 +20,52 @@ object movimiento {
 	}
 	
 	method estaEnAgua(){
+		
 		return false
+		
+		//const obj = config.objPrincipal()
+		//const posX = obj.position().x()
+		//return colisiones.estaEnAgua(posX)
 	}
 	
-	method proxDireccionEsAgua(){
-		return false
-	}
-	
-	method proxDireccionEsArbusto(){
-		return false
-	}
-	
-	method proxDireccionFueraDeRango(){
-		return false
-	}
-	
-	method validarMovimientoNormal(){
+	method proxDireccionEsAgua(posNueva) = false //colisiones.estaEnAgua(posNueva.x())
+
+	method validarMovimientoNormal(posNueva){
 		
 		//Debe controlarse la velocidad de movimiento
 		if(self.estaEnAgua())
 			return false
 		
-		if(self.proxDireccionEsAgua())
+		if(self.proxDireccionEsAgua(posNueva))
 			return false
 		
-		if(self.proxDireccionEsArbusto())
-			return false
+		return not colisiones.esColumnaDeMeta(posNueva.x())
 		
-		return true
 	}
 	
 	method mover(direccion){
 		
 		self._direccion(direccion)
-		self.modificarImg()
+		const obj = config.objPrincipal()
+		const posNueva = direccion.mover(obj)
+		const desdeOHaciaAgua = self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)
+		const esColumnaDeMeta = colisiones.esColumnaDeMeta(posNueva.x())
 		
-		if (self.validarMovimientoNormal()){
-			const obj = config.objPrincipal()
-			obj.velocidad(obj.velocidadOriginal())
-			const posNueva = direccion.mover(obj)
+		if (self.validarMovimientoNormal(posNueva)){
+			self.modificarImg()
 			obj.mover(posNueva)
 		}
-		else if(self.estaEnAgua() or self.proxDireccionEsAgua())
-			self.moverDesdeOHaciaAgua(direccion)
+		else if(desdeOHaciaAgua){
+			self.moverDesdeOHaciaAgua(posNueva)			
+		}
+		else if(esColumnaDeMeta){
+			
+			if(colisiones.esMeta(posNueva.y())){
+				self.modificarImg()
+				obj.mover(posNueva)
+				config.ganar()
+			}
+		}
 		
 	}
 	

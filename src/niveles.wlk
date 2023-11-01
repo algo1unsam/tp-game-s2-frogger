@@ -14,7 +14,7 @@ class Nivel {
 	
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
 	//Cuando hablo de "neto" me refiero a posición en grilla / tamaño de celda
-	const property lugaresDeLLegada  = []//[2,4,6]
+	const property lugaresDeMetas  = []//[2,4,6]
 	
 	//Sobrescribir con listas de Position
 	const property posicionesDeHojasEnAgua  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
@@ -45,7 +45,7 @@ class Nivel {
 		
 		background.eje_x().forEach({x =>
 			
-			const esColumnaDeMeta = x == background.limite_x() - background.tamanio_celda()
+			const esColumnaDeMeta = x == background.columna_de_meta()
 			
 			const esAgua = self.columnasDeAgua().any({columna => (columna * background.tamanio_celda()) == x})
 			
@@ -105,7 +105,7 @@ class Nivel {
 		
 		background.eje_y().forEach({ y =>
 			const posicion = new Position(x = x, y = y)
-			const esLugarDeLLegada = self.lugaresDeLLegada().any({ lugar => lugar == (y/background.tamanio_celda())})
+			const esLugarDeLLegada = self.lugaresDeMetas().any({ lugar => lugar == (y/background.tamanio_celda())})
 			
 			if(esLugarDeLLegada)
 				game.addVisualIn(new Meta(), posicion)
@@ -136,7 +136,7 @@ class Nivel {
 class NivelTest inherits Nivel{
 	override method columnasDeAgua() = [10,11,12,13]
 	override method columnasDePista() = [2,3,4,5]
-	override method lugaresDeLLegada() = [0,4,5,8]
+	override method lugaresDeMetas() = [0,3,4,7]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
 	
@@ -163,7 +163,7 @@ class Nivel1 inherits Nivel{
 	
 	override method columnasDeAgua() = [10,11,12,13]
 	override method columnasDePista() = [2,3,7,8,9]
-	override method lugaresDeLLegada() = [0,4,5,8]
+	override method lugaresDeMetas() = [0,3,4,7]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
 	
