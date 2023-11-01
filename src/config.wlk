@@ -2,7 +2,7 @@ import wollok.game.*
 import rana.*
 import escenario.*
 import movimiento.*
-import colisiones.*
+import terreno.*
 
 object posXRana{
 	method position() = game.at(4,0)
@@ -48,7 +48,7 @@ object config {
 		game.addVisual(contactosRana)
 		game.addVisual(colNetaRana)
 		game.addVisual(filaNetaRana)
-		game.onTick(100,"Validar",{colisiones.verificarContactos()})
+		game.onTick(100,"Validar",{terreno.verificarContactos()})
 	}
 	
 	method finalizar(){

@@ -2,7 +2,7 @@ import config.*
 import background.*
 import wollok.game.*
 
-object colisiones {
+object terreno {
 	
 	method verificarContactos(){
 		

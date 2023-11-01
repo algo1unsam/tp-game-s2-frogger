@@ -134,7 +134,7 @@ class Nivel {
 }
 
 class NivelTest inherits Nivel{
-	override method columnasDeAgua() = [10,11,12,13]
+	override method columnasDeAgua() = [10,11,12]
 	override method columnasDePista() = [2,3,4,5]
 	override method lugaresDeMetas() = [0,3,4,7]
 	override method posicionesDeCalaveras() = []

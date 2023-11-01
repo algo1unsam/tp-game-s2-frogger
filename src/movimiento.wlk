@@ -1,7 +1,7 @@
 import wollok.game.*
 import config.*
 import background.*
-import colisiones.*
+import terreno.*
 
 object movimiento {
 	
@@ -23,10 +23,10 @@ object movimiento {
 		
 		const obj = config.objPrincipal()
 		const posX = obj.position().x()
-		return colisiones.estaEnAgua(posX)
+		return terreno.estaEnAgua(posX)
 	}
 	
-	method proxDireccionEsAgua(posNueva) = colisiones.estaEnAgua(posNueva.x())
+	method proxDireccionEsAgua(posNueva) = terreno.estaEnAgua(posNueva.x())
 
 	method validarMovimientoNormal(posNueva){
 		
@@ -37,7 +37,7 @@ object movimiento {
 		if(self.proxDireccionEsAgua(posNueva))
 			return false
 		
-		return not colisiones.esColumnaDeMeta(posNueva.x())
+		return not terreno.esColumnaDeMeta(posNueva.x())
 		
 	}
 	
@@ -46,51 +46,101 @@ object movimiento {
 		self._direccion(direccion)
 		const obj = config.objPrincipal()
 		const posNueva = direccion.mover(obj)
-		const desdeOHaciaAgua = self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)
-		const esColumnaDeMeta = colisiones.esColumnaDeMeta(posNueva.x())
+		const desdeOHaciaAguaHorizontal = 
+			(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
+			and 
+			(direccion.nombre() == "Izquierda" or direccion.nombre() == "Derecha")
+		
+		const desdeOHaciaAguaVertical = 
+			(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
+			and 
+			(direccion.nombre() == "Arriba" or direccion.nombre() == "Abajo")
+		
+		var esColumnaDeMeta
+		
+		if(self.estaEnAgua() and direccion.nombre() == "Derecha"){
+			const proximaColumna = ((posNueva.x() + 4).div(8) + 1) * 8
+			esColumnaDeMeta = terreno.esColumnaDeMeta(proximaColumna)	
+		}
+		else{
+			esColumnaDeMeta = terreno.esColumnaDeMeta(posNueva.x())			
+		}
 		
 		if (self.validarMovimientoNormal(posNueva)){
 			self.modificarImg()
 			obj.mover(posNueva)
 		}
-		else if(desdeOHaciaAgua){
-			self.moverDesdeOHaciaAgua(posNueva)			
+		else if(desdeOHaciaAguaHorizontal and not esColumnaDeMeta){
+			self.modificarImg()
+			self.moverDesdeOHaciaAguaHorizontal(posNueva)			
+		}
+		else if(desdeOHaciaAguaVertical){
+			self.modificarImg()
+			obj.mover(posNueva)		
 		}
 		else if(esColumnaDeMeta){
 			
-			if(colisiones.esMeta(posNueva.y())){
+			if(terreno.esMeta(posNueva.y())){
 				self.modificarImg()
-				obj.mover(posNueva)
+				const posicionDeMeta = new Position(x = background.columna_de_meta(), y = posNueva.y())
+				obj.mover(posicionDeMeta)
 				config.ganar()
 			}
 		}
 		
 	}
 	
-	method moverDesdeOHaciaAgua(posNueva){
+	method moverDesdeOHaciaAguaHorizontal(posNueva){
+		
+		const obj = config.objPrincipal()
 		const deTierraHaciaAgua = (not self.estaEnAgua()) and self.proxDireccionEsAgua(posNueva)
 		const deAguaHaciaAgua = self.estaEnAgua() and self.proxDireccionEsAgua(posNueva)
-		const deAguaHaciaTierra = (not self.estaEnAgua()) and (not self.proxDireccionEsAgua(posNueva))
-		const posActual = config.objPrincipal().position()
+		const deAguaHaciaTierra = self.estaEnAgua() and (not self.proxDireccionEsAgua(posNueva))
+		const posActual = obj.position()
+		
+		const columnaNetaOrigen = (posActual.x() + 4).div(8) * background.tamanio_celda()
+		var columnaNetaDestino = (posNueva.x() + 4).div(8) * background.tamanio_celda()
+		var inicioDeColumnaDestino
+		if(columnaNetaDestino == columnaNetaOrigen and self.estaEnAgua()){
+			if(posActual.x() > posNueva.x()){
+				columnaNetaDestino -= background.tamanio_celda()
+				inicioDeColumnaDestino = columnaNetaDestino + 4
+			}
+			else{
+				columnaNetaDestino += background.tamanio_celda()
+				inicioDeColumnaDestino = columnaNetaDestino - 4
+			}
+		}
+		
+		const posColNetaDestino = new Position(x = columnaNetaDestino, y = posNueva.y())
+		const posInicioDeColDestino = new Position(x = inicioDeColumnaDestino, y = posNueva.y())
+		var distanciaEnXParaRecorrer
 		
 		//Caso 1: se encuentra en tierra y quiere moverse a agua
 		//Dos posibles escenarios:
 		//A)está en el borde de la tierra o pista
 		//B) No está en el borde de la tierra o pista
 		if(deTierraHaciaAgua){
-			
+		//	distanciaEnXParaRecorrer = posActual.distance(posInicioDeColDestino).x()
+		//	if(distanciaEnXParaRecorrer < 0)
+		//		distanciaEnXParaRecorrer *= -1
+		//	if(distanciaEnXParaRecorrer == 0)
+		//		obj.mover(posColNetaDestino)
+		//	else
+		//		obj.mover(posInicioDeColDestino)
+			obj.mover(posColNetaDestino)
 		}
 		//Caso 2: Se encuentra en agua y quiere moverse a agua
 			//Debe moverse al centro de la columna de agua (moverse de a 8)
 		else if(deAguaHaciaAgua){
-			
+			obj.mover(posColNetaDestino)
 		}
 		
 		//Caso 3: está en agua y quiere moverse a tierra
 		//Debe moverse al borde de la tierra, en el que la distancia desde esa posicion
 		//Al inicio de columna de agua sea cero
 		else if(deAguaHaciaTierra){
-			
+			obj.mover(posInicioDeColDestino)
 		}
 		
 		
