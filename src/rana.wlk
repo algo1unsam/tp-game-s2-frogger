@@ -12,7 +12,8 @@ object rana{
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	var property estaEnAgua = false
 	var property estaEnPista = false
-	var property velocidad = 4
+	const property velocidadOriginal = 4
+	var property velocidad = velocidadOriginal
 	var property columnaNeta = 0
 	var property contactos = ""
 	
