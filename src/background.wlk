@@ -1,6 +1,6 @@
 import wollok.game.*
 import escenario.*
-
+import tiempo.*
 object background {
 	
 	//****************

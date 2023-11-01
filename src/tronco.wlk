@@ -2,16 +2,25 @@ import wollok.game.*
 import objetosMoviles.*
 import background.*
 import rana.*
+import tiempo.*
+class Tronco inherits ObjetoMovil{
 
-class Tronco0 inherits ObjetoMovil{
-	
-	var property tope = false
-	
 	const property tamanio = 20
-	
-	override method velocidad() = 40
-	
+	const property image = ""
+	var property tope = false
 	override method esMortal() = false
+	
+	override method altura() = 15
+	
+	override method verificarContacto(posicion) {
+		
+		const topeInferior = self.position().y() - 1
+		const topeSuperior = self.position().y() + self.altura()
+		
+		return ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
+		
+	}
+	
 	
 	
 	override method mover(){
@@ -19,37 +28,51 @@ class Tronco0 inherits ObjetoMovil{
 		self.valPosicion()
 	}
 	
-
-	method valPosicion(){
-		if ((self.position().y() + self.tamanio()) < 0){
-			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
-		}
-	}
-
-	method image(){return "troncos/tronco0.png"} 
 	
-	override method Contacto(){
-		game.say(rana,"Me sente en el tronco")
+	override method ejecutarContacto(){
+		rana.contactos("Tronco")
 	}
+	
+	method valPosicion(){
+		if ((self.position().y() + self.tamanio()) < 0)
+			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
+	}
+	
+	
+		
 	
 }
 
-class Tronco1 inherits Tronco0{
+class Tronco0 inherits Tronco{
+	
+	override method tamanio() = 20
+	override method image() = "troncos/tronco0.png"
+	override method velocidad() = 40
+
+}
+
+class Tronco1 inherits Tronco{
 	
 	override method tamanio() = 28
-	
 	override method velocidad() = 60
-	
-	override method image(){return "troncos/tronco1.png"} 
+	override method image() = "troncos/tronco1.png"
+	override method altura() = 25
 	
 }
 
-class Tronco2 inherits Tronco0{
+class Tronco2 inherits Tronco{
 	
 	override method tamanio() = 36
-	
 	override method velocidad() = 100
+	override method image() = "troncos/tronco2.png"
+	override method altura() = 32
 	
-	override method image(){return "troncos/tronco2.png"} 
+}
+class Barra inherits Tronco{
+	
+	override method tamanio() = 100
+	override method velocidad() = 1000
+	override method image() = "Escenario/TiempoBarra.png"
+	override method altura() = 10
 	
 }

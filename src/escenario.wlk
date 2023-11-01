@@ -3,20 +3,14 @@ class Escenario {
 	method image()
 	method esMortal() = false
 	method esPosicionable() = true
-	method Contacto(){}
-		
+	method verificarContacto(posicion) = false
+	
 }
 
 class BarraSuperior inherits Escenario{
 	
 	override method esPosicionable() = false
 	override method image() = "Escenario/Barra sup.png"
-	
-}
-
-class Pasto inherits Escenario{
-	
-	override method image() = "Escenario/Pasto.png"
 	
 }
 

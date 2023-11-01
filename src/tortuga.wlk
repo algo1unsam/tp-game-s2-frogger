@@ -1,11 +1,14 @@
 import wollok.game.*
 import objetosMoviles.*
 import background.*
+import rana.*
 
 class Tortuga inherits ObjetoMovil{
 	
 	var etapa = 0
 	var property tope = false
+	
+	override method altura() = 2
 	
 	override method velocidad() = 200
 	
@@ -44,6 +47,9 @@ class Tortuga inherits ObjetoMovil{
 	
 	method abajoAgua() = etapa > 9 and etapa < 15
 	
-	override method Contacto(){}
+	
+	override method ejecutarContacto(){
+		rana.contactos("Tortuga")
+	}
 	
 }

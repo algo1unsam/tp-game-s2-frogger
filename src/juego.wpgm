@@ -4,16 +4,17 @@ import background.*
 import objetosMoviles.*
 import niveles.*
 import rana.*
-import tiempo.*
 import config.*
-
+import tiempo.*
 program juego {
 	game.title("Juego Base")
 	game.cellSize(10)
 	game.height(background.limite_y())
 	game.width(background.limite_x() + (background.tamanio_celda() / 2))
+	game.boardGround("Escenario/Fondo_pasto.png")
 	
-	new Nivel1().iniciar()
+	config.nivelActual(new NivelTest())
+	config.nivelActual().iniciar()
 	config.iniciar()
 	
 	game.start()

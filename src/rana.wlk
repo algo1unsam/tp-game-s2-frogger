@@ -1,68 +1,44 @@
 import wollok.game.*
+import config.*
+import background.*
 
 object rana{
-	var property position = game.at(0,16)
-	var puntos = 0
-	var vidas = 5
+	const property positionInicial = game.at(0,16)
+	const property nombreAssets = "Rana"
+	var property estadoParaImg = 1
+	var property position = self.positionInicial()
+	var property puntaje = 0
+	var property cantVidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
+	var property estaEnAgua = false
+	var property estaEnPista = false
+	var property velocidad = 4
+	var property columnaNeta = 0
+	var property contactos = ""
+
+
+	
 	
 	method aumentar(valor){
-		puntos += valor
+		puntaje += valor
 	}
 	
 	method iniciar(){
-		game.addVisualCharacter(self)
+		game.addVisual(self)
 	}
-
-
-	method puntaje() = puntos
-//	method image() = "assets/Escenario/Ranaarr.png"
-	
-	
-	method moverIzquierda(){
-		self.image("assets/Rana/Izquierda/Rana-Izquierda1.png")
-		self.position(self.position().left(7))
-	}
-	
-	method moverDerecha(){
-		self.image("assets/Rana/Derecha/Rana-Derecha1.png")
-		self.position(self.position().right(7))
-	}
-	
-	method moverArriba(){
-		self.image("assets/Rana/Arriba/Rana-Arriba1.png")
-		self.position(self.position().up(7))
-	}
-	
-	method moverAbajo(){
-		self.image("assets/Rana/Abajo/Rana-Abajo1.png")
-		self.position(self.position().down(7))	
-	}
-	
-
-	method movimiento() {
-		//const animacion = {
-		//	imagen1, imagen2 =>
-		//	self.image(imagen1)
-		//	game.schedule(300, {self.image(imagen2)})
-		//}
-		//keyboard.up().onPressDo({animacion.apply(self.image(),"assets/Rana/Arriba/Rana-Arriba1.png")})
-		
-		//keyboard.down().onPressDo({animacion.apply(self.image(),"assets/Rana/Abajo/Rana-Abajo1.png")})
-	
-		//keyboard.left().onPressDo({animacion.apply(self.image(),"assets/Rana/Izquierda/Rana-Izquierda1.png")})
-	
-		//keyboard.right().onPressDo({animacion.apply(self.image(),"assets/Rana/Derecha/Rana-Derecha1.png")})
-	}
-	
 	
 	method perderVida(){
-		vidas -=1
-		if (vidas == 0){
+		cantVidas -= 1
+
+	
+		if(cantVidas == 0){
 			game.stop()
+			cantVidas = 3
 		}
 	}
-	method vida()=vidas
+
+	
+	method verificarContacto(posicion) = false
+	
 }
 	
-
