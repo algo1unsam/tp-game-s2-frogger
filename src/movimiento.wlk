@@ -46,11 +46,12 @@ object movimiento {
 	
 	method mover(direccion){
 		
+		self._direccion(direccion)
+		self.modificarImg()
+		
 		if (self.validarMovimiento()){
 			const obj = config.objPrincipal()
 			const posNueva = direccion.mover(obj)
-			self._direccion(direccion)
-			self.modificarImg()
 			obj.mover(posNueva)
 		}
 		

@@ -61,9 +61,9 @@ object colisiones {
 			if(_contactos.size() > 0){
 				_contactos.forEach({obj =>
 					//Tiene que verificarse si el resultado de "verificarContacto" es true
-					//antes de la función "ejecutarContacto" porque todos los escenarios
+					//antes de la función "ejecutarContacto" (por ej. todos los escenarios
 					//Devuelven false en verificarContacto porque no tienen un método llamado
-					//"ejecutarContacto"
+					//"ejecutarContacto")
 					if(obj.verificarContacto(config.objPrincipal().position())){
 						obj.ejecutarContacto()	
 						hizoContacto = true				
