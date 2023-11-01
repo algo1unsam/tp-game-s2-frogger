@@ -93,16 +93,14 @@ object movimiento {
 	method moverDesdeOHaciaAguaHorizontal(posNueva){
 		
 		const obj = config.objPrincipal()
-		const deTierraHaciaAgua = (not self.estaEnAgua()) and self.proxDireccionEsAgua(posNueva)
-		const deAguaHaciaAgua = self.estaEnAgua() and self.proxDireccionEsAgua(posNueva)
-		const deAguaHaciaTierra = self.estaEnAgua() and (not self.proxDireccionEsAgua(posNueva))
 		const posActual = obj.position()
 		
 		const columnaNetaOrigen = (posActual.x() + 4).div(8) * background.tamanio_celda()
 		var columnaNetaDestino = (posNueva.x() + 4).div(8) * background.tamanio_celda()
 		var inicioDeColumnaDestino
+		
 		if(columnaNetaDestino == columnaNetaOrigen and self.estaEnAgua()){
-			if(posActual.x() > posNueva.x()){
+			if(posActual.x() >= posNueva.x()){
 				columnaNetaDestino -= background.tamanio_celda()
 				inicioDeColumnaDestino = columnaNetaDestino + 4
 			}
@@ -110,25 +108,34 @@ object movimiento {
 				columnaNetaDestino += background.tamanio_celda()
 				inicioDeColumnaDestino = columnaNetaDestino - 4
 			}
+			
+		} else{
+			
+			if(posActual.x() >= posNueva.x())
+				inicioDeColumnaDestino = columnaNetaDestino + 4
+			else
+				inicioDeColumnaDestino = columnaNetaDestino - 4
 		}
 		
 		const posColNetaDestino = new Position(x = columnaNetaDestino, y = posNueva.y())
 		const posInicioDeColDestino = new Position(x = inicioDeColumnaDestino, y = posNueva.y())
 		var distanciaEnXParaRecorrer
 		
+		const deTierraHaciaAgua = (not self.estaEnAgua()) and self.proxDireccionEsAgua(posColNetaDestino)
+		const deAguaHaciaAgua = self.estaEnAgua() and self.proxDireccionEsAgua(posColNetaDestino)
+		const deAguaHaciaTierra = self.estaEnAgua() and (not self.proxDireccionEsAgua(posColNetaDestino))
+		
 		//Caso 1: se encuentra en tierra y quiere moverse a agua
 		//Dos posibles escenarios:
 		//A)está en el borde de la tierra o pista
 		//B) No está en el borde de la tierra o pista
 		if(deTierraHaciaAgua){
-		//	distanciaEnXParaRecorrer = posActual.distance(posInicioDeColDestino).x()
-		//	if(distanciaEnXParaRecorrer < 0)
-		//		distanciaEnXParaRecorrer *= -1
-		//	if(distanciaEnXParaRecorrer == 0)
-		//		obj.mover(posColNetaDestino)
-		//	else
-		//		obj.mover(posInicioDeColDestino)
-			obj.mover(posColNetaDestino)
+			distanciaEnXParaRecorrer = posActual.x() - posInicioDeColDestino.x()
+			
+			if(distanciaEnXParaRecorrer == 0)
+				obj.mover(posColNetaDestino)
+			else
+				obj.mover(posInicioDeColDestino)
 		}
 		//Caso 2: Se encuentra en agua y quiere moverse a agua
 			//Debe moverse al centro de la columna de agua (moverse de a 8)
