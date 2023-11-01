@@ -30,7 +30,7 @@ object rana{
 	}
 	
 	method validarEtapa() {
-		if(self.estadoParaImg() == 7)
+		if(self.estadoParaImg() == 4)
 			estadoParaImg = 2
 	}
 	
