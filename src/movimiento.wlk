@@ -21,14 +21,12 @@ object movimiento {
 	
 	method estaEnAgua(){
 		
-		return false
-		
-		//const obj = config.objPrincipal()
-		//const posX = obj.position().x()
-		//return colisiones.estaEnAgua(posX)
+		const obj = config.objPrincipal()
+		const posX = obj.position().x()
+		return colisiones.estaEnAgua(posX)
 	}
 	
-	method proxDireccionEsAgua(posNueva) = false //colisiones.estaEnAgua(posNueva.x())
+	method proxDireccionEsAgua(posNueva) = colisiones.estaEnAgua(posNueva.x())
 
 	method validarMovimientoNormal(posNueva){
 		
@@ -69,19 +67,34 @@ object movimiento {
 		
 	}
 	
-	method moverDesdeOHaciaAgua(direccion){
+	method moverDesdeOHaciaAgua(posNueva){
+		const deTierraHaciaAgua = (not self.estaEnAgua()) and self.proxDireccionEsAgua(posNueva)
+		const deAguaHaciaAgua = self.estaEnAgua() and self.proxDireccionEsAgua(posNueva)
+		const deAguaHaciaTierra = (not self.estaEnAgua()) and (not self.proxDireccionEsAgua(posNueva))
+		const posActual = config.objPrincipal().position()
+		
 		//Caso 1: se encuentra en tierra y quiere moverse a agua
-		//Dos escenarios: está en el borde de la tierra o pista
-			//A)Debe moverse al centro de la columna de agua (la distancia entre el inicio
-			//de columna de agua y la posactual debe ser cero)
-		//No está en el borde de la tierra o pista
-			//B)Debe calcularse la distancia al borde de tierra o pista y moverse ahí, en donde
-			//la distancia con el inicio de columna de agua sea cero
+		//Dos posibles escenarios:
+		//A)está en el borde de la tierra o pista
+		//B) No está en el borde de la tierra o pista
+		if(deTierraHaciaAgua){
+			
+		}
 		//Caso 2: Se encuentra en agua y quiere moverse a agua
 			//Debe moverse al centro de la columna de agua (moverse de a 8)
+		else if(deAguaHaciaAgua){
+			
+		}
+		
 		//Caso 3: está en agua y quiere moverse a tierra
-			//Debe moverse al borde de la tierra, en el que la distancia desde esa posicion
-			//Al inicio de columna de agua sea cero
+		//Debe moverse al borde de la tierra, en el que la distancia desde esa posicion
+		//Al inicio de columna de agua sea cero
+		else if(deAguaHaciaTierra){
+			
+		}
+		
+		
+		
 	}
 }
 
