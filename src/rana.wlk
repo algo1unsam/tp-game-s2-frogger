@@ -5,7 +5,7 @@ import background.*
 object rana{
 	const property positionInicial = game.at(0,16)
 	const property nombreAssets = "Rana"
-	var property estadoParaImg = 2
+	var property estadoParaImg = 1
 	var property position = self.positionInicial()
 	var property puntaje = 0
 	var property vidas = 5
@@ -30,8 +30,8 @@ object rana{
 	}
 	
 	method validarEtapa() {
-		if(self.estadoParaImg() == 4)
-			estadoParaImg = 2
+		if(self.estadoParaImg() == 3)
+			estadoParaImg = 1
 	}
 	
 	method mover(nuevaPosicion){
