@@ -22,6 +22,7 @@ class Nivel {
 	//Sobrescribir con listas de Position
 	const property posicionesDeHojasEnAgua  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	const property posicionesDeCalaveras  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
+	const property posicionesDeCorazones  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
 	const property tortugas  = [] //[new Tortuga(0,1), new Tortuga(2, 8)] 
 	const property autos  = [] //[new Vehiculo(0,1), new Vehiculo(2, 8)]
 	const property troncos  = [] // new tronco() , new Tronco ()
@@ -36,10 +37,10 @@ class Nivel {
 		self.insertarFondo()
 		self.insertarHojasEnAgua()
 		self.insertarCalaveras()
+		self.insertarCorazones()
 		self.insertarTortugas()
 		self.insertarAutos()
 		self.insertarTroncos()
-		config.objPrincipal().iniciar()
 	}
 	
 	method reiniciarEscenario(){
@@ -85,6 +86,14 @@ class Nivel {
 		})
 	}
 	
+	method insertarCorazones(){
+		self.posicionesDeCorazones().forEach({posicion =>
+			const nuevaX = posicion.x() * background.tamanio_celda()
+			const nuevaY = posicion.y() * background.tamanio_celda()
+			game.addVisual(new Corazon(position = new Position(x = nuevaX, y = nuevaY)))
+		})
+	}
+	
 	method insertarTortugas(){
 		self.tortugas().forEach({tortuga=> tortuga.iniciar()})
 	}
@@ -97,6 +106,11 @@ class Nivel {
 		self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
+	method pausar(){
+		config.objetos().forEach({ obj =>
+			game.removeTickEvent(obj)
+		})
+	}
 	method reiniciarMovimientos(){
 		self.tortugas().forEach({tortuga=> tortuga.reiniciar()})
 		self.autos().forEach({auto=> auto.reiniciar()})
@@ -157,90 +171,171 @@ class Nivel {
 	}
 }
 
-class NivelTest inherits Nivel{
-	
-	override method columnasDeAgua() = [10,11,12]
-	override method columnasDePista() = [2,3,4,5]
-	override method columnasDePasto() = [1,6,7,8,9]
-	override method lugaresDeMetas() = [0,3,4,7]
-	override method posicionesDeCalaveras() = []
-	override method posicionesDeHojasEnAgua() = []
-	
-	override method tortugas() = 
-	[new Tortuga(x = 13, y = 6, id_unico = 1)
-	]
-	
-	override method autos() = 
-	[
-		new Vehiculo(x = 2, y = 2, id_unico = 2,  velocidad = 300),
-		new Vehiculo(x = 3, y = 5, id_unico = 3, velocidad = 300),
-		new Vehiculo(x = 4, y = 7, id_unico = 4, velocidad = 300),
-		new Vehiculo(x = 5, y = 3, id_unico = 5, velocidad = 300)
-	]
-	
-	override method troncos() = 
-	[new Tronco1(x = 11, y = 4, id_unico = 6),
-	 new Tronco2(x = 12, y = 3, id_unico = 7),
-	 new Tronco0(x = 10, y = 3, id_unico = 8)
-	]
-}
-
-class NivelTestAgua inherits Nivel{
-	
-	override method columnasDeAgua() = []
-	override method columnasDePista() = []
-	override method lugaresDeMetas() = [4, 6]
-	override method columnasDePasto() = [1,2,3,5,7,8,9]
-	override method posicionesDeCalaveras() = [
-		new Position(x = 4, y = 4),
-		new Position(x = 5, y = 5),
-		new Position(x = 6, y = 6),
-		new Position(x = 7, y = 7),
-		new Position(x = 3, y = 3),
-		new Position(x = 2, y = 2)
-	]
-	
-	override method nroNivel() = 0
-	
-	override method posicionesDeHojasEnAgua() = []
-	
-	override method tortugas() = 
-	[
-	]
-	
-	override method autos() = 
-	[
-	]
-	
-	override method troncos() = 
-	[
-	]
-}
-
 class Nivel1 inherits Nivel{
-	override method columnasDeAgua() = [8]
-	override method columnasDePista() = [7]
-	override method columnasDePasto() = [0,1,2,3,4,5,6]
-	override method lugaresDeMetas() = [0,4,5,7]
-	override method posicionesDeCalaveras() = []
+	override method columnasDeAgua() = [7,8]
+	override method columnasDePista() = [3,4]
+	override method columnasDePasto() = [0,1,2,5,6]
+	override method lugaresDeMetas() = [4]
+	override method posicionesDeCalaveras() = [
+
+	]
 	override method posicionesDeHojasEnAgua() = []
+	override method posicionesDeCorazones() = []
+	override method nroNivel() = 2
+	
+	override method tortugas() = 
+	[
+	]
+	
+	override method autos() = 
+	[
+		new Vehiculo(x = 4, y = 0, id_unico = 1, velocidad = 150),
+		new Vehiculo(x = 4, y = 2, id_unico = 2, velocidad = 150),
+		new Vehiculo(x = 4, y = 4, id_unico = 3, velocidad = 150),
+		new Vehiculo(x = 3, y = 0, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 3, y = 4, id_unico = 5, velocidad = 300)
+	]
+	
+	override method troncos() = 
+	[
+		new Tronco0(x = 7, y = 3, id_unico = 6),
+		new Tronco0(x = 7, y = 6, id_unico = 7),
+		new Tronco1(x = 8, y = 0, id_unico = 8)
+	]
+	
+}
+
+class Nivel2 inherits Nivel{
+	override method columnasDeAgua() = [4,8]
+	override method columnasDePista() = [3,5]
+	override method columnasDePasto() = [0,1,2,4,6,7]
+	override method lugaresDeMetas() = [0,2]
+	override method posicionesDeCalaveras() = [
+		new Position(x = 0,y = 6),
+		new Position(x = 2,y = 6),
+		new Position(x = 0,y = 7),
+		new Position(x = 2,y = 7),
+		new Position(x = 6,y = 1),
+		new Position(x = 6,y = 2),
+		new Position(x = 6,y = 3),
+		new Position(x = 6,y = 4),
+		new Position(x = 7,y = 1),
+		new Position(x = 7,y = 2),
+		new Position(x = 7,y = 3),
+		new Position(x = 7,y = 4)
+	]
+	override method posicionesDeHojasEnAgua() = []
+	override method posicionesDeCorazones() = [new Position(x = 1,y = 7)]
+	override method nroNivel() = 3
+	
+	override method tortugas() = 
+	[new Tortuga(x = 8, y = 8, id_unico = 0),
+	 new Tortuga(x = 8, y = 5, id_unico = 1),
+	 new Tortuga(x = 8, y = 2, id_unico = 2)
+	]
+	
+	override method autos() = 
+	[
+		new Vehiculo(x = 3, y = 0, id_unico = 3, velocidad = 300),
+		new Vehiculo(x = 3, y = 4, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 3, y = 7, id_unico = 5, velocidad = 300),
+		new Vehiculo(x = 5, y = 0, id_unico = 6, velocidad = 300),
+		new Vehiculo(x = 5, y = 2, id_unico = 7, velocidad = 300),
+		new Vehiculo(x = 5, y = 4, id_unico = 8, velocidad = 300)
+	]
+	
+	override method troncos() = 
+	[
+		new Tronco1(x = 4, y = 0, id_unico = 14)
+	]
+	
+}
+
+class Nivel3 inherits Nivel{
+	override method columnasDeAgua() = [7,8]
+	override method columnasDePista() = [3,4,5,6]
+	override method columnasDePasto() = [0,1,2]
+	override method lugaresDeMetas() = [2,4,6]
+	override method posicionesDeCalaveras() = [
+		new Position(x = 0,y = 6),
+		new Position(x = 2,y = 6),
+		new Position(x = 0,y = 7),
+		new Position(x = 2,y = 7)
+	]
+	override method posicionesDeHojasEnAgua() = []
+	override method posicionesDeCorazones() = [new Position(x = 1,y = 7)]
+	override method nroNivel() = 4
+	
+	override method tortugas() = 
+	[new Tortuga(x = 8, y = 7, id_unico = 1),
+	 new Tortuga(x = 8, y = 3, id_unico = 2)
+	]
+	
+	override method autos() = 
+	[
+		new Vehiculo(x = 4, y = 0, id_unico = 3, velocidad = 150),
+		new Vehiculo(x = 4, y = 2, id_unico = 4, velocidad = 150),
+		new Vehiculo(x = 4, y = 4, id_unico = 5, velocidad = 150),
+		new Vehiculo(x = 4, y = 6, id_unico = 6, velocidad = 150),
+		new Vehiculo(x = 3, y = 0, id_unico = 7, velocidad = 300),
+		new Vehiculo(x = 3, y = 4, id_unico = 8, velocidad = 300),
+		new Vehiculo(x = 3, y = 7, id_unico = 9, velocidad = 300),
+		new Vehiculo(x = 5, y = 0, id_unico = 10, velocidad = 300),
+		new Vehiculo(x = 5, y = 2, id_unico = 11, velocidad = 300),
+		new Vehiculo(x = 5, y = 4, id_unico = 12, velocidad = 300),
+		new Vehiculo(x = 5, y = 6, id_unico = 13, velocidad = 300),
+		new Vehiculo(x = 6, y = 0, id_unico = 14, velocidad = 150),
+		new Vehiculo(x = 6, y = 2, id_unico = 15, velocidad = 150),
+		new Vehiculo(x = 6, y = 4, id_unico = 16, velocidad = 150),
+		new Vehiculo(x = 6, y = 6, id_unico = 17, velocidad = 150)
+	]
+	
+	override method troncos() = 
+	[
+		new Tronco2(x = 7, y = 0, id_unico = 18)
+	]
+	
+}
+
+class Nivel4 inherits Nivel{
+	override method columnasDeAgua() = [1,4,6,8]
+	override method columnasDePista() = [2,3,5,7]
+	override method columnasDePasto() = [0]
+	override method lugaresDeMetas() = [1,4,5,7]
+	override method posicionesDeCalaveras() = [
+		new Position(x = 0,y = 1),
+		new Position(x = 0,y = 3)
+	]
+	override method posicionesDeHojasEnAgua() = []
+	override method posicionesDeCorazones() = [new Position(x = 0,y = 7)]
 	override method nroNivel() = 1
 	
 	override method tortugas() = 
-	[new Tortuga(x = 8, y = 8, id_unico = 1),
-	 new Tortuga(x = 8, y = 6, id_unico = 2)
+	[new Tortuga(x = 8, y = 7, id_unico = 0)
 	]
 	
 	override method autos() = 
 	[
-		new Vehiculo(x = 7, y = 0, id_unico = 3, velocidad = 300),
-		new Vehiculo(x = 7, y = 2, id_unico = 4, velocidad = 300),
-		new Vehiculo(x = 7, y = 4, id_unico = 5, velocidad = 300),
-		new Vehiculo(x = 7, y = 6, id_unico = 6, velocidad = 300)
+		new Vehiculo(x = 4, y = 0, id_unico = 3, velocidad = 150),
+		new Vehiculo(x = 4, y = 2, id_unico = 4, velocidad = 150),
+		new Vehiculo(x = 4, y = 4, id_unico = 5, velocidad = 150),
+		new Vehiculo(x = 4, y = 6, id_unico = 6, velocidad = 150),
+		new Vehiculo(x = 3, y = 0, id_unico = 7, velocidad = 300),
+		new Vehiculo(x = 3, y = 4, id_unico = 8, velocidad = 300),
+		new Vehiculo(x = 3, y = 7, id_unico = 9, velocidad = 300),
+		new Vehiculo(x = 5, y = 0, id_unico = 10, velocidad = 300),
+		new Vehiculo(x = 5, y = 2, id_unico = 11, velocidad = 300),
+		new Vehiculo(x = 5, y = 4, id_unico = 12, velocidad = 300),
+		new Vehiculo(x = 5, y = 6, id_unico = 13, velocidad = 300),
+		new Vehiculo(x = 6, y = 0, id_unico = 14, velocidad = 150),
+		new Vehiculo(x = 6, y = 2, id_unico = 15, velocidad = 150),
+		new Vehiculo(x = 6, y = 4, id_unico = 16, velocidad = 150),
+		new Vehiculo(x = 6, y = 6, id_unico = 17, velocidad = 150)
 	]
 	
 	override method troncos() = 
 	[
+		new Tronco2(x = 7, y = 0, id_unico = 18)
 	]
 	
 }

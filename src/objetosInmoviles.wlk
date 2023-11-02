@@ -1,6 +1,7 @@
 import wollok.game.*
 import config.*
 import vidas.*
+import background.*
 
 class ObjetosInmoviles {
 	
@@ -61,4 +62,15 @@ object cartelSinVidas{
 	
 	method image() = "assets/Menu/Cartel_SinVidas.png"
 	method position() = game.at(0,0)
+}
+
+object cartelGanaste{
+	
+	method image() = "assets/Menu/Cartel_Ganaste.png"
+	method position() = game.at(0,0)
+}
+
+object cartelPausa{
+	method position() = game.at(background.limite_x().div(2) - 4,background.limite_y().div(2) - 8)
+	method image() = "assets/Menu/BotonPausa.png"
 }

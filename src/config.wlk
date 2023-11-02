@@ -12,14 +12,14 @@ object config {
 	const property objPrincipal = rana
 	var property nivelActual
 	const property objetos = #{}
-	const property nivelesGanados = #{}
+	const property nivelesDesbloqueados = #{1}
 	var property pausa = false
 	var property jugando = false
 	
 	method iniciar(nivel){
-		game.boardGround("Escenario/Fondo_pasto.png")
 		self.nivelActual(nivel)
 		nivel.iniciar()
+		objPrincipal.iniciar()
 		game.onTick(100,"Validar",{terreno.verificarContactos()})
 		self.iniciarTiempo()
 		self.iniciarVidas()
@@ -46,19 +46,16 @@ object config {
 	
 	method pausar(){
 		
-		game.addVisual(cartelPausa)
-		self.objetos().forEach({obj =>
-			game.removeTickEvent(obj)
-		})
-		
-		tiempo.pausar()
 		pausa = true
+		game.addVisual(cartelPausa)
+		self.nivelActual().pausar()
+		tiempo.pausar()
 	}
 	
 	method reiniciar(){
 		pausa = false
 		game.removeVisual(cartelPausa)
-		nivelActual.reiniciarMovimientos()
+		self.nivelActual().reiniciarMovimientos()
 		tiempo.reiniciar()
 	}
 	
@@ -75,18 +72,40 @@ object config {
 		game.allVisuals().forEach({obj => game.removeVisual(obj)})
 		game.addVisual(cartelSinVidas)
 		
-		game.schedule(4000,{self.irAlMenuPrincipal()})
+		game.schedule(4000,{self.irAlMenuPrincipal(false)})
 	}
 	
-	method irAlMenuPrincipal(){
+	method irAlMenuPrincipal(gano){
 		self.jugando(false)
-		game.removeVisual(cartelSinVidas)
+		
+		if(gano)
+			game.removeVisual(cartelGanaste)
+		else
+			game.removeVisual(cartelSinVidas)
+			
+		menuPrincipal.mostrar()
 	}
 	
 	method ganar(){
-		nivelesGanados.add(nivelActual.nroNivel())
-		game.say(objPrincipal,"Gané")		
+		nivelesDesbloqueados.add(nivelActual.nroNivel())
+		
+		game.removeTickEvent("Validar")
+		
+		self.objetos().forEach({obj =>
+			game.removeTickEvent(obj)
+		})
+		
+		self.objetos().clear()
+		tiempo.finalizar()
+		game.allVisuals().forEach({obj => game.removeVisual(obj)})
+		game.addVisual(cartelGanaste)
+		
+		game.schedule(4000,{self.irAlMenuPrincipal(true)})
 	}
+	
+	method frenarBusquedaDeContactos(){game.removeTickEvent("Validar")}
+	
+	method reanudarBusquedaDeContactos(){game.onTick(100,"Validar",{terreno.verificarContactos()})}
 
 	
 	method configTeclas(){
@@ -116,8 +135,10 @@ object config {
 		})
 		
 		keyboard.space().onPressDo({
-			if(jugando)
-				self.pausarDespausar()
+			//En un momento dado, lo había testeado y funcionaba.
+			//Ahora, el desapusar los objetos quedan inmóviles
+			//if(jugando)
+			//	self.pausarDespausar()
 		})
 		
 		keyboard.enter().onPressDo({
@@ -127,11 +148,4 @@ object config {
 		
 	}
 	
-}
-
-
-object cartelPausa{
-	method text() = "PAUSA"
-	method position() = game.center()
-	method textColor() = "000000FF"
 }

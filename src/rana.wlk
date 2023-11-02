@@ -3,6 +3,7 @@ import config.*
 import background.*
 import objetosInmoviles.*
 import vidas.*
+import tiempo.*
 
 object rana{
 	const property positionInicial = game.at(0,16)
@@ -48,8 +49,15 @@ object rana{
 		position = positionInicial
 		game.addVisual(self)
 		
-		if(moscasComidas == config.nivelActual().moscasTotales())
+		if(config.nivelActual().nroNivel() == 1 or config.nivelActual().nroNivel() == 2){
+			tiempo.finalizar()
+			tiempo.iniciar()			
+		}
+		
+		if(moscasComidas == config.nivelActual().moscasTotales()){
 			config.ganar()
+			moscasComidas = 0
+		}
 	}
 
 	method perderVida(){

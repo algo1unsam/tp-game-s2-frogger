@@ -2,50 +2,55 @@ import wollok.game.*
 import niveles.*
 import config.*
 import objetosInmoviles.*
+import background.*
 
 object menuPrincipal {
 	
-	var property nivelSeleccionado = 1
+	var property nivelSeleccionado
 	
 	method mostrar() {
+		self.nivelSeleccionado(config.nivelesDesbloqueados().size())
 		game.boardGround("Menu/MenuPrincipal.png")
-		config.configTeclas()
+		game.addVisual(botonNivel)
 	}
 	
 	method desplazarANivelDeIzquierda(){
-		if(cartelDerecha.visible()){
-			game.removeVisual(cartelDerecha)
-			cartelDerecha.visible(false)
-		}
 		
-		if(not cartelIzquierda.visible()){
-			cartelIzquierda.visible(true)
-			game.addVisual(cartelIzquierda)
+		const cantidadNiveles = config.nivelesDesbloqueados().size()
+		
+		if(cantidadNiveles > 1){
+			if(nivelSeleccionado == 1)
+				nivelSeleccionado = config.nivelesDesbloqueados().size()
+			else
+				nivelSeleccionado--
 		}
 	}
 	
 	method desplazarANivelDeDerecha(){
-		if(cartelIzquierda.visible()){
-			game.removeVisual(cartelIzquierda)
-			cartelIzquierda.visible(false)
-		}
 		
-		if(not cartelDerecha.visible()){
-			cartelDerecha.visible(true)
-			game.addVisual(cartelDerecha)
+		const cantidadNiveles = config.nivelesDesbloqueados().size()
+		
+		if(cantidadNiveles > 1){
+			if(nivelSeleccionado == config.nivelesDesbloqueados().size())
+				nivelSeleccionado = 1
+			else
+				nivelSeleccionado++
 		}
 	}
 	
 	method seleccionarNivel(nroNivel){
+		
+		game.removeVisual(botonNivel)
+		
 		var nivel
 		if(nroNivel == 1)
 			nivel = new Nivel1()
-		//if(nroNivel == 2)
-		//	nivel = new Nivel2()
-		//if(nroNivel == 3)
-		//	nivel = new Nivel3()
-		//if(nroNivel == 4)
-		//	nivel = new Nivel4()
+		if(nroNivel == 2)
+			nivel = new Nivel2()
+		if(nroNivel == 3)
+			nivel = new Nivel3()
+		if(nroNivel == 4)
+			nivel = new Nivel4()
 		
 		config.iniciar(nivel)
 			
@@ -53,16 +58,11 @@ object menuPrincipal {
 	
 }
 
-object cartelDerecha{
-	var property visible = false
-	method text() = "Desplazaste a derecha"
-	method textColor() = "FFFFFFFF"
-	method position() = game.at(30,16)
-}
+object botonNivel{
+	
+	method conFlechas() = config.nivelesDesbloqueados().size() > 1
+	method inicioDeRuta() = if(self.conFlechas()) "assets/Menu/Botones/BotonFlechas-Nivel" else "assets/Menu/Botones/Boton-Nivel"
+	method image() =  self.inicioDeRuta() + menuPrincipal.nivelSeleccionado().toString() + ".png"
+	method position() = game.at(background.limite_x().div(2) - 13, 8)
 
-object cartelIzquierda{
-	var property visible = false
-	method text() = "Desplazaste a izquierda"
-	method textColor() = "FFFFFFFF"
-	method position() = game.at(30,16)
 }

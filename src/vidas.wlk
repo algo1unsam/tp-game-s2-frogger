@@ -18,8 +18,10 @@ object vidas {
 	method perderVida(){
 		cantidad -= 1
 		
-		if (cantidad <= 0)
+		if (cantidad <= 0){
 			config.finalizar()
+			config.objPrincipal().moscasComidas(0)
+		}
 	}
 	
 	method ganarVida(){
@@ -29,7 +31,7 @@ object vidas {
 
 object vidasTexto{
 	
-	const pos = new Position(x = vidas.position().x() - 1, y = vidas.position().y() - 6)
+	const pos = new Position(x = vidas.position().x() - 1, y = vidas.position().y() - 4)
 	method text() = vidas.cantidad().toString()
 	method textColor() = "000000FF"
 	method position() = pos

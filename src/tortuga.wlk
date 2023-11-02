@@ -12,8 +12,6 @@ class Tortuga inherits ObjetoMovilMarino{
 	
 	override method velocidad() = 200
 	
-	override method esMortal() = self.abajoAgua()
-	
 	override method mover(){
 		position = self.position().down(1)
 		self.etapas()

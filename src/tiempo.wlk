@@ -3,8 +3,8 @@ import background.*
 import config.*
 
 object tiempo {
-	const tiempoInicial = 80
- 	const property position = new Position(x = background.limite_x(), y = background.limite_y() - 15)
+	const tiempoInicial = 100
+ 	const property position = new Position(x = background.limite_x(), y = background.limite_y() - 9)
 	const property image = "assets/Menu/Reloj.png"
 	var property tiempoRestante = tiempoInicial
 	
@@ -15,6 +15,7 @@ object tiempo {
 		barraDeTiempo.iniciar()
 		game.onTick(1000, "tiempo", { self.pasarTiempo()})
 	}
+
 	
 	method pasarTiempo() {
 		
@@ -41,7 +42,7 @@ object tiempo {
 
 object tiempoTexto {
 	
-	const posicionInicial = new Position(x = tiempo.position().x() - 1, y = tiempo.position().y() - 6)
+	const posicionInicial = new Position(x = tiempo.position().x() - 1, y = tiempo.position().y() - 4)
 	method text() = tiempo.tiempoRestante().toString()
 	method textColor() = "000000FF"
 	method position() = posicionInicial
@@ -55,7 +56,7 @@ object barraDeTiempo {
 
 	
 	var property position = posicionInicial
-    const posicionInicial = new Position(x = background.limite_x(), y = -31)
+    const posicionInicial = new Position(x = background.limite_x(), y = -21)
 	method image() = "assets/Menu/TiempoBarra.png"//arreglar imagen y pausar todo     
     method iniciar(){
     	position = posicionInicial
