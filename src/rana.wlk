@@ -2,13 +2,13 @@ import wollok.game.*
 import config.*
 import background.*
 import objetosInmoviles.*
+import vidas.*
 
 object rana{
 	const property positionInicial = game.at(0,16)
 	const property nombreAssets = "Rana"
 	var property estadoParaImg = 1
 	var property position = self.positionInicial()
-	var property vidas
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	const property velocidadOriginal = 3
 	var property velocidad = velocidadOriginal
@@ -17,7 +17,6 @@ object rana{
 	var property moscasComidas = 0
 	
 	method iniciar(){
-		self.vidas(5)
 		game.addVisual(self)
 	}
 
@@ -49,19 +48,13 @@ object rana{
 		position = positionInicial
 		game.addVisual(self)
 		
-		config.reiniciarTiempo()
-		
 		if(moscasComidas == config.nivelActual().moscasTotales())
 			config.ganar()
 	}
 
 	method perderVida(){
 		
-		vidas -=1	
-		
-		if (vidas == 0)
-			config.finalizar()
-			
+		vidas.perderVida()
 		self.position(self.positionInicial())
 	}
 	

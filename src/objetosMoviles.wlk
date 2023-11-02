@@ -34,6 +34,11 @@ class ObjetoMovil {
 		game.onTick(self.velocidad(), nombreMovimiento, {self.mover()})
 	}
 	
+	method reiniciar(){
+		const nombreMovimiento = id_unico.toString()
+		game.onTick(self.velocidad(), nombreMovimiento, {self.mover()})
+	}
+	
 	method mover()
 	
 	//Este método se va a llamar cuando la rana toque al objeto

@@ -43,52 +43,54 @@ object movimiento {
 	
 	method mover(direccion){
 		
-		self._direccion(direccion)
-		const obj = config.objPrincipal()
-		const posNueva = direccion.mover(obj)
-		const desdeOHaciaAguaHorizontal = 
-			(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
-			and 
-			(direccion.nombre() == "Izquierda" or direccion.nombre() == "Derecha")
-		
-		const desdeOHaciaAguaVertical = 
-			(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
-			and 
-			(direccion.nombre() == "Arriba" or direccion.nombre() == "Abajo")
-		
-		var esColumnaDeMeta
-		
-		if(self.estaEnAgua() and direccion.nombre() == "Derecha"){
-			const proximaColumna = ((posNueva.x() + 4).div(8) + 1) * 8
-			esColumnaDeMeta = terreno.esColumnaDeMeta(proximaColumna)	
-		}
-		else{
-			esColumnaDeMeta = terreno.esColumnaDeMeta(posNueva.x())			
-		}
-		
-		if (self.validarMovimientoNormal(posNueva)){
-			obj.tieneSuperficieMarina(false)
-			self.modificarImg()
-			obj.mover(posNueva)
-		}
-		else if(desdeOHaciaAguaHorizontal and not esColumnaDeMeta){
-			obj.tieneSuperficieMarina(false)
-			self.modificarImg()
-			self.moverDesdeOHaciaAguaHorizontal(posNueva)			
-		}
-		else if(desdeOHaciaAguaVertical){
-			self.modificarImg()
-			obj.mover(posNueva)		
-		}
-		else if(esColumnaDeMeta){
+		if(not config.pausa()){
 			
-			if(terreno.esMetaOcupable(posNueva.y())){
-				self.modificarImg()
-				const posicionDeMeta = new Position(x = background.columna_de_meta(), y = posNueva.y())
-				obj.mover(posicionDeMeta)
+			self._direccion(direccion)
+			const obj = config.objPrincipal()
+			const posNueva = direccion.mover(obj)
+			const desdeOHaciaAguaHorizontal = 
+				(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
+				and 
+				(direccion.nombre() == "Izquierda" or direccion.nombre() == "Derecha")
+			
+			const desdeOHaciaAguaVertical = 
+				(self.estaEnAgua() or self.proxDireccionEsAgua(posNueva)) 
+				and 
+				(direccion.nombre() == "Arriba" or direccion.nombre() == "Abajo")
+			
+			var esColumnaDeMeta
+			
+			if(self.estaEnAgua() and direccion.nombre() == "Derecha"){
+				const proximaColumna = ((posNueva.x() + 4).div(8) + 1) * 8
+				esColumnaDeMeta = terreno.esColumnaDeMeta(proximaColumna)	
 			}
+			else{
+				esColumnaDeMeta = terreno.esColumnaDeMeta(posNueva.x())			
+			}
+			
+			if (self.validarMovimientoNormal(posNueva)){
+				obj.tieneSuperficieMarina(false)
+				self.modificarImg()
+				obj.mover(posNueva)
+			}
+			else if(desdeOHaciaAguaHorizontal and not esColumnaDeMeta){
+				obj.tieneSuperficieMarina(false)
+				self.modificarImg()
+				self.moverDesdeOHaciaAguaHorizontal(posNueva)			
+			}
+			else if(desdeOHaciaAguaVertical){
+				self.modificarImg()
+				obj.mover(posNueva)		
+			}
+			else if(esColumnaDeMeta){
+				
+				if(terreno.esMetaOcupable(posNueva.y())){
+					self.modificarImg()
+					const posicionDeMeta = new Position(x = background.columna_de_meta(), y = posNueva.y())
+					obj.mover(posicionDeMeta)
+				}
+			}	
 		}
-		
 	}
 	
 	method ocuparMeta(posicionDeMeta){

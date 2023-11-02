@@ -24,6 +24,7 @@ class Nivel {
 	const property tortugas  = [] //[new Tortuga(0,1), new Tortuga(2, 8)] 
 	const property autos  = [] //[new Vehiculo(0,1), new Vehiculo(2, 8)]
 	const property troncos  = [] // new tronco() , new Tronco ()
+
 	
 	method moscasTotales() = self.lugaresDeMetas().size()
 	
@@ -89,6 +90,12 @@ class Nivel {
 		self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
+	method reiniciarMovimientos(){
+		self.tortugas().forEach({tortuga=> tortuga.reiniciar()})
+		self.autos().forEach({auto=> auto.reiniciar()})
+		self.troncos().forEach({tronco=> tronco.reiniciar()})
+	}
+	
 	method crearAgua(x){
 
 		background.eje_y().forEach({ y =>
@@ -141,6 +148,7 @@ class Nivel {
 }
 
 class NivelTest inherits Nivel{
+	
 	override method columnasDeAgua() = [10,11,12]
 	override method columnasDePista() = [2,3,4,5]
 	override method lugaresDeMetas() = [0,3,4,7]
@@ -194,7 +202,6 @@ class NivelTestAgua inherits Nivel{
 }
 
 class Nivel1 inherits Nivel{
-	
 	override method columnasDeAgua() = [10,11,12,13]
 	override method columnasDePista() = [2,3,7,8,9]
 	override method lugaresDeMetas() = [0,3,4,7]
