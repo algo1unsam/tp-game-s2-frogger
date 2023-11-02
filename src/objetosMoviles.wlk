@@ -1,5 +1,6 @@
 import wollok.game.*
 import background.*
+import config.*
 
 class ObjetoMovil {
 	//La grilla es de 9 (alto) por 15 (ancho: 0 - 14)
@@ -45,4 +46,11 @@ class ObjetoMovil {
 	//Método al que se llama si hace contacto
 	method ejecutarContacto()
 	
+}
+
+class ObjetoMovilMarino inherits ObjetoMovil{
+	
+	method contactaObjPrincipal() = config.objPrincipal().contacto() == self
+	method darSuperficieMarina(personaje){personaje.tieneSuperficieMarina(true)}
+	method sacarSuperficieMarina(personaje){personaje.tieneSuperficieMarina(false)}
 }

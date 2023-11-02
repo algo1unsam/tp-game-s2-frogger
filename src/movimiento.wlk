@@ -67,10 +67,12 @@ object movimiento {
 		}
 		
 		if (self.validarMovimientoNormal(posNueva)){
+			obj.tieneSuperficieMarina(false)
 			self.modificarImg()
 			obj.mover(posNueva)
 		}
 		else if(desdeOHaciaAguaHorizontal and not esColumnaDeMeta){
+			obj.tieneSuperficieMarina(false)
 			self.modificarImg()
 			self.moverDesdeOHaciaAguaHorizontal(posNueva)			
 		}

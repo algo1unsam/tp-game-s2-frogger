@@ -1,9 +1,9 @@
 import wollok.game.*
 import objetosMoviles.*
 import background.*
-import rana.*
+import config.*
 
-class Tortuga inherits ObjetoMovil{
+class Tortuga inherits ObjetoMovilMarino{
 	
 	var etapa = 0
 	var property tope = false
@@ -19,13 +19,21 @@ class Tortuga inherits ObjetoMovil{
 		self.etapas()
 		self.limiteEtapas()
 		self.valPosicion()
+		
+		if(self.contactaObjPrincipal()){
+			const objPrincipal = config.objPrincipal()
+			const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
+			objPrincipal.position(nuevaPos)
+			
+			if(objPrincipal.position().y() < 0)
+				self.sacarSuperficieMarina(objPrincipal)
+		}
 	}
 	
 
 	method valPosicion(){
-		if (self.position().y() < 0){
+		if ((self.position().y() + self.altura()) < -2)
 			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
-		}
 	}
 	
 	method limiteEtapas(){
@@ -47,9 +55,28 @@ class Tortuga inherits ObjetoMovil{
 	
 	method abajoAgua() = etapa > 9 and etapa < 15
 	
+	override method verificarContacto(posicion){
+		const mitad_de_altura = self.altura().div(2) + 1
+		const topeInferior = self.position().y() - mitad_de_altura
+		const topeSuperior = self.position().y() + mitad_de_altura
+		const haceContacto = ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
+		
+		if(not haceContacto and self.contactaObjPrincipal())
+			self.sacarSuperficieMarina(config.objPrincipal())
+		
+		return haceContacto
+	}
 	
 	override method ejecutarContacto(){
-		rana.contactos("Tortuga")
+
+		const objPrincipal = config.objPrincipal()
+		
+		if(self.abajoAgua())
+			self.sacarSuperficieMarina(objPrincipal)
+		else
+			self.darSuperficieMarina(objPrincipal)
+		
+			
 	}
 	
 }

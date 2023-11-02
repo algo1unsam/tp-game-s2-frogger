@@ -22,7 +22,7 @@ object terrenoRana{
 
 object contactosRana{
 	method position() = game.at(4,24)
-	method text() = "Contacto: " + rana.contactos()
+	method text() = "Contacto: " + if(rana.contacto() != null) "Tronco" else ""
 }
 
 object colNetaRana{
@@ -33,6 +33,11 @@ object colNetaRana{
 object filaNetaRana{
 	method position() = game.at(4,40)
 	method text() = "Fila neta: " + rana.filaNeta()
+}
+
+object supMarina{
+	method position() = game.at(4,48)
+	method text() = "Sup Marina: " + rana.tieneSuperficieMarina().toString()
 }
 
 
@@ -48,10 +53,12 @@ object config {
 		game.addVisual(contactosRana)
 		game.addVisual(colNetaRana)
 		game.addVisual(filaNetaRana)
+		game.addVisual(supMarina)
 		game.onTick(100,"Validar",{terreno.verificarContactos()})
 	}
 	
 	method finalizar(){
+		objPrincipal.perderVida()
 		game.say(objPrincipal,"Finalicé")
 	}
 	

@@ -1,7 +1,7 @@
 import objetosMoviles.*
 import wollok.game.*
 import background.*
-import rana.*
+import config.*
 
 class Vehiculo inherits ObjetoMovil {
 	var property velocidad
@@ -48,7 +48,7 @@ class Vehiculo inherits ObjetoMovil {
 	}
 	
 	override method ejecutarContacto(){
-		rana.contactos("Auto")
+		config.finalizar()
 	}
 	
 }

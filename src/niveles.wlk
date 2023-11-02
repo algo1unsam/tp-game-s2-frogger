@@ -159,6 +159,26 @@ class NivelTest inherits Nivel{
 	]
 }
 
+class NivelTestAgua inherits Nivel{
+	override method columnasDeAgua() = [1]
+	override method columnasDePista() = []
+	override method lugaresDeMetas() = [1]
+	override method posicionesDeCalaveras() = []
+	override method posicionesDeHojasEnAgua() = []
+	
+	override method tortugas() = 
+	[ new Tortuga(x = 1, y = 5)
+	]
+	
+	override method autos() = 
+	[
+	]
+	
+	override method troncos() = 
+	[
+	]
+}
+
 class Nivel1 inherits Nivel{
 	
 	override method columnasDeAgua() = [10,11,12,13]

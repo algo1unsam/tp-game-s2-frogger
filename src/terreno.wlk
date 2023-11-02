@@ -22,11 +22,20 @@ object terreno {
 		obj.estaEnAgua(self.estaEnAgua(posX))
 		
 		//Cuando lancemos el juego reemplazar por "self.estaEnPista(posX)"
-		if(obj.estaEnPista() or obj.estaEnAgua())
+		if(obj.estaEnPista()){
+			self.buscarObjetosEnColumna(columnaNeta)			
+		}
+		else if(self.estaEnAgua(posX)){
 			self.buscarObjetosEnColumna(columnaNeta)
-		
+			
+			if(not obj.tieneSuperficieMarina())
+				config.finalizar()
+		} else{
+			obj.contacto(null)			
+		}
 		
 	}
+	
 	
 	method estaEnAgua(posX){
 		
@@ -91,6 +100,7 @@ object terreno {
 	method contactaObjeto(xEnBruto) {
 		
 		var hizoContacto = false
+		var objDeContacto
 		const yEnColumnaActual = new Range(start = 0, end = background.limite_y())
 		const posObjPrincipal = config.objPrincipal().position()
 		
@@ -111,11 +121,15 @@ object terreno {
 					if(obj.verificarContacto(posObjPrincipal)){
 						//Este método se llama cada vez que la rana toca a un obj
 						obj.ejecutarContacto()	
-						hizoContacto = true				
+						hizoContacto = true	
+						objDeContacto = obj	
 					}
 				})
 			}
 		})
+		
+		if(hizoContacto)
+			config.objPrincipal().contacto(objDeContacto)
 		
 		return hizoContacto
 	}

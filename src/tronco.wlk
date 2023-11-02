@@ -1,9 +1,9 @@
 import wollok.game.*
 import objetosMoviles.*
 import background.*
-import rana.*
+import config.*
 
-class Tronco inherits ObjetoMovil{
+class Tronco inherits ObjetoMovilMarino{
 
 	const property tamanio = 20
 	const property image = ""
@@ -16,8 +16,12 @@ class Tronco inherits ObjetoMovil{
 		
 		const topeInferior = self.position().y() - 1
 		const topeSuperior = self.position().y() + self.altura()
+		const haceContacto = ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
 		
-		return ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
+		if(not haceContacto and self.contactaObjPrincipal())
+			self.sacarSuperficieMarina(config.objPrincipal())
+		
+		return haceContacto
 		
 	}
 	
@@ -26,11 +30,20 @@ class Tronco inherits ObjetoMovil{
 	override method mover(){
 		position = self.position().down(1)
 		self.valPosicion()
+		if(self.contactaObjPrincipal()){
+			const objPrincipal = config.objPrincipal()
+			const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
+			objPrincipal.position(nuevaPos)
+			
+			if(objPrincipal.position().y() < 0)
+				self.sacarSuperficieMarina(objPrincipal)
+		}
 	}
 	
 	
 	override method ejecutarContacto(){
-		rana.contactos("Tronco")
+		const obj = config.objPrincipal()
+		self.darSuperficieMarina(obj)
 	}
 	
 	method valPosicion(){

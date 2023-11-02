@@ -17,6 +17,8 @@ object rana{
 	var property columnaNeta = 0
 	var property filaNeta = (self.positionInicial().y() + 4).div(8)
 	var property contactos = ""
+	var property contacto = null
+	var property tieneSuperficieMarina = false
 	
 	method iniciar(){
 		game.addVisual(self)
