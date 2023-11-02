@@ -20,7 +20,6 @@ object vidas {
 		
 		if (cantidad <= 0){
 			config.finalizar()
-			config.objPrincipal().moscasComidas(0)
 		}
 	}
 	

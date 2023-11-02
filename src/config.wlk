@@ -61,6 +61,7 @@ object config {
 	
 	method finalizar(){
 		
+		self.objPrincipal().moscasComidas(0)
 		game.removeTickEvent("Validar")
 		
 		self.objetos().forEach({obj =>
