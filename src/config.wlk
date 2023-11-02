@@ -15,11 +15,13 @@ object config {
 		nivel.iniciar()
 		self.configTeclas()
 		game.onTick(100,"Validar",{terreno.verificarContactos()})
+		self.reiniciarTiempo()
 	}
+	
+	method reiniciarTiempo(){}
 	
 	method finalizar(){
 		
-		objPrincipal.perderVida()
 		game.removeTickEvent("Validar")
 		
 		self.objetos().forEach({obj =>
@@ -27,10 +29,12 @@ object config {
 		})
 		
 		game.say(objPrincipal,"Finalicé")
+		
+		game.schedule(4000,game.stop())
 	}
 	
 	method ganar(){
-		game.say(objPrincipal,"Gané")
+		game.say(objPrincipal,"Gané")		
 	}
 
 	

@@ -1,7 +1,9 @@
+import wollok.game.*
+import config.*
+
 class Escenario {
 	
 	method image()
-	method esMortal() = false
 	method esPosicionable() = true
 	method verificarContacto(posicion) = false
 	
@@ -17,7 +19,6 @@ class BarraSuperior inherits Escenario{
 class Agua inherits Escenario{
 	
 	override method image() = "Escenario/Agua.png"
-	override method esMortal() = true
 	
 }
 
@@ -43,18 +44,5 @@ class Meta inherits Escenario{
 class HojaEnAgua inherits Escenario{
 	
 	override method image() = "Escenario/Hoja.png"
-	
-}
-
-class Mosca inherits Escenario{
-	
-	override method image() = "Escenario/Mosca.png"
-	
-}
-
-class Calavera inherits Escenario{
-	
-	override method image() = "Escenario/Calavera.png"
-	override method esMortal() = true
 	
 }

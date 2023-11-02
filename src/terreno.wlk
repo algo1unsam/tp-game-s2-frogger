@@ -8,29 +8,15 @@ object terreno {
 		
 		const obj = config.objPrincipal()
 		const posX = obj.position().x()
-		const posY = obj.position().y()
 		const columnaNeta = (posX + 4).div(8)
-		const filaNeta = (posY + 4).div(8)
 		
-		//Variable de debug:
-		obj.columnaNeta(columnaNeta)
-		//Variable de debug:
-		obj.filaNeta(filaNeta)
-		//Variable de debug
-		obj.estaEnPista(self.estaEnPista(posX))
-		//Variable de debug
-		obj.estaEnAgua(self.estaEnAgua(posX))
+		self.buscarObjetosEnColumna(columnaNeta)
 		
-		//Cuando lancemos el juego reemplazar por "self.estaEnPista(posX)"
-		if(obj.estaEnPista()){
-			self.buscarObjetosEnColumna(columnaNeta)			
-		}
-		else if(self.estaEnAgua(posX)){
-			self.buscarObjetosEnColumna(columnaNeta)
-			
+		if(self.estaEnAgua(posX)){
 			if(not obj.tieneSuperficieMarina())
-				config.finalizar()
-		} else{
+				config.objPrincipal().perderVida()		
+		}
+		else{
 			obj.contacto(null)			
 		}
 		
@@ -65,16 +51,16 @@ object terreno {
 	}
 	
 	//Antes de usarse debe validarse con self.esColumnaDeMeta(posicion.x())
-	method esArbusto(posY) = not self.esMeta(posY)
+	method esArbusto(posY) = not self.esMetaOcupable(posY)
 	
 	//Antes de usarse debe validarse con self.esColumnaDeMeta(posicion.x())
-	method esMeta(posY){
+	method esMetaOcupable(posY){
 		
 		return config.nivelActual().lugaresDeMetas().any({y =>
 			const limSuperior = (y * 8) + 4
 			const limInferior = (y * 8) - 2
 			
-			posY < limSuperior and posY > limInferior
+			(posY < limSuperior and posY > limInferior) and not(config.nivelActual().metasOcupadas().contains(y))
 		})
 	}
 	
@@ -90,11 +76,7 @@ object terreno {
 	method buscarObjetosEnColumna(xEnNeto){
 		
 		const _xEnBruto = xEnNeto * 8
-		const hizoContacto = self.contactaObjeto(_xEnBruto)
-		
-		if(not hizoContacto)
-			//Variable de debug
-			config.objPrincipal().contactos("")
+		self.contactaObjeto(_xEnBruto)
 	}
 	
 	method contactaObjeto(xEnBruto) {
@@ -130,7 +112,7 @@ object terreno {
 		
 		if(hizoContacto)
 			config.objPrincipal().contacto(objDeContacto)
-		
-		return hizoContacto
+			
+		//Si se necesitara, se podría devolver el "hizoContacto" para verificar que se tocó algo
 	}
 }

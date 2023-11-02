@@ -5,6 +5,7 @@ import tortuga.*
 import config.*
 import auto.*
 import tronco.*
+import objetosInmoviles.*
 
 class Nivel {
 	
@@ -15,6 +16,7 @@ class Nivel {
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
 	//Cuando hablo de "neto" me refiero a posición en grilla / tamaño de celda
 	const property lugaresDeMetas  = []//[2,4,6]
+	const property metasOcupadas = []
 	
 	//Sobrescribir con listas de Position
 	const property posicionesDeHojasEnAgua  = [] //[new Position(x = 0, y = 0), new Position(x = 10, y = 8)] 
@@ -23,6 +25,7 @@ class Nivel {
 	const property autos  = [] //[new Vehiculo(0,1), new Vehiculo(2, 8)]
 	const property troncos  = [] // new tronco() , new Tronco ()
 	
+	method moscasTotales() = self.lugaresDeMetas().size()
 	
 	method iniciar(){
 		
@@ -68,7 +71,9 @@ class Nivel {
 	
 	method insertarCalaveras(){
 		self.posicionesDeCalaveras().forEach({posicion =>
-			game.addVisualIn(new Calavera(), posicion)
+			const nuevaX = posicion.x() * background.tamanio_celda()
+			const nuevaY = posicion.y() * background.tamanio_celda()
+			game.addVisual(new Calavera(position = new Position(x = nuevaX, y = nuevaY)))
 		})
 	}
 	
@@ -107,8 +112,10 @@ class Nivel {
 			const posicion = new Position(x = x, y = y)
 			const esLugarDeLLegada = self.lugaresDeMetas().any({ lugar => lugar == (y/background.tamanio_celda())})
 			
-			if(esLugarDeLLegada)
+			if(esLugarDeLLegada){
 				game.addVisualIn(new Meta(), posicion)
+				game.addVisual(new Mosca(position = posicion))				
+			}
 			else
 				game.addVisualIn(new Arbusto(), posicion)
 		})
@@ -160,26 +167,29 @@ class NivelTest inherits Nivel{
 }
 
 class NivelTestAgua inherits Nivel{
-	override method columnasDeAgua() = [1,2,3,4]
-	override method columnasDePista() = [6,7,8]
-	override method lugaresDeMetas() = [1]
-	override method posicionesDeCalaveras() = []
+	override method columnasDeAgua() = []
+	override method columnasDePista() = []
+	override method lugaresDeMetas() = [4, 6]
+	override method posicionesDeCalaveras() = [
+		new Position(x = 4, y = 4),
+		new Position(x = 5, y = 5),
+		new Position(x = 6, y = 6),
+		new Position(x = 7, y = 7),
+		new Position(x = 3, y = 3),
+		new Position(x = 2, y = 2)
+	]
 	override method posicionesDeHojasEnAgua() = []
 	
 	override method tortugas() = 
-	[ new Tortuga(x = 1, y = 5, id_unico = 1),
-	new Tortuga(x = 2, y = 5, id_unico = 2)
+	[
 	]
 	
 	override method autos() = 
-	[ new Vehiculo(x = 6, y = 4, id_unico = 3, velocidad = 300),
-		new Vehiculo(x = 7, y = 4, id_unico = 4, velocidad = 300),
-		new Vehiculo(x = 8, y = 0, id_unico = 5, velocidad = 300)
+	[
 	]
 	
 	override method troncos() = 
-	[ new Tronco0(x = 3, y = 4, id_unico = 6),
-		new Tronco1(x = 4, y = 4, id_unico = 7)
+	[
 	]
 }
 

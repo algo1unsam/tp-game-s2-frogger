@@ -48,7 +48,7 @@ class Vehiculo inherits ObjetoMovil {
 	}
 	
 	override method ejecutarContacto(){
-		config.finalizar()
+		config.objPrincipal().perderVida()
 	}
 	
 }

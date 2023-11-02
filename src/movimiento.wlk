@@ -82,13 +82,16 @@ object movimiento {
 		}
 		else if(esColumnaDeMeta){
 			
-			if(terreno.esMeta(posNueva.y())){
+			if(terreno.esMetaOcupable(posNueva.y())){
 				self.modificarImg()
 				const posicionDeMeta = new Position(x = background.columna_de_meta(), y = posNueva.y())
 				obj.mover(posicionDeMeta)
-				config.ganar()
 			}
 		}
+		
+	}
+	
+	method ocuparMeta(posicionDeMeta){
 		
 	}
 	
