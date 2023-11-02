@@ -5,19 +5,20 @@ import config.*
 object vidas {
 	
 	var property cantidad
- 	const property position = new Position(x = background.limite_x(), y = background.limite_y() - 4)
-	const property image = "assets/Menu/Corazon.png"
+ 	const property position = new Position(x = background.limite_x() + 0.5, y = background.limite_y() - 4)
+	const property image = "assets/Escenario/Corazon.png"
 	
 	method iniciar(){
-		self.cantidad(5)
 		game.addVisual(self)
 		game.addVisual(vidasTexto)
+		cantidad = 5
 	}
+
 	
 	method perderVida(){
 		cantidad -= 1
 		
-		if (cantidad== 0)
+		if (cantidad <= 0)
 			config.finalizar()
 	}
 	

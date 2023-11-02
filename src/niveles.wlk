@@ -12,6 +12,7 @@ class Nivel {
 	//Sobrescribir con valores en neto de X
 	const property columnasDeAgua = [] //[2,4,6]
 	const property columnasDePista = [] //[2,4,6]
+	const property columnasDePasto = [] //[2,4,6]
 	
 	//Tiene que devolver una lista con la posición en Y en neto de las metas
 	//Cuando hablo de "neto" me refiero a posición en grilla / tamaño de celda
@@ -24,7 +25,8 @@ class Nivel {
 	const property tortugas  = [] //[new Tortuga(0,1), new Tortuga(2, 8)] 
 	const property autos  = [] //[new Vehiculo(0,1), new Vehiculo(2, 8)]
 	const property troncos  = [] // new tronco() , new Tronco ()
-
+	
+	method nroNivel()
 	
 	method moscasTotales() = self.lugaresDeMetas().size()
 	
@@ -55,12 +57,17 @@ class Nivel {
 			
 			const esPista = self.columnasDePista().any({columna => (columna * background.tamanio_celda()) == x})
 			
+			const esPasto = self.columnasDePasto().any({columna => (columna * background.tamanio_celda()) == x})
+			
+			
 			if(esAgua)
 				self.crearAgua(x)
 			else if(esPista)
 				self.crearPista(x)
 			else if(esColumnaDeMeta)
 				self.crearMeta(x)
+			else if(esPasto)
+				self.crearPasto(x)
 		})
 	}
 	
@@ -111,6 +118,14 @@ class Nivel {
 			game.addVisualIn(new Pista(), posicion)
 		})
 	}
+	
+	method crearPasto(x){
+		
+		background.eje_y().forEach({ y =>
+			const posicion = new Position(x = x, y = y)
+			game.addVisualIn(new Pasto(), posicion)
+		})
+	}
 
 	
 	method crearMeta(x){
@@ -129,12 +144,7 @@ class Nivel {
 	}
 	
 	method borrarEscenario() {
-		
-		background.eje_y().forEach({y =>
-			background.eje_x().forEach({x =>
-				new Position(x = x, y = y).allElements().forEach({element => game.removeVisual(element)})
-			})
-		})
+		game.allVisuals().forEach({obj => game.removeVisual(obj)})
 	}
 	
 	method crearBarraDeEstado(){
@@ -151,6 +161,7 @@ class NivelTest inherits Nivel{
 	
 	override method columnasDeAgua() = [10,11,12]
 	override method columnasDePista() = [2,3,4,5]
+	override method columnasDePasto() = [1,6,7,8,9]
 	override method lugaresDeMetas() = [0,3,4,7]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
@@ -175,9 +186,11 @@ class NivelTest inherits Nivel{
 }
 
 class NivelTestAgua inherits Nivel{
+	
 	override method columnasDeAgua() = []
 	override method columnasDePista() = []
 	override method lugaresDeMetas() = [4, 6]
+	override method columnasDePasto() = [1,2,3,5,7,8,9]
 	override method posicionesDeCalaveras() = [
 		new Position(x = 4, y = 4),
 		new Position(x = 5, y = 5),
@@ -186,6 +199,9 @@ class NivelTestAgua inherits Nivel{
 		new Position(x = 3, y = 3),
 		new Position(x = 2, y = 2)
 	]
+	
+	override method nroNivel() = 0
+	
 	override method posicionesDeHojasEnAgua() = []
 	
 	override method tortugas() = 
@@ -202,15 +218,17 @@ class NivelTestAgua inherits Nivel{
 }
 
 class Nivel1 inherits Nivel{
-	override method columnasDeAgua() = [10,11,12,13]
-	override method columnasDePista() = [2,3,7,8,9]
-	override method lugaresDeMetas() = [0,3,4,7]
+	override method columnasDeAgua() = [8]
+	override method columnasDePista() = [7]
+	override method columnasDePasto() = [0,1,2,3,4,5,6]
+	override method lugaresDeMetas() = [0,4,5,7]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
+	override method nroNivel() = 1
 	
 	override method tortugas() = 
-	[new Tortuga(x = 11, y = 8, id_unico = 1),
-	 new Tortuga(x = 11, y = 7, id_unico = 2)
+	[new Tortuga(x = 8, y = 8, id_unico = 1),
+	 new Tortuga(x = 8, y = 6, id_unico = 2)
 	]
 	
 	override method autos() = 
@@ -218,22 +236,11 @@ class Nivel1 inherits Nivel{
 		new Vehiculo(x = 7, y = 0, id_unico = 3, velocidad = 300),
 		new Vehiculo(x = 7, y = 2, id_unico = 4, velocidad = 300),
 		new Vehiculo(x = 7, y = 4, id_unico = 5, velocidad = 300),
-		new Vehiculo(x = 7, y = 6, id_unico = 6, velocidad = 300),
-		new Vehiculo(x = 8, y = 2, id_unico = 7, velocidad = 300),
-		new Vehiculo(x = 8, y = 4, id_unico = 8, velocidad = 300),
-		new Vehiculo(x = 8, y = 5, id_unico = 9, velocidad = 300),
-		new Vehiculo(x = 8, y = 7, id_unico = 10, velocidad = 300),
-		new Vehiculo(x = 9, y = 0, id_unico = 11, velocidad = 175),
-		new Vehiculo(x = 9, y = 2, id_unico = 12, velocidad = 175),
-		new Vehiculo(x = 9, y = 4, id_unico = 13, velocidad = 175),
-		new Vehiculo(x = 9, y = 6, id_unico = 14, velocidad = 175)
+		new Vehiculo(x = 7, y = 6, id_unico = 6, velocidad = 300)
 	]
 	
 	override method troncos() = 
-	[new Tronco1(x = 12, y = 2, id_unico = 15),
-	 new Tronco2(x = 10, y = 5, id_unico = 16),
-	 new Tronco0(x = 13, y = 1, id_unico = 17),
-	 new Tronco0(x = 13, y = 5, id_unico = 18)
+	[
 	]
 	
 }

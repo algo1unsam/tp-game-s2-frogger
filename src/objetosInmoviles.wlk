@@ -1,5 +1,6 @@
 import wollok.game.*
 import config.*
+import vidas.*
 
 class ObjetosInmoviles {
 	
@@ -40,7 +41,24 @@ class Calavera inherits ObjetosInmoviles{
 	
 }
 
+class Corazon inherits ObjetosInmoviles{
+
+	override method image() = "Escenario/CorazonGrande.png"
+	
+	override method ejecutarContacto(){
+		game.removeVisual(self)
+		vidas.ganarVida()
+	}
+	
+}
+
 class RanaGanadora inherits ObjetosInmoviles{
-	override method image() = "assets/Rana/Izquierda/Rana-Izquierda1.png"
+	override method image() = "assets/Rana/Rana-Ganadora.png"
 	override method verificarContacto(posicion) = false
+}
+
+object cartelSinVidas{
+	
+	method image() = "assets/Menu/Cartel_SinVidas.png"
+	method position() = game.at(0,0)
 }

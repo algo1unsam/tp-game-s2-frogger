@@ -11,8 +11,8 @@ object tiempo {
 	method iniciar() {   
 		tiempoRestante = tiempoInicial
 		game.addVisual(self)
-		game.addVisual(tiempoTexto)
-		game.addVisual(barraDeTiempo)
+		tiempoTexto.iniciar()
+		barraDeTiempo.iniciar()
 		game.onTick(1000, "tiempo", { self.pasarTiempo()})
 	}
 	
@@ -26,26 +26,41 @@ object tiempo {
 		if (tiempoRestante == 0) 
 			config.finalizar()
 	}
+	
+	method finalizar() {
+		game.removeTickEvent("tiempo")
+		game.removeVisual(self)
+		game.removeVisual(tiempoTexto)
+		game.removeVisual(barraDeTiempo)
+	}
 
-	method detener() {game.removeTickEvent("tiempo")}
+	method pausar() {game.removeTickEvent("tiempo")}
 	
 	method reiniciar() {game.onTick(1000, "tiempo", { self.pasarTiempo()})}
 }
 
 object tiempoTexto {
 	
-	const pos = new Position(x = tiempo.position().x() - 1, y = tiempo.position().y() - 6)
+	const posicionInicial = new Position(x = tiempo.position().x() - 1, y = tiempo.position().y() - 6)
 	method text() = tiempo.tiempoRestante().toString()
 	method textColor() = "000000FF"
-	method position() = pos
+	method position() = posicionInicial
+	
+	method iniciar(){
+    	game.addVisual(self)
+    }
 }
 
 object barraDeTiempo {
 
-	var property position = self.posicionInicial()
 	
+	var property position = posicionInicial
+    const posicionInicial = new Position(x = background.limite_x(), y = -31)
 	method image() = "assets/Menu/TiempoBarra.png"//arreglar imagen y pausar todo     
-    method posicionInicial() = new Position(x = background.limite_x(), y = -31)
+    method iniciar(){
+    	position = posicionInicial
+    	game.addVisual(self)
+    }
     
 
 }

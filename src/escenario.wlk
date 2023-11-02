@@ -22,6 +22,12 @@ class Agua inherits Escenario{
 	
 }
 
+class Pasto inherits Escenario{
+	
+	override method image() = "Escenario/Pasto.png"
+	
+}
+
 class Pista inherits Escenario{
 	
 	override method image() = "Escenario/Pista.png"

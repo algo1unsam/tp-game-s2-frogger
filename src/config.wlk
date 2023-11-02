@@ -5,20 +5,25 @@ import movimiento.*
 import terreno.*
 import tiempo.*
 import vidas.*
+import menuPrincipal.*
+import objetosInmoviles.*
 
 object config {
 	const property objPrincipal = rana
 	var property nivelActual
-	var property objetos = #{}
+	const property objetos = #{}
+	const property nivelesGanados = #{}
 	var property pausa = false
+	var property jugando = false
 	
 	method iniciar(nivel){
+		game.boardGround("Escenario/Fondo_pasto.png")
 		self.nivelActual(nivel)
 		nivel.iniciar()
-		self.configTeclas()
 		game.onTick(100,"Validar",{terreno.verificarContactos()})
 		self.iniciarTiempo()
 		self.iniciarVidas()
+		self.jugando(true)
 	}
 	
 	method iniciarVidas(){
@@ -30,10 +35,13 @@ object config {
 	}
 	
 	method pausarDespausar(){
-		if(pausa)
-			self.reiniciar()
-		else
-			self.pausar()
+		
+		if(jugando){
+			if(pausa)
+				self.reiniciar()
+			else
+				self.pausar()			
+		}
 	}
 	
 	method pausar(){
@@ -43,6 +51,7 @@ object config {
 			game.removeTickEvent(obj)
 		})
 		
+		tiempo.pausar()
 		pausa = true
 	}
 	
@@ -50,6 +59,7 @@ object config {
 		pausa = false
 		game.removeVisual(cartelPausa)
 		nivelActual.reiniciarMovimientos()
+		tiempo.reiniciar()
 	}
 	
 	method finalizar(){
@@ -61,28 +71,59 @@ object config {
 		})
 		
 		self.objetos().clear()
+		tiempo.finalizar()
+		game.allVisuals().forEach({obj => game.removeVisual(obj)})
+		game.addVisual(cartelSinVidas)
 		
-		game.say(objPrincipal,"Finalicé")
-		
-		game.schedule(4000,game.stop())
+		game.schedule(4000,{self.irAlMenuPrincipal()})
+	}
+	
+	method irAlMenuPrincipal(){
+		self.jugando(false)
+		game.removeVisual(cartelSinVidas)
 	}
 	
 	method ganar(){
+		nivelesGanados.add(nivelActual.nroNivel())
 		game.say(objPrincipal,"Gané")		
 	}
 
 	
 	method configTeclas(){
 		
-		keyboard.up().onPressDo({movimiento.mover(arriba)})
+		keyboard.up().onPressDo({
+			if(jugando)
+				movimiento.mover(arriba)
+		})
 		
-		keyboard.down().onPressDo({movimiento.mover(abajo)})
+		keyboard.down().onPressDo({
+			if(jugando)
+				movimiento.mover(abajo)
+		})
 	
-		keyboard.left().onPressDo({movimiento.mover(izquierda)})
+		keyboard.left().onPressDo({
+			if(jugando)
+				movimiento.mover(izquierda)
+			else
+				menuPrincipal.desplazarANivelDeIzquierda()
+		})
 	
-		keyboard.right().onPressDo({movimiento.mover(derecha)})
+		keyboard.right().onPressDo({
+			if(jugando)
+				movimiento.mover(derecha)
+			else
+				menuPrincipal.desplazarANivelDeDerecha()
+		})
 		
-		keyboard.space().onPressDo({self.pausarDespausar()})
+		keyboard.space().onPressDo({
+			if(jugando)
+				self.pausarDespausar()
+		})
+		
+		keyboard.enter().onPressDo({
+			if(not jugando)
+				menuPrincipal.seleccionarNivel(menuPrincipal.nivelSeleccionado())
+		})
 		
 	}
 	
@@ -92,4 +133,5 @@ object config {
 object cartelPausa{
 	method text() = "PAUSA"
 	method position() = game.center()
+	method textColor() = "000000FF"
 }
