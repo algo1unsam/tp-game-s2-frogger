@@ -304,22 +304,29 @@ class Nivel4 inherits Nivel{
 	override method lugaresDeMetas() = [1,4,5,7]
 	override method posicionesDeCalaveras() = [
 		new Position(x = 0,y = 1),
-		new Position(x = 0,y = 3)
+		new Position(x = 0,y = 3),
+		new Position(x = 0,y = 4),
+		new Position(x = 0,y = 5)
 	]
 	override method posicionesDeHojasEnAgua() = []
-	override method posicionesDeCorazones() = [new Position(x = 0,y = 7)]
+	override method posicionesDeCorazones() = [
+		new Position(x = 0,y = 7),
+		new Position(x = 0,y = 0)
+	]
 	override method nroNivel() = 1
 	
 	override method tortugas() = 
-	[new Tortuga(x = 8, y = 7, id_unico = 0)
+	
+	[	new Tortuga(x = 1, y = 7, id_unico = 1),
+		new Tortuga(x = 8, y = 7, id_unico = 2)
 	]
 	
 	override method autos() = 
 	[
-		new Vehiculo(x = 4, y = 0, id_unico = 3, velocidad = 150),
-		new Vehiculo(x = 4, y = 2, id_unico = 4, velocidad = 150),
-		new Vehiculo(x = 4, y = 4, id_unico = 5, velocidad = 150),
-		new Vehiculo(x = 4, y = 6, id_unico = 6, velocidad = 150),
+		new Vehiculo(x = 2, y = 0, id_unico = 3, velocidad = 150),
+		new Vehiculo(x = 2, y = 2, id_unico = 4, velocidad = 150),
+		new Vehiculo(x = 2, y = 4, id_unico = 5, velocidad = 150),
+		new Vehiculo(x = 2, y = 6, id_unico = 6, velocidad = 150),
 		new Vehiculo(x = 3, y = 0, id_unico = 7, velocidad = 300),
 		new Vehiculo(x = 3, y = 4, id_unico = 8, velocidad = 300),
 		new Vehiculo(x = 3, y = 7, id_unico = 9, velocidad = 300),
@@ -327,15 +334,16 @@ class Nivel4 inherits Nivel{
 		new Vehiculo(x = 5, y = 2, id_unico = 11, velocidad = 300),
 		new Vehiculo(x = 5, y = 4, id_unico = 12, velocidad = 300),
 		new Vehiculo(x = 5, y = 6, id_unico = 13, velocidad = 300),
-		new Vehiculo(x = 6, y = 0, id_unico = 14, velocidad = 150),
-		new Vehiculo(x = 6, y = 2, id_unico = 15, velocidad = 150),
-		new Vehiculo(x = 6, y = 4, id_unico = 16, velocidad = 150),
-		new Vehiculo(x = 6, y = 6, id_unico = 17, velocidad = 150)
+		new Vehiculo(x = 7, y = 0, id_unico = 14, velocidad = 150),
+		new Vehiculo(x = 7, y = 2, id_unico = 15, velocidad = 150),
+		new Vehiculo(x = 7, y = 4, id_unico = 16, velocidad = 150),
+		new Vehiculo(x = 7, y = 6, id_unico = 17, velocidad = 150)
 	]
 	
 	override method troncos() = 
 	[
-		new Tronco2(x = 7, y = 0, id_unico = 18)
+		new Tronco0(x = 4, y = 4, id_unico = 18),
+		new Tronco1(x = 6, y = 4, id_unico = 19)
 	]
 	
 }

@@ -44,7 +44,7 @@ object menuPrincipal {
 		
 		var nivel
 		if(nroNivel == 1)
-			nivel = new Nivel1()
+			nivel = new Nivel4()
 		if(nroNivel == 2)
 			nivel = new Nivel2()
 		if(nroNivel == 3)
