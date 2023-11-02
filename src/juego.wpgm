@@ -12,9 +12,7 @@ program juego {
 	game.height(background.limite_y())
 	game.width(background.limite_x() + (background.tamanio_celda() / 2))
 	game.boardGround("Escenario/Fondo_pasto.png")
-	config.nivelActual(new NivelTestAgua())
-	config.nivelActual().iniciar()
-	config.iniciar()
+	config.iniciar(new NivelTestAgua())
 	
 	game.start()
 	

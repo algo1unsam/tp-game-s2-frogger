@@ -2,7 +2,7 @@ import wollok.game.*
 import background.*
 import escenario.*
 import tortuga.*
-import rana.*
+import config.*
 import auto.*
 import tronco.*
 
@@ -33,7 +33,7 @@ class Nivel {
 		self.insertarTortugas()
 		self.insertarAutos()
 		self.insertarTroncos()
-		rana.iniciar()
+		config.objPrincipal().iniciar()
 	}
 	
 	method reiniciarEscenario(){
@@ -141,41 +141,45 @@ class NivelTest inherits Nivel{
 	override method posicionesDeHojasEnAgua() = []
 	
 	override method tortugas() = 
-	[new Tortuga(x = 13, y = 6)
+	[new Tortuga(x = 13, y = 6, id_unico = 1)
 	]
 	
 	override method autos() = 
 	[
-		new Vehiculo(x = 2, y = 2, velocidad = 300),
-		new Vehiculo(x = 3, y = 5, velocidad = 300),
-		new Vehiculo(x = 4, y = 7, velocidad = 300),
-		new Vehiculo(x = 5, y = 3, velocidad = 300)
+		new Vehiculo(x = 2, y = 2, id_unico = 2,  velocidad = 300),
+		new Vehiculo(x = 3, y = 5, id_unico = 3, velocidad = 300),
+		new Vehiculo(x = 4, y = 7, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 5, y = 3, id_unico = 5, velocidad = 300)
 	]
 	
 	override method troncos() = 
-	[new Tronco1(x = 11, y = 4),
-	 new Tronco2(x = 12, y = 3),
-	 new Tronco0(x = 10, y = 3)
+	[new Tronco1(x = 11, y = 4, id_unico = 6),
+	 new Tronco2(x = 12, y = 3, id_unico = 7),
+	 new Tronco0(x = 10, y = 3, id_unico = 8)
 	]
 }
 
 class NivelTestAgua inherits Nivel{
-	override method columnasDeAgua() = [1]
-	override method columnasDePista() = []
+	override method columnasDeAgua() = [1,2,3,4]
+	override method columnasDePista() = [6,7,8]
 	override method lugaresDeMetas() = [1]
 	override method posicionesDeCalaveras() = []
 	override method posicionesDeHojasEnAgua() = []
 	
 	override method tortugas() = 
-	[ new Tortuga(x = 1, y = 5)
+	[ new Tortuga(x = 1, y = 5, id_unico = 1),
+	new Tortuga(x = 2, y = 5, id_unico = 2)
 	]
 	
 	override method autos() = 
-	[
+	[ new Vehiculo(x = 6, y = 4, id_unico = 3, velocidad = 300),
+		new Vehiculo(x = 7, y = 4, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 8, y = 0, id_unico = 5, velocidad = 300)
 	]
 	
 	override method troncos() = 
-	[
+	[ new Tronco0(x = 3, y = 4, id_unico = 6),
+		new Tronco1(x = 4, y = 4, id_unico = 7)
 	]
 }
 
@@ -188,31 +192,31 @@ class Nivel1 inherits Nivel{
 	override method posicionesDeHojasEnAgua() = []
 	
 	override method tortugas() = 
-	[new Tortuga(x = 11, y = 8),
-	 new Tortuga(x = 11, y = 7)
+	[new Tortuga(x = 11, y = 8, id_unico = 1),
+	 new Tortuga(x = 11, y = 7, id_unico = 2)
 	]
 	
 	override method autos() = 
 	[
-		new Vehiculo(x = 7, y = 0, velocidad = 300),
-		new Vehiculo(x = 7, y = 2, velocidad = 300),
-		new Vehiculo(x = 7, y = 4, velocidad = 300),
-		new Vehiculo(x = 7, y = 6, velocidad = 300),
-		new Vehiculo(x = 8, y = 2, velocidad = 300),
-		new Vehiculo(x = 8, y = 4, velocidad = 300),
-		new Vehiculo(x = 8, y = 5, velocidad = 300),
-		new Vehiculo(x = 8, y = 7, velocidad = 300),
-		new Vehiculo(x = 9, y = 0, velocidad = 175),
-		new Vehiculo(x = 9, y = 2, velocidad = 175),
-		new Vehiculo(x = 9, y = 4, velocidad = 175),
-		new Vehiculo(x = 9, y = 6, velocidad = 175)
+		new Vehiculo(x = 7, y = 0, id_unico = 3, velocidad = 300),
+		new Vehiculo(x = 7, y = 2, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 7, y = 4, id_unico = 5, velocidad = 300),
+		new Vehiculo(x = 7, y = 6, id_unico = 6, velocidad = 300),
+		new Vehiculo(x = 8, y = 2, id_unico = 7, velocidad = 300),
+		new Vehiculo(x = 8, y = 4, id_unico = 8, velocidad = 300),
+		new Vehiculo(x = 8, y = 5, id_unico = 9, velocidad = 300),
+		new Vehiculo(x = 8, y = 7, id_unico = 10, velocidad = 300),
+		new Vehiculo(x = 9, y = 0, id_unico = 11, velocidad = 175),
+		new Vehiculo(x = 9, y = 2, id_unico = 12, velocidad = 175),
+		new Vehiculo(x = 9, y = 4, id_unico = 13, velocidad = 175),
+		new Vehiculo(x = 9, y = 6, id_unico = 14, velocidad = 175)
 	]
 	
 	override method troncos() = 
-	[new Tronco1(x = 12, y = 2),
-	 new Tronco2(x = 10, y = 5),
-	 new Tronco0(x = 13, y = 1),
-	 new Tronco0(x = 13, y = 5)
+	[new Tronco1(x = 12, y = 2, id_unico = 15),
+	 new Tronco2(x = 10, y = 5, id_unico = 16),
+	 new Tronco0(x = 13, y = 1, id_unico = 17),
+	 new Tronco0(x = 13, y = 5, id_unico = 18)
 	]
 	
 }

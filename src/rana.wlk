@@ -7,25 +7,17 @@ object rana{
 	const property nombreAssets = "Rana"
 	var property estadoParaImg = 1
 	var property position = self.positionInicial()
-	var property puntaje = 0
 	var property vidas = 5
 	var property image = "assets/Rana/Derecha/Rana-Derecha1.png"
 	var property estaEnAgua = false
 	var property estaEnPista = false
 	const property velocidadOriginal = 3
 	var property velocidad = velocidadOriginal
-	var property columnaNeta = 0
-	var property filaNeta = (self.positionInicial().y() + 4).div(8)
-	var property contactos = ""
 	var property contacto = null
 	var property tieneSuperficieMarina = false
 	
 	method iniciar(){
 		game.addVisual(self)
-	}
-	
-	method aumentar(valor){
-		puntaje += valor
 	}
 
 	method sumarEtapas() {

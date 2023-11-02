@@ -8,6 +8,7 @@ class ObjetoMovil {
 	//O sea, su posición sin importar el tamaño de la celda. El cálculo se hace automático.
 	const property x
 	const property y
+	const property id_unico
 	
 	const property x_real = x * background.tamanio_celda()
 	const property y_real = y * background.tamanio_celda()
@@ -26,8 +27,11 @@ class ObjetoMovil {
 	//Se puede sobrescribir para que el obj vaya a la izquierda, deberían invertir las imágenes
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
 	method iniciar(){
+		const nombreMovimiento = id_unico.toString()
+		config.objetos().add(nombreMovimiento)
 		game.addVisual(self)
-		game.onTick(self.velocidad(), "movimiento", {self.mover()})
+		//Creamos un identificador único para cada evento de objeto
+		game.onTick(self.velocidad(), nombreMovimiento, {self.mover()})
 	}
 	
 	method mover()

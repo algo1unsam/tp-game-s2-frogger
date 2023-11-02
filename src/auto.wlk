@@ -14,7 +14,7 @@ class Vehiculo inherits ObjetoMovil {
 		position =  new Position(x= x_real, y= background.limite_y())
 	}
 	
-	method verificarContacto(posicion) {
+	override method verificarContacto(posicion) {
 		
 		//Los autos que no sean camión tienen una unidad menor de altura
 		var factor_de_altura
