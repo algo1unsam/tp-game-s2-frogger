@@ -171,7 +171,45 @@ class Nivel {
 	}
 }
 
+class NivelTest inherits Nivel{
+	
+	override method iniciar(){
+		super()
+		//Freno el movimiento de objetos en el nivel para testing
+		self.pausar()
+	}
+	override method columnasDeAgua() = [7,8]
+	override method columnasDePista() = [2,3,4]
+	override method columnasDePasto() = [0,1,5,6]
+	override method lugaresDeMetas() = [4]
+	override method posicionesDeCalaveras() = [
+
+	]
+	override method posicionesDeCorazones() = [new Position(x = 0, y = 6)]
+	override method nroNivel() = 2
+	
+	override method tortugas() = 
+	[ new Tortuga(x = 8, y = 4, id_unico = 0)
+	]
+	
+	override method autos() = 
+	[
+		new Vehiculo(x = 4, y = 0, id_unico = 1, velocidad = 150),
+		new Vehiculo(x = 4, y = 2, id_unico = 2, velocidad = 150),
+		new Vehiculo(x = 4, y = 4, id_unico = 3, velocidad = 150),
+		new Vehiculo(x = 3, y = 0, id_unico = 4, velocidad = 300),
+		new Vehiculo(x = 3, y = 4, id_unico = 5, velocidad = 300)
+	]
+	
+	override method troncos() = 
+	[
+		new Tronco0(x = 7, y = 3, id_unico = 6)
+	]
+	
+}
+
 class Nivel1 inherits Nivel{
+	
 	override method columnasDeAgua() = [7,8]
 	override method columnasDePista() = [3,4]
 	override method columnasDePasto() = [0,1,2,5,6]
@@ -179,7 +217,6 @@ class Nivel1 inherits Nivel{
 	override method posicionesDeCalaveras() = [
 
 	]
-	override method posicionesDeHojasEnAgua() = []
 	override method posicionesDeCorazones() = []
 	override method nroNivel() = 2
 	
@@ -206,11 +243,13 @@ class Nivel1 inherits Nivel{
 }
 
 class Nivel2 inherits Nivel{
+	
 	override method columnasDeAgua() = [4,8]
 	override method columnasDePista() = [3,5]
 	override method columnasDePasto() = [0,1,2,4,6,7]
 	override method lugaresDeMetas() = [0,2]
 	override method posicionesDeCalaveras() = [
+		
 		new Position(x = 0,y = 6),
 		new Position(x = 2,y = 6),
 		new Position(x = 0,y = 7),
@@ -224,11 +263,11 @@ class Nivel2 inherits Nivel{
 		new Position(x = 7,y = 3),
 		new Position(x = 7,y = 4)
 	]
-	override method posicionesDeHojasEnAgua() = []
 	override method posicionesDeCorazones() = [new Position(x = 1,y = 7)]
 	override method nroNivel() = 3
 	
-	override method tortugas() = 
+	override method tortugas() =
+	
 	[new Tortuga(x = 8, y = 8, id_unico = 0),
 	 new Tortuga(x = 8, y = 5, id_unico = 1),
 	 new Tortuga(x = 8, y = 2, id_unico = 2)
@@ -262,7 +301,6 @@ class Nivel3 inherits Nivel{
 		new Position(x = 0,y = 7),
 		new Position(x = 2,y = 7)
 	]
-	override method posicionesDeHojasEnAgua() = []
 	override method posicionesDeCorazones() = [new Position(x = 1,y = 7)]
 	override method nroNivel() = 4
 	
@@ -308,7 +346,6 @@ class Nivel4 inherits Nivel{
 		new Position(x = 0,y = 4),
 		new Position(x = 0,y = 5)
 	]
-	override method posicionesDeHojasEnAgua() = []
 	override method posicionesDeCorazones() = [
 		new Position(x = 0,y = 7),
 		new Position(x = 0,y = 0)

@@ -21,7 +21,16 @@ object config {
 		nivel.iniciar()
 		objPrincipal.iniciar()
 		game.onTick(100,"Validar",{terreno.verificarContactos()})
-		self.iniciarTiempo()
+		self.iniciarTiempo(false)
+		self.iniciarVidas()
+		self.jugando(true)
+	}
+	
+	method iniciarParaTesting(nivel){
+		self.nivelActual(nivel)
+		nivel.iniciar()
+		objPrincipal.iniciar()
+		self.iniciarTiempo(true)
 		self.iniciarVidas()
 		self.jugando(true)
 	}
@@ -30,8 +39,8 @@ object config {
 		vidas.iniciar()
 	}
 	
-	method iniciarTiempo(){
-		tiempo.iniciar()		
+	method iniciarTiempo(esTesting){
+		tiempo.iniciar(esTesting)		
 	}
 	
 	method pausarDespausar(){

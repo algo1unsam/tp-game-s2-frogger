@@ -73,8 +73,7 @@ class Tortuga inherits ObjetoMovilMarino{
 			self.sacarSuperficieMarina(objPrincipal)
 		else
 			self.darSuperficieMarina(objPrincipal)
-		
-			
+
 	}
 	
 }

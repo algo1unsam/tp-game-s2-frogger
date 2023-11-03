@@ -102,7 +102,7 @@ object terreno {
 					
 					if(obj.verificarContacto(posObjPrincipal)){
 						//Este método se llama cada vez que la rana toca a un obj
-						obj.ejecutarContacto()	
+						obj.ejecutarContacto()
 						hizoContacto = true	
 						objDeContacto = obj	
 					}
@@ -110,8 +110,13 @@ object terreno {
 			}
 		})
 		
-		if(hizoContacto)
-			config.objPrincipal().contacto(objDeContacto)
+		if(hizoContacto){
+			config.objPrincipal().contacto(objDeContacto)			
+		}
+		else{
+			config.objPrincipal().tieneSuperficieMarina(false)
+			config.objPrincipal().contacto(null)
+		}
 			
 		//Si se necesitara, se podría devolver el "hizoContacto" para verificar que se tocó algo
 	}

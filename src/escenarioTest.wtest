@@ -1,0 +1,127 @@
+import wollok.game.*
+import config.*
+import niveles.*
+import terreno.*
+import background.*
+
+describe "Tests de escenario" {
+	
+	const nivelTest = new NivelTest()
+	const rana = config.objPrincipal()
+	
+	test "Tipos y cantidades de columnas" {
+		
+		const cantColumnasDeAgua = nivelTest.columnasDeAgua().size()
+		const cantColumnasDePista = nivelTest.columnasDePista().size()
+		const cantColumnasDePasto = nivelTest.columnasDePasto().size()
+		const cantFilasDeLLegadaParaGanar = nivelTest.lugaresDeMetas().size()
+		
+		assert.equals(2, cantColumnasDeAgua)
+		assert.equals(3, cantColumnasDePista)
+		assert.equals(4, cantColumnasDePasto)
+		assert.equals(1, cantFilasDeLLegadaParaGanar)
+
+	}
+	
+	test "Tipos y cantidades de elementos" {
+		
+		const cantTortugas = nivelTest.tortugas().size()
+		const cantAutos = nivelTest.autos().size()
+		const cantTroncos = nivelTest.troncos().size()
+		const cantCalaveras = nivelTest.posicionesDeCalaveras().size()
+		const cantCorazones = nivelTest.posicionesDeCorazones().size()
+		
+		assert.equals(1, cantTortugas)
+		assert.equals(5, cantAutos)
+		assert.equals(1, cantTroncos)
+		assert.equals(0, cantCalaveras)
+		assert.equals(1, cantCorazones)
+
+	}
+	
+	test "Verificar que la rana está o no en agua"{
+		
+		config.iniciarParaTesting(nivelTest)
+		
+		assert.equals(rana.position(), rana.positionInicial())
+		assert.notThat(rana.tieneSuperficieMarina())
+		assert.notThat(terreno.estaEnAgua(rana.position().x()))
+		
+		//******************************************
+		//Probamos el soporte con un tronco en agua
+		//******************************************
+		//Pendiente del tronco: verificar que la rana pueda subirse a cualquier extremo
+		//Y que una vez arriba se vaya desplazando junto a él
+		//Ídem para la tortuga
+		const tronco = nivelTest.troncos().first()
+		const posTronco = tronco.position()
+		const columnaNeta = posTronco.x().div(background.tamanio_celda())
+		const alturaTronco = tronco.altura()
+		const posicionConSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() + (alturaTronco / 2))
+		const posicionSinSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() - alturaTronco)
+		
+		rana.mover(posicionConSuperficieMarina)
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() != null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		
+		rana.mover(posicionSinSuperficieMarina)
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		
+		assert.notThat(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() == null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+	}
+	
+}
+
+describe "Tests de niveles" {
+	
+	const nivel1 = new Nivel1()
+	const nivel2 = new Nivel2()
+	const nivel3 = new Nivel3()
+	const nivel4 = new Nivel4()
+	
+	test "Se inicia con un nivel desbloqueado" {
+		
+		assert.equals(#{1}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+	}
+	
+	test "No modifica nada ganar un nivel previamente ganado" {
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		config.iniciar(nivel1)
+		config.ganar()
+		
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+	}
+	
+	test "Cada nivel desbloquea al siguiente" {
+
+		assert.equals(#{1}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel2)
+		config.ganar()
+		assert.equals(#{1, 2, 3}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel3)
+		config.ganar()
+		assert.equals(#{1, 2, 3, 4}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel4)
+		config.ganar()
+		assert.equals(#{1, 2, 3, 4}, config.nivelesDesbloqueados())
+	}
+	
+}

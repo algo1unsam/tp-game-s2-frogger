@@ -51,7 +51,7 @@ object rana{
 		
 		if(config.nivelActual().nroNivel() == 1 or config.nivelActual().nroNivel() == 2){
 			tiempo.finalizar()
-			tiempo.iniciar()			
+			tiempo.iniciar(false)			
 		}
 		
 		if(moscasComidas == config.nivelActual().moscasTotales()){

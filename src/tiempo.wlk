@@ -8,12 +8,14 @@ object tiempo {
 	const property image = "assets/Menu/Reloj.png"
 	var property tiempoRestante = tiempoInicial
 	
-	method iniciar() {   
+	method iniciar(esTesting) {   
 		tiempoRestante = tiempoInicial
 		game.addVisual(self)
 		tiempoTexto.iniciar()
 		barraDeTiempo.iniciar()
-		game.onTick(1000, "tiempo", { self.pasarTiempo()})
+		
+		if(not esTesting)
+			game.onTick(1000, "tiempo", { self.pasarTiempo()})
 	}
 
 	
@@ -53,11 +55,10 @@ object tiempoTexto {
 }
 
 object barraDeTiempo {
-
 	
 	var property position = posicionInicial
-    const posicionInicial = new Position(x = background.limite_x(), y = -21)
-	method image() = "assets/Menu/TiempoBarra.png"//arreglar imagen y pausar todo     
+    const posicionInicial = new Position(x = background.limite_x(), y = -22)
+	method image() = "assets/Menu/TiempoBarra.png"   
     method iniciar(){
     	position = posicionInicial
     	game.addVisual(self)
