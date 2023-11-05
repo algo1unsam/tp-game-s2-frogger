@@ -29,8 +29,9 @@
 El objetivo del juego es hacer que una rana ubicada en una punta del mapa atrape ciertas cantidades de moscas ubicadas
 en una pocision opuesta del mismo, evitando varios tipos de obstáculos (obstaculos móviles e inmóviles). La rana comienza
 la partida con cinco vidas que se decrementan cada vez que es chocada por un automovil o cae en el agua, la cual se puede
-cruzar urilizando los troncos o tortugas que pasan por allí. El nivel se gana cuando se atrapan todas las moscas 
-y se procede al siguiente.
+cruzar urilizando los troncos o tortugas que pasan por allí. Ademas, cada nivel posee cierta cantidad de tiempo para ser superado.
+En caso de que el tiempo se acabe, se perderá y se tendrá que volver a comenzar el nivel.
+El nivel se gana cuando se atrapan todas las moscas antes de que el tiempo se agote.
 
 
 ## Otros
