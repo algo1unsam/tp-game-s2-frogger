@@ -1,0 +1,47 @@
+import wollok.game.*
+import config.*
+import niveles.*
+import background.*
+import auto.*
+import vidas.*
+import objetosMoviles.*
+
+describe "Tests de auto" {
+	
+	const nivelTest = new NivelTest()
+    const auto = new Vehiculo(x = 4, y = 0, id_unico = 1, velocidad = 150)
+	
+	 test "Vehículo se crea con la velocidad correcta" {
+        assert.equals(auto.velocidad(), 150)
+    }
+    
+    test "Vehículo tiene la posición inicial correcta" {
+        auto.posicionInicial()
+        assert.equals(auto.position(), new Position(x= auto.x_real(), y= background.limite_y()))
+    }
+    
+    test "Vehículo verifica correctamente el contacto con una posición" {
+        const posicion = new Position(x = 4, y = 2)
+        assert.that(auto.verificarContacto(posicion))
+    }
+
+    test "Vehículo se mueve correctamente hacia abajo" {
+        auto.posicionInicial()
+        const primeraPosicionEnY = auto.position().y()
+        auto.mover()
+        auto.mover()
+        assert.equals(auto.position().y(), primeraPosicionEnY - 2) //menos la cantidad de veces que se movio
+    }
+
+
+    test "Vehículo ejecuta correctamente el contacto" {
+		config.iniciarParaTesting(nivelTest)
+        const viejaVida = vidas.cantidad()
+        auto.ejecutarContacto()
+        const nuevaVida = vidas.cantidad()
+        
+        assert.equals(viejaVida - 1, nuevaVida) // menos la cantidad de contactos que hizo
+    }
+    
+
+}
