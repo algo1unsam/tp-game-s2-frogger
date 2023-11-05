@@ -1,19 +1,25 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/a9iMdRt8)
-# Nombre del juego (<- borrar y completar)
+# FROGGER
 
 ## Equipo de desarrollo
 
 -Cristian Lomas
+
 -Sueldo Tomas
+
 -Nahuel Bembo
+
 -Luciano Perazzini
+
 -Ignacio Nolasco
+
 -Federico Balborin
 
 ## Capturas
-![inicio](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/728bedeb-e4b6-4f62-81e3-1f98abe5f4e3)
-![nivel1](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/a283a982-1c83-4f5b-b471-989de1f3082c)
-![nivel3](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/09bc9596-97f1-4c8a-be75-19ffa4e3d0ee)
+![inicio](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/177ce1ea-9ba1-474b-afc6-13ec57d28d50)
+![nivel1](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/48114887-1bf8-4e98-b00c-74266890d23d)
+![nivel3](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/4c60abe4-94c9-40b2-896d-665afb1ccf49)
+
 
 
 
