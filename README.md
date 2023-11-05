@@ -11,9 +11,10 @@
 -Federico Balborin
 
 ## Capturas
-![inicio](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/5f6b7263-152a-43ad-a271-42ac56cbde2e)
-![nivel1](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/e9f05169-0203-4fb5-926a-5f91523748fd)
-![nivel3](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/6346397f-1b28-4f7e-8a3c-6982a1a5d1b6)
+![inicio](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/728bedeb-e4b6-4f62-81e3-1f98abe5f4e3)
+![nivel1](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/a283a982-1c83-4f5b-b471-989de1f3082c)
+![nivel3](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/09bc9596-97f1-4c8a-be75-19ffa4e3d0ee)
+
 
 
 
