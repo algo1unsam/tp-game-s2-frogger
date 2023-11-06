@@ -13,7 +13,7 @@
 
 -Ignacio Nolasco
 
--Federico Balborin
+-Federico Lestrange
 
 ## Capturas
 ![inicio](https://github.com/algo1unsam/tp-game-s2-frogger/assets/142063685/177ce1ea-9ba1-474b-afc6-13ec57d28d50)
