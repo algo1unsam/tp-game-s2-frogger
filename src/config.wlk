@@ -11,7 +11,7 @@ import objetosInmoviles.*
 object config {
 	const property objPrincipal = rana
 	var property nivelActual
-	const property objetos = #{}
+	const property id_objetos = #{}
 	const property nivelesDesbloqueados = #{1}
 	var property pausa = false
 	var property jugando = false
@@ -73,11 +73,11 @@ object config {
 		self.objPrincipal().moscasComidas(0)
 		game.removeTickEvent("Validar")
 		
-		self.objetos().forEach({obj =>
+		self.id_objetos().forEach({obj =>
 			game.removeTickEvent(obj)
 		})
 		
-		self.objetos().clear()
+		self.id_objetos().clear()
 		tiempo.finalizar()
 		game.allVisuals().forEach({obj => game.removeVisual(obj)})
 		game.addVisual(cartelSinVidas)
@@ -101,11 +101,11 @@ object config {
 		
 		game.removeTickEvent("Validar")
 		
-		self.objetos().forEach({obj =>
+		self.id_objetos().forEach({obj =>
 			game.removeTickEvent(obj)
 		})
 		
-		self.objetos().clear()
+		self.id_objetos().clear()
 		tiempo.finalizar()
 		game.allVisuals().forEach({obj => game.removeVisual(obj)})
 		game.addVisual(cartelGanaste)
@@ -147,8 +147,8 @@ object config {
 		keyboard.space().onPressDo({
 			//En un momento dado, lo había testeado y funcionaba.
 			//Ahora, el desapusar los objetos quedan inmóviles
-			//if(jugando)
-			//	self.pausarDespausar()
+			if(jugando)
+				self.pausarDespausar()
 		})
 		
 		keyboard.enter().onPressDo({

@@ -104,7 +104,7 @@ object terreno {
 						//Este método se llama cada vez que la rana toca a un obj
 						obj.ejecutarContacto()
 						hizoContacto = true	
-						objDeContacto = obj	
+						objDeContacto = obj
 					}
 				})
 			}

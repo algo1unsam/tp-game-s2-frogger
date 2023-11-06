@@ -107,7 +107,7 @@ class Nivel {
 	}
 	
 	method pausar(){
-		config.objetos().forEach({ obj =>
+		config.id_objetos().forEach({ obj =>
 			game.removeTickEvent(obj)
 		})
 	}

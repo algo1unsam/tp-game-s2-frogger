@@ -54,6 +54,7 @@ class Tortuga inherits ObjetoMovilMarino{
 	method abajoAgua() = etapa > 9 and etapa < 15
 	
 	override method verificarContacto(posicion){
+		
 		const mitad_de_altura = self.altura().div(2) + 1
 		const topeInferior = self.position().y() - mitad_de_altura
 		const topeSuperior = self.position().y() + mitad_de_altura

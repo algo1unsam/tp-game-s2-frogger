@@ -25,7 +25,7 @@ class ObjetoMovil {
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
 	method iniciar(){
 		const nombreMovimiento = id_unico.toString()
-		config.objetos().add(nombreMovimiento)
+		config.id_objetos().add(nombreMovimiento)
 		game.addVisual(self)
 		//Creamos un identificador único para cada evento de objeto
 		game.onTick(self.velocidad(), nombreMovimiento, {self.mover()})

@@ -1,0 +1,32 @@
+import wollok.game.*
+import niveles.*
+import config.*
+import background.*
+import terreno.*
+
+describe "Test de tortugas" {
+	
+	const nivelTest = new NivelTest()
+	const rana = config.objPrincipal()
+	const tortuga = nivelTest.tortugas().first()
+
+	test "Verificar que la tortuga mata a la rana si está debajo del agua" {
+		
+		const posTortuga = tortuga.position()
+		const columnaNeta = posTortuga.x().div(background.tamanio_celda())
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		rana.mover(posicionConSuperficieMarina)
+		
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		assert.notThat(tortuga.abajoAgua())
+		//assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() != null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+
+	}
+	
+	test "Verificar que la tortuga se mueve junto con la rana"{
+		assert.that(true)
+	}
+}

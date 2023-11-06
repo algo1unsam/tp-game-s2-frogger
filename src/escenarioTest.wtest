@@ -9,6 +9,7 @@ describe "Tests de escenario" {
 	const nivelTest = new NivelTest()
 	const rana = config.objPrincipal()
 	
+	
 	test "Tipos y cantidades de columnas" {
 		
 		const cantColumnasDeAgua = nivelTest.columnasDeAgua().size()
