@@ -38,4 +38,4 @@ El nivel se gana cuando se atrapan todas las moscas antes de que el tiempo se ag
 
 - Curso/Facultad
 - Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Una vez terminado, no tenemos problemas en que el repositorio sea público
