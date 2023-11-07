@@ -71,6 +71,7 @@ object config {
 	method finalizar(){
 		
 		self.objPrincipal().moscasComidas(0)
+		self.objPrincipal().finalizar()
 		game.removeTickEvent("Validar")
 		
 		self.id_objetos().forEach({obj =>
@@ -147,8 +148,8 @@ object config {
 		keyboard.space().onPressDo({
 			//En un momento dado, lo había testeado y funcionaba.
 			//Ahora, el desapusar los objetos quedan inmóviles
-			if(jugando)
-				self.pausarDespausar()
+			//if(jugando)
+			//	self.pausarDespausar()
 		})
 		
 		keyboard.enter().onPressDo({

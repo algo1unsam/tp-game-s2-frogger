@@ -20,6 +20,10 @@ object rana{
 	method iniciar(){
 		game.addVisual(self)
 	}
+	
+	method finalizar(){
+		position = positionInicial
+	}
 
 	method sumarEtapas() {
 		self.validarEtapa()
