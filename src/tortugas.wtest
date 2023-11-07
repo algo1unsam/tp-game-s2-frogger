@@ -3,6 +3,9 @@ import niveles.*
 import config.*
 import background.*
 import terreno.*
+import tortuga.*
+import objetosMoviles.*
+import vidas.*
 
 describe "Test de tortugas" {
 	
@@ -29,10 +32,46 @@ describe "Test de tortugas" {
 	}
 	
 	test "La tortuga SI mata a la rana si está abajo del agua"{
-		assert.that(true)
+		
+		config.iniciarParaTesting(nivelTest)
+		
+		const posTortuga = tortuga.position()
+		const columnaNeta = posTortuga.x().div(background.tamanio_celda())
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		tortuga.etapa(11)
+		assert.equals(5,vidas.cantidad())
+		rana.mover(posicionConSuperficieMarina)
+		tortuga.ejecutarContacto()
+		rana.contacto(tortuga)
+		
+		assert.that(tortuga.abajoAgua())
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		assert.equals(4,vidas.cantidad())
+		
 	}
 	
 	test "Verificar que la tortuga se mueve junto con la rana"{
-		assert.that(true)
+		config.iniciarParaTesting(nivelTest)
+
+		const posTortuga = tortuga.position()
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		
+		rana.mover(posicionConSuperficieMarina)
+		tortuga.ejecutarContacto()
+		rana.contacto(tortuga)
+		tortuga.mover()
+		
+		assert.that(rana.position() == posicionConSuperficieMarina.down(1))
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		tortuga.mover()
+		assert.that(rana.position() == posicionConSuperficieMarina.down(2))
+		tortuga.mover()
+		tortuga.mover() //vamos verificando que a medida que se mueva la tortuga, 
+		tortuga.mover() //la rana se mueva con el
+		assert.that(rana.position() == posicionConSuperficieMarina.down(5))
+		
 	}
 }

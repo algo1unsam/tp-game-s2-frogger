@@ -5,7 +5,7 @@ import config.*
 
 class Tortuga inherits ObjetoMovilMarino{
 	
-	var etapa = 0
+	var property etapa = 0
 	var property tope = false
 	
 	override method altura() = 2
