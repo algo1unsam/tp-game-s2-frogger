@@ -132,7 +132,6 @@ object movimiento {
 		const deAguaHaciaAgua = self.estaEnAgua() and self.proxDireccionEsAgua(posColNetaDestino)
 		const deAguaHaciaTierra = self.estaEnAgua() and (not self.proxDireccionEsAgua(posColNetaDestino))
 		
-		config.frenarBusquedaDeContactos()
 		//Caso 1: se encuentra en tierra y quiere moverse a agua
 		//Dos posibles escenarios:
 		//A)está en el borde de la tierra o pista
@@ -159,9 +158,6 @@ object movimiento {
 		else if(deAguaHaciaTierra){
 			obj.mover(posInicioDeColDestino)
 		}
-		
-		terreno.buscarObjetosEnColumna(posColNetaDestino.x())
-		config.reanudarBusquedaDeContactos()
 		
 	}
 }

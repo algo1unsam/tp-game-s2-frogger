@@ -33,6 +33,7 @@ class Nivel {
 	
 	method iniciar(){
 		
+		config.id_objetos().clear()
 		self.reiniciarEscenario()
 		self.insertarFondo()
 		self.insertarHojasEnAgua()
