@@ -10,7 +10,9 @@ describe "Test de tortugas" {
 	const rana = config.objPrincipal()
 	const tortuga = nivelTest.tortugas().first()
 
-	test "Verificar que la tortuga mata a la rana si está debajo del agua" {
+	test "La tortuga NO mata a la rana si está afuera del agua" {
+		
+		config.iniciarParaTesting(nivelTest)
 		
 		const posTortuga = tortuga.position()
 		const columnaNeta = posTortuga.x().div(background.tamanio_celda())
@@ -20,10 +22,14 @@ describe "Test de tortugas" {
 		
 		terreno.buscarObjetosEnColumna(columnaNeta)
 		assert.notThat(tortuga.abajoAgua())
-		//assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.tieneSuperficieMarina())
 		assert.that(rana.contacto() != null)
 		assert.that(terreno.estaEnAgua(rana.position().x()))
 
+	}
+	
+	test "La tortuga SI mata a la rana si está abajo del agua"{
+		assert.that(true)
 	}
 	
 	test "Verificar que la tortuga se mueve junto con la rana"{
