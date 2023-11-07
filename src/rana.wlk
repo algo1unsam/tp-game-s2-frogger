@@ -22,6 +22,7 @@ object rana{
 	}
 	
 	method finalizar(){
+		moscasComidas = 0
 		position = positionInicial
 	}
 

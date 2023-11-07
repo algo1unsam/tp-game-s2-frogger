@@ -69,8 +69,6 @@ object config {
 	}
 	
 	method finalizar(){
-		
-		self.objPrincipal().moscasComidas(0)
 		self.objPrincipal().finalizar()
 		game.removeTickEvent("Validar")
 		
