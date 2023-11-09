@@ -108,14 +108,17 @@ class Nivel {
 	}
 	
 	method pausar(){
-		config.id_objetos().forEach({ obj =>
-			game.removeTickEvent(obj)
-		})
+		//config.id_objetos().forEach({ id => game.removeTickEvent(id)})
+		//config.id_objetos().clear()
+		//self.tortugas().forEach({tortuga=> game.removeVisual(tortuga)})
+		//self.autos().forEach({auto=> game.removeVisual(auto)})
+		//self.troncos().forEach({tronco=> game.removeVisual(tronco)})
 	}
+	
 	method reiniciarMovimientos(){
-		self.tortugas().forEach({tortuga=> tortuga.reiniciar()})
-		self.autos().forEach({auto=> auto.reiniciar()})
-		self.troncos().forEach({tronco=> tronco.reiniciar()})
+		//self.tortugas().forEach({tortuga=> tortuga.iniciar()})
+		//self.autos().forEach({auto=> auto.inciar()})
+		//self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
 	method crearAgua(x){

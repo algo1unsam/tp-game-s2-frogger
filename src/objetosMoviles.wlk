@@ -24,7 +24,7 @@ class ObjetoMovil {
 	//Se puede sobrescribir para que el obj vaya a la izquierda, deberían invertir las imágenes
 	//Cuando creen el objeto pueden crearlo por ejemplo: new Tortuga().moverse()
 	method iniciar(){
-		const nombreMovimiento = id_unico.toString()
+		const nombreMovimiento = self.id_unico().toString()
 		config.id_objetos().add(nombreMovimiento)
 		game.addVisual(self)
 		//Creamos un identificador único para cada evento de objeto
@@ -32,7 +32,8 @@ class ObjetoMovil {
 	}
 	
 	method reiniciar(){
-		const nombreMovimiento = id_unico.toString()
+		const nombreMovimiento = self.id_unico().toString()
+		config.id_objetos().add(nombreMovimiento)
 		game.onTick(self.velocidad(), nombreMovimiento, {self.mover()})
 	}
 	

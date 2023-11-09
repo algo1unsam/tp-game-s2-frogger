@@ -56,8 +56,8 @@ object tiempoTexto {
 
 object barraDeTiempo {
 	
-	var property position = posicionInicial
     const posicionInicial = new Position(x = background.limite_x(), y = -22)
+	var property position = posicionInicial
 	method image() = "assets/Menu/TiempoBarra.png"   
     method iniciar(){
     	position = posicionInicial

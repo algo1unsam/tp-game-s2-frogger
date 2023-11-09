@@ -14,12 +14,8 @@ class Tronco inherits ObjetoMovilMarino{
 		
 		const topeInferior = self.position().y() - 1
 		const topeSuperior = self.position().y() + self.altura()
-		const haceContacto = ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
 		
-		//if(not haceContacto and self.contactaObjPrincipal())
-		//	self.sacarSuperficieMarina(config.objPrincipal())
-		
-		return haceContacto
+		return ((posicion.y() >= topeInferior) and (posicion.y() <= topeSuperior))
 		
 	}
 	
@@ -53,7 +49,7 @@ class Tronco inherits ObjetoMovilMarino{
 class Tronco0 inherits Tronco{
 	
 	override method tamanio() = 20
-	override method image() = "troncos/tronco0.png"
+	override method image() = "troncos/Tronco0.png"
 	override method velocidad() = 40
 
 }
@@ -62,7 +58,7 @@ class Tronco1 inherits Tronco{
 	
 	override method tamanio() = 28
 	override method velocidad() = 60
-	override method image() = "troncos/tronco1.png"
+	override method image() = "troncos/Tronco1.png"
 	override method altura() = 25
 	
 }
@@ -71,6 +67,6 @@ class Tronco2 inherits Tronco{
 	
 	override method tamanio() = 36
 	override method velocidad() = 100
-	override method image() = "troncos/tronco2.png"
+	override method image() = "troncos/Tronco2.png"
 	override method altura() = 32
 }

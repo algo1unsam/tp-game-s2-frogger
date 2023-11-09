@@ -45,12 +45,12 @@ object config {
 	
 	method pausarDespausar(){
 		
-		if(jugando){
-			if(pausa)
-				self.reiniciar()
-			else
-				self.pausar()			
-		}
+		//if(jugando){
+		//	if(pausa)
+		//		self.reiniciar()
+		//	else
+		//		self.pausar()			
+		//}
 	}
 	
 	method pausar(){
@@ -85,6 +85,7 @@ object config {
 	}
 	
 	method irAlMenuPrincipal(gano){
+		
 		self.jugando(false)
 		
 		if(gano)
@@ -146,8 +147,7 @@ object config {
 		keyboard.space().onPressDo({
 			//En un momento dado, lo había testeado y funcionaba.
 			//Ahora, el desapusar los objetos quedan inmóviles
-			//if(jugando)
-			//	self.pausarDespausar()
+			//self.pausarDespausar()
 		})
 		
 		keyboard.enter().onPressDo({
