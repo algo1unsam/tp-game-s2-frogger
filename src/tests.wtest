@@ -8,6 +8,8 @@ import objetosMoviles.*
 import terreno.*
 import rana.*
 
+//Tests
+
 describe "Tests de escenario" {
 	
 	const nivelTest = new NivelTest()
