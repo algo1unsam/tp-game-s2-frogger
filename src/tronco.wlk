@@ -22,15 +22,18 @@ class Tronco inherits ObjetoMovilMarino{
 	
 	
 	override method mover(){
-		position = self.position().down(1)
-		self.valPosicion()
-		if(self.contactaObjPrincipal()){
-			const objPrincipal = config.objPrincipal()
-			const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
-			objPrincipal.position(nuevaPos)
-			
-			if(objPrincipal.position().y() < 0)
-				self.sacarSuperficieMarina(objPrincipal)
+		
+		if(not config.pausa()){			
+			position = self.position().down(1)
+			self.valPosicion()
+			if(self.contactaObjPrincipal()){
+				const objPrincipal = config.objPrincipal()
+				const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
+				objPrincipal.position(nuevaPos)
+				
+				if(objPrincipal.position().y() < 0)
+					self.sacarSuperficieMarina(objPrincipal)
+			}
 		}
 	}
 	

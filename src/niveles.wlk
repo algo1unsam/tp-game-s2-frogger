@@ -107,18 +107,9 @@ class Nivel {
 		self.troncos().forEach({tronco=> tronco.iniciar()})
 	}
 	
-	method pausar(){
-		//config.id_objetos().forEach({ id => game.removeTickEvent(id)})
-		//config.id_objetos().clear()
-		//self.tortugas().forEach({tortuga=> game.removeVisual(tortuga)})
-		//self.autos().forEach({auto=> game.removeVisual(auto)})
-		//self.troncos().forEach({tronco=> game.removeVisual(tronco)})
-	}
-	
-	method reiniciarMovimientos(){
-		//self.tortugas().forEach({tortuga=> tortuga.iniciar()})
-		//self.autos().forEach({auto=> auto.inciar()})
-		//self.troncos().forEach({tronco=> tronco.iniciar()})
+	method eliminarMovimientos(){
+		config.id_objetos().forEach({ id => game.removeTickEvent(id)})
+		config.id_objetos().clear()
 	}
 	
 	method crearAgua(x){
@@ -180,7 +171,7 @@ class NivelTest inherits Nivel{
 	override method iniciar(){
 		super()
 		//Freno el movimiento de objetos en el nivel para testing
-		self.pausar()
+		self.eliminarMovimientos()
 	}
 	override method columnasDeAgua() = [7,8]
 	override method columnasDePista() = [2,3,4]

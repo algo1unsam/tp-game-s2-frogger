@@ -45,26 +45,24 @@ object config {
 	
 	method pausarDespausar(){
 		
-		//if(jugando){
-		//	if(pausa)
-		//		self.reiniciar()
-		//	else
-		//		self.pausar()			
-		//}
+		if(jugando){
+			if(pausa)
+				self.reiniciar()
+			else
+				self.pausar()			
+		}
 	}
 	
 	method pausar(){
 		
 		pausa = true
 		game.addVisual(cartelPausa)
-		self.nivelActual().pausar()
 		tiempo.pausar()
 	}
 	
 	method reiniciar(){
 		pausa = false
 		game.removeVisual(cartelPausa)
-		self.nivelActual().reiniciarMovimientos()
 		tiempo.reiniciar()
 	}
 	
@@ -77,6 +75,7 @@ object config {
 		})
 		
 		self.id_objetos().clear()
+		
 		tiempo.finalizar()
 		game.allVisuals().forEach({obj => game.removeVisual(obj)})
 		game.addVisual(cartelSinVidas)
@@ -113,11 +112,6 @@ object config {
 		game.schedule(4000,{self.irAlMenuPrincipal(true)})
 	}
 	
-	method frenarBusquedaDeContactos(){game.removeTickEvent("Validar")}
-	
-	method reanudarBusquedaDeContactos(){game.onTick(100,"Validar",{terreno.verificarContactos()})}
-
-	
 	method configTeclas(){
 		
 		keyboard.up().onPressDo({
@@ -147,7 +141,7 @@ object config {
 		keyboard.space().onPressDo({
 			//En un momento dado, lo había testeado y funcionaba.
 			//Ahora, el desapusar los objetos quedan inmóviles
-			//self.pausarDespausar()
+			self.pausarDespausar()
 		})
 		
 		keyboard.enter().onPressDo({

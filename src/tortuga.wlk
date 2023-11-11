@@ -13,25 +13,28 @@ class Tortuga inherits ObjetoMovilMarino{
 	override method velocidad() = 200
 	
 	override method mover(){
-		position = self.position().down(1)
-		self.etapas()
-		self.limiteEtapas()
-		self.valPosicion()
 		
-		if(self.contactaObjPrincipal()){
-			const objPrincipal = config.objPrincipal()
-			const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
-			objPrincipal.position(nuevaPos)
+		if(not config.pausa()){
+			position = self.position().down(1)
+			self.etapas()
+			self.limiteEtapas()
+			self.valPosicion()
 			
-			if(objPrincipal.position().y() < 0)
-				self.sacarSuperficieMarina(objPrincipal)
+			if(self.contactaObjPrincipal()){
+				const objPrincipal = config.objPrincipal()
+				const nuevaPos = new Position(x = objPrincipal.position().x(), y = objPrincipal.position().down(1).y())
+				objPrincipal.position(nuevaPos)
+				
+				if(objPrincipal.position().y() < 0)
+					self.sacarSuperficieMarina(objPrincipal)
+			}
 		}
 	}
 	
 
 	method valPosicion(){
 		if ((self.position().y() + self.altura()) < -2)
-			position = new Position(x = x_real, y = (background.limite_y() - background.tamanio_celda()))
+			position = new Position(x = self.x_real(), y = (background.limite_y() - background.tamanio_celda()))
 	}
 	
 	method limiteEtapas(){

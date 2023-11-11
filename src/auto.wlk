@@ -1,11 +1,10 @@
-import objetosMoviles.*
 import wollok.game.*
+import objetosMoviles.*
 import background.*
 import config.*
 
 class Vehiculo inherits ObjetoMovil {
 	var property velocidad
-	
 	var property numero = self.obtenerNumeroImagen()
 	
 	override method velocidad() = velocidad
@@ -37,8 +36,11 @@ class Vehiculo inherits ObjetoMovil {
 	
 	
 	override method mover(){
-    	position = position.down(1)
-		self.valPosicion()
+		
+		if(not config.pausa()){
+	    	position = position.down(1)
+	    	self.valPosicion()
+		}
 	}
 	
 	method valPosicion(){
