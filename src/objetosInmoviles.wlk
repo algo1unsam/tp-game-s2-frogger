@@ -71,6 +71,6 @@ object cartelGanaste{
 }
 
 object cartelPausa{
-	method position() = game.at(background.limite_x().div(2) - 4,background.limite_y().div(2) - 8)
+	method position() = game.at(background.limite_x().div(2) - 8,background.limite_y().div(2) - 8)
 	method image() = "assets/Menu/BotonPausa.png"
 }
