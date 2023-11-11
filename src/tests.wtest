@@ -1,6 +1,288 @@
+import wollok.game.*
+import config.*
+import niveles.*
+import background.*
+import auto.*
+import vidas.*
+import objetosMoviles.*
+import terreno.*
+import rana.*
 
-test "testX" {
+//Tests
 
-	assert.that(true)
+describe "Tests de escenario" {
+	
+	const nivelTest = new NivelTest()
+	
+	
+	test "Tipos y cantidades de columnas" {
+		
+		const cantColumnasDeAgua = nivelTest.columnasDeAgua().size()
+		const cantColumnasDePista = nivelTest.columnasDePista().size()
+		const cantColumnasDePasto = nivelTest.columnasDePasto().size()
+		const cantFilasDeLLegadaParaGanar = nivelTest.lugaresDeMetas().size()
+		
+		assert.equals(2, cantColumnasDeAgua)
+		assert.equals(3, cantColumnasDePista)
+		assert.equals(4, cantColumnasDePasto)
+		assert.equals(1, cantFilasDeLLegadaParaGanar)
 
+	}
+	
+	test "Tipos y cantidades de elementos" {
+		
+		const cantTortugas = nivelTest.tortugas().size()
+		const cantAutos = nivelTest.autos().size()
+		const cantTroncos = nivelTest.troncos().size()
+		const cantCalaveras = nivelTest.posicionesDeCalaveras().size()
+		const cantCorazones = nivelTest.posicionesDeCorazones().size()
+		
+		assert.equals(1, cantTortugas)
+		assert.equals(5, cantAutos)
+		assert.equals(1, cantTroncos)
+		assert.equals(0, cantCalaveras)
+		assert.equals(1, cantCorazones)
+
+	}
+	
+	test "Verificar que la rana está o no en agua"{
+		
+		config.iniciarParaTesting(nivelTest)
+		
+		assert.equals(rana.position(), rana.positionInicial())
+		assert.notThat(rana.tieneSuperficieMarina())
+		assert.notThat(terreno.estaEnAgua(rana.position().x()))
+		
+		//******************************************
+		//Probamos el soporte con un tronco en agua
+		//******************************************
+		const tronco = nivelTest.troncos().first()
+		const posTronco = tronco.position()
+		const columnaNeta = posTronco.x().div(background.tamanio_celda())
+		const alturaTronco = tronco.altura()
+		const posicionConSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() + (alturaTronco / 2))
+		const posicionSinSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() - alturaTronco)
+		
+		rana.mover(posicionConSuperficieMarina)
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() != null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		
+		rana.mover(posicionSinSuperficieMarina)
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		
+		assert.notThat(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() == null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+	}
+	
+}
+
+describe "Tests de niveles" {
+	
+	const nivel1 = new Nivel1()
+	const nivel2 = new Nivel2()
+	const nivel3 = new Nivel3()
+	const nivel4 = new Nivel4()
+	
+	test "Se inicia con un nivel desbloqueado" {
+		
+		assert.equals(#{1}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+	}
+	
+	test "No modifica nada ganar un nivel previamente ganado" {
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		config.iniciar(nivel1)
+		config.ganar()
+		
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+	}
+	
+	test "Cada nivel desbloquea al siguiente" {
+
+		assert.equals(#{1}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel1)
+		config.ganar()
+		assert.equals(#{1, 2}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel2)
+		config.ganar()
+		assert.equals(#{1, 2, 3}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel3)
+		config.ganar()
+		assert.equals(#{1, 2, 3, 4}, config.nivelesDesbloqueados())
+		
+		config.iniciar(nivel4)
+		config.ganar()
+		assert.equals(#{1, 2, 3, 4}, config.nivelesDesbloqueados())
+	}
+	
+}
+
+
+
+describe "Tests de auto" {
+	
+	const nivelTest = new NivelTest()
+    const auto = new Vehiculo(x = 4, y = 0, id_unico = 1, velocidad = 150)
+	
+	 test "Vehículo se crea con la velocidad correcta" {
+        assert.equals(auto.velocidad(), 150)
+    }
+    
+    test "Vehículo tiene la posición inicial correcta" {
+        auto.posicionInicial()
+        assert.equals(auto.position(), new Position(x= auto.x_real(), y= background.limite_y()))
+    }
+    
+    test "Vehículo verifica correctamente el contacto con una posición" {
+        const posicion = new Position(x = 4, y = 2)
+        assert.that(auto.verificarContacto(posicion))
+    }
+
+    test "Vehículo se mueve correctamente hacia abajo" {
+        auto.posicionInicial()
+        const primeraPosicionEnY = auto.position().y()
+        auto.mover()
+        auto.mover()
+        assert.equals(auto.position().y(), primeraPosicionEnY - 2) //menos la cantidad de veces que se movio
+    }
+
+
+    test "Vehículo ejecuta correctamente el contacto" {
+		config.iniciarParaTesting(nivelTest)
+        const viejaVida = vidas.cantidad()
+        auto.ejecutarContacto()
+        const nuevaVida = vidas.cantidad()
+        
+        assert.equals(viejaVida - 1, nuevaVida) // menos la cantidad de contactos que hizo
+    }
+    
+
+}
+
+describe "Test de tortugas" {
+	
+	const nivelTest = new NivelTest()
+	const tortuga = nivelTest.tortugas().first()
+
+	test "La tortuga NO mata a la rana si está afuera del agua" {
+		
+		config.iniciarParaTesting(nivelTest)
+		
+		const posTortuga = tortuga.position()
+		const columnaNeta = posTortuga.x().div(background.tamanio_celda())
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		
+		rana.mover(posicionConSuperficieMarina)
+		
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		assert.notThat(tortuga.abajoAgua())
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() != null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+
+	}
+	
+	test "La tortuga SI mata a la rana si está abajo del agua"{
+		
+		config.iniciarParaTesting(nivelTest)
+		
+		const posTortuga = tortuga.position()
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		
+		tortuga.etapa(11)
+		rana.mover(posicionConSuperficieMarina)
+		tortuga.ejecutarContacto()
+		rana.contacto(tortuga)
+		
+		assert.that(tortuga.abajoAgua())
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		assert.notThat(rana.tieneSuperficieMarina())
+		
+	}
+	
+	test "Verificar que la tortuga se mueve junto con la rana"{
+		
+		config.iniciarParaTesting(nivelTest)
+
+		const posTortuga = tortuga.position()
+		const alturaTortuga = tortuga.altura()
+		const posicionConSuperficieMarina = new Position(x = posTortuga.x(), y = posTortuga.y() + (alturaTortuga / 2))
+		
+		rana.mover(posicionConSuperficieMarina)
+		tortuga.ejecutarContacto()
+		rana.contacto(tortuga)
+		tortuga.mover()
+		
+		assert.that(rana.position() == posicionConSuperficieMarina.down(1))
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		tortuga.mover()
+		assert.that(rana.position() == posicionConSuperficieMarina.down(2))
+		tortuga.mover()
+		tortuga.mover() //vamos verificando que a medida que se mueva la tortuga, 
+		tortuga.mover() //la rana se mueva con el
+		assert.that(rana.position() == posicionConSuperficieMarina.down(5))
+		
+	}
+}
+
+describe "Test de troncos" {
+	
+	const nivelTest = new NivelTest()
+	const tronco = nivelTest.troncos().first()
+	
+
+	test "La rana esta en el tronco" {
+		
+		config.iniciarParaTesting(nivelTest)
+
+		const posTronco= tronco.position()
+		const columnaNeta = posTronco.x().div(background.tamanio_celda())
+		const alturaTronco = tronco.altura()
+		const posicionConSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() + (alturaTronco / 2))
+		rana.mover(posicionConSuperficieMarina)
+		
+		terreno.buscarObjetosEnColumna(columnaNeta)
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(rana.contacto() != null)
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+	}
+
+	test "Verificar que la rana se mueve junto con el tronco"{
+		config.iniciarParaTesting(nivelTest)
+
+		const posTronco= tronco.position()
+		const alturaTronco = tronco.altura()
+		const posicionConSuperficieMarina = new Position(x = posTronco.x(), y = posTronco.y() + (alturaTronco / 2))
+		
+		rana.mover(posicionConSuperficieMarina)
+		tronco.ejecutarContacto()
+		rana.contacto(tronco)
+		tronco.mover()
+		
+		assert.that(rana.position() == posicionConSuperficieMarina.down(1))
+		assert.that(rana.tieneSuperficieMarina())
+		assert.that(terreno.estaEnAgua(rana.position().x()))
+		tronco.mover()
+		assert.that(rana.position() == posicionConSuperficieMarina.down(2))
+		tronco.mover()
+		tronco.mover() //vamos verificando que a medida que se mueva el tronco, 
+		tronco.mover() //la rana se mueva con el
+		assert.that(rana.position() == posicionConSuperficieMarina.down(5))
+		
+	}
 }

@@ -1,8 +1,15 @@
 import wollok.game.*
-import pepita.*
+import config.*
+import menuPrincipal.*
+import background.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	game.title("Frogger")
+	game.cellSize(10)
+	game.height(background.limite_y())
+	game.width(background.limite_x() + (background.tamanio_celda() / 2))
+	config.configTeclas()
+	menuPrincipal.mostrar()
 	game.start()
+	
 }
